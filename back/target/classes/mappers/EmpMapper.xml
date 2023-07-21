@@ -7,7 +7,6 @@
 		<id property="emp_cd" column="EMP_CD" />
 		<result property="emp_nm" column="EMP_NM" />
 		<result property="password" column="PASSWORD" />
-		<result property="biz_nm" column="BIZ_NM" />
 		<result property="dept_cd" column="DEPT_CD" />
 		<result property="emp_id" column="EMP_ID" />
 		<collection property="authList" resultMap="authMap" />
@@ -23,7 +22,6 @@
 		emp.co_cd, 
 		emp.emp_cd, 
 		emp.emp_nm, 
-		emp.biz_nm, 
 		emp.dept_cd, 
 		emp.password, 
 		emp.emp_id, 
@@ -37,6 +35,11 @@
 		WHERE 
 		emp.emp_id = #{username};
 	</select>
+	
+	<select id="readMauthList" resultType="com.dz.back.dto.MauthDTO">
+    <!-- select MENU_CD as menu_cd, MGROUP_CD as mgroup_cd, URL as url from mauth where EMP_CD = #{emp_cd} -->
+         SELECT MENU_CD as menucd, MGROUP_CD as mgroupcd, URL as url ,MENU_NM as menunm ,MGROUP_NM AS mgroupnm FROM mauth WHERE EMP_CD =  #{emp_cd} ORDER BY menucd;
+</select>
 
 </mapper>
 
