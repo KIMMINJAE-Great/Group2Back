@@ -24,285 +24,153 @@ public class MemberTest {
 	private DataSource datasource;
 	
 	@Test
-	public void testInsertMember() {
-		String sql = "INSERT INTO testsemp(userid, password, username ) VALUES(?,?,?)";
-		
-		
-		for(int i =0; i<100; i++) {
-			Connection con =null;
-			PreparedStatement ps = null;
-			try {
-				con = datasource.getConnection();
-				ps = con.prepareStatement(sql);
-				ps.setString(2, passwordEncoder.encode("pw" + i));
-				
-				if(i < 80) {
-					ps.setString(1, "user" + i);
-					ps.setString(3, "ì¼ë°˜ì‚¬ìš©ìž" + i);
-				} else if(i < 90) {
-					ps.setString(1, "manager" + i);
-					ps.setString(3, "ìš´ì˜ìž" + i);
-				}else {
-					ps.setString(1, "admin" + i);
-					ps.setString(3, "ê´€ë¦¬ìž" + i);
-				}
-				ps.executeUpdate();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} finally {
-				if(ps!= null) try {
-					ps.close();
-				} catch (Exception e2) {
-					e2.printStackTrace();
-				}
-				if(con!= null) try {
-					con.close();
-				} catch (Exception e3) {
-					e3.printStackTrace();
-				}
-			}
-		}
-		
-		
-	}
-	@Test
-	public void testInsertAuth() {
-		String sql = "INSERT INTO testauth(userid, auth ) VALUES(?,?)";
-		
-		
-		for(int i =0; i<100; i++) {
-			Connection con =null;
-			PreparedStatement ps = null;
-			try {
-				con = datasource.getConnection();
-				ps = con.prepareStatement(sql);
-				
-				if(i < 80) {
-					ps.setString(1, "user" + i);
-					ps.setString(2, "ROLE_USER");
-				} else if(i < 90) {
-					ps.setString(1, "manager" + i);
-					ps.setString(2, "ROLSE_MANAGER");
-				}else {
-					ps.setString(1, "admin" + i);
-					ps.setString(2, "ROLE_ADMIN");
-				}
-				ps.executeUpdate();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} finally {
-				if(ps!= null) try {
-					ps.close();
-				} catch (Exception e2) {
-					e2.printStackTrace();
-				}
-				if(con!= null) try {
-					con.close();
-				} catch (Exception e3) {
-					e3.printStackTrace();
-				}
-			}
-		}
-		
-		
-	}
-	@Test
 	public void testInsertEmp() {
-		String sql = "INSERT INTO semp(CO_CD,EMP_CD,EMP_NM,EMP_ID,BIZ_NM,DEPT_CD, password ) VALUES(?,?,?,?,?,?,?)";
-		
+		String sql = "INSERT INTO semp(CO_CD,EMP_CD,EMP_NM,EMP_ID,DEPT_CD, password ) VALUES(?,?,?,?,?,?)";
+
 //		CREATE TABLE semp (
 //				CO_CD VARCHAR(4) NOT NULL,
 //				EMP_CD VARCHAR(10) NOT NULL,
 //				EMP_NM VARCHAR(20) NOT NULL,
-//				EMP_ID VARCHAR(20) NOT NULL, PASSWORD VARCHAR(100) NOT NULL,
-//				BIZ_NM VARCHAR(10) NOT NULL,
+//				EMP_ID VARCHAR(20) NOT NULL, 
+//				PASSWORD VARCHAR(100) NOT NULL,
 //				DEPT_CD VARCHAR(10) NOT NULL, PRIMARY KEY (CO_CD,EMP_CD) USING BTREE
 //			) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
-		
-		
-		for(int i =0; i<100; i++) {
-			Connection con =null;
+
+		for (int i = 1; i < 51; i++) {
+			Connection con = null;
 			PreparedStatement ps = null;
 			try {
 				con = datasource.getConnection();
 				ps = con.prepareStatement(sql);
-				ps.setString(2, passwordEncoder.encode("pw" + i));
-				int initialNumber = 1;
-				
-				String formattedId = String.format("%010d", initialNumber + i);
-				
-				
-				if(i < 30) {
-					ps.setString(1, "2000"); //2000 ë”ì¡´ë¹„ì¦ˆì˜¨
-					if(i%2 == 0) {
-						ps.setString(2, "2000BB"+i);
-					}else {
-						ps.setString(2, "2000AA"+i);						
-					}
-					ps.setString(3, "ê¹€ë¯¼ìž¬"+i);
-					ps.setString(4, "user"+i);
-					ps.setString(5, formattedId);
-					
-					if(i%2 == 0) {
-						ps.setString(6, "2000BB");
-					}else {
-						ps.setString(6, "2000AA");						
-					}
-					ps.setString(7,passwordEncoder.encode("pw" + i) );
-					
-				}
-				else if(i < 50) {
-					ps.setString(1, "1000"); // ë”ì¡´
-					if(i%2 == 0) {
-						ps.setString(2, "1000BB"+i);
-					}else {
-						ps.setString(2, "1000AA"+i);						
-					}
-					ps.setString(3, "ìž¥ìš°ì„"+i);
-					ps.setString(4, "user"+i);
-					ps.setString(5, formattedId);
-					
-					if(i%2 == 0) {
-						ps.setString(6, "1000BB");
-					}else {
-						ps.setString(6, "1000AA");						
-					}
-					ps.setString(7,passwordEncoder.encode("pw" + i) );
-				}
-				else if(i < 70) {
-					ps.setString(1, "3000"); // ë”ì¡´ì—ë“€ìº 
-					if(i%2 == 0) {
-						ps.setString(2, "3000CC"+i);
-					}else {
-						ps.setString(2, "3000AA"+i);						
-					}
-					ps.setString(3, "ìž¥ìš°ì„"+i);
-					ps.setString(4, "user"+i);
-					ps.setString(5, formattedId);
-					
-					if(i%2 == 0) {
-						ps.setString(6, "3000CC");
-					}else {
-						ps.setString(6, "3000AA");						
-					}
-					ps.setString(7,passwordEncoder.encode("pw" + i) );
-				}
-				else if(i < 80) {
-					ps.setString(1, "4000"); // ë”ì¡´í‚¤ì»´
-					if(i%2 == 0) {
-						ps.setString(2, "4000BB"+i);
-					}else {
-						ps.setString(2, "4000AA"+i);						
-					}
-					ps.setString(3, "ì´ê±´ìš°"+i);
-					ps.setString(4, "user"+i);
-					ps.setString(5, formattedId);
-					
-					if(i%2 == 0) {
-						ps.setString(6, "4000BB");
-					}else {
-						ps.setString(6, "4000AA");						
-					}
-					ps.setString(7,passwordEncoder.encode("pw" + i) );
-				} else if(i < 90) {
-					ps.setString(1, "1000"); // ë”ì¡´
-					if(i%2 == 0) {
-						ps.setString(2, "1000BB"+i);
-					}else {
-						ps.setString(2, "1000AA"+i);						
-					}
-					ps.setString(3, "ì´ê²½í˜¸"+i);
-					ps.setString(4, "manager"+i);
-					ps.setString(5, formattedId);
-					
-					if(i%2 == 0) {
-						ps.setString(6, "1000BB");
-					}else {
-						ps.setString(6, "1000AA");						
-					}
-					ps.setString(7,passwordEncoder.encode("pw" + i) );
-				}else {
-					ps.setString(1, "1000"); // ë”ì¡´
-					if(i%2 == 0) {
-						ps.setString(2, "1000BB"+i);
-					}else {
-						ps.setString(2, "1000AA"+i);						
-					}
-					ps.setString(3, "ê¹€íƒœì„±"+i);
-					ps.setString(4, "admin"+i);
-					ps.setString(5, formattedId);
-					
-					if(i%2 == 0) {
-						ps.setString(6, "1000BB");
-					}else {
-						ps.setString(6, "1000AA");						
-					}
-					ps.setString(7,passwordEncoder.encode("pw" + i) );
+
+				int initialNumber = 0;
+
+				String formattedId = String.format("%06d", +initialNumber + i);
+				// String lastFormattedId = "1000" + formattedId;
+				if (i < 10) {
+					ps.setString(1, "1000"); // 2000 ´õÁ¸ºñÁî¿Â
+
+					ps.setString(2, "1000" + formattedId);
+
+					ps.setString(3, "±è¹ÎÀç" + i);
+					ps.setString(4, "user" + i);
+					ps.setString(5, "1000AA");
+					ps.setString(6, passwordEncoder.encode("pw" + i));
+
+				} else if (i < 20) {
+					ps.setString(1, "1000"); // 2000 ´õÁ¸ºñÁî¿Â
+
+					ps.setString(2, "1000" + formattedId);
+
+					ps.setString(3, "ÀÌ°Ç¿ì" + i);
+					ps.setString(4, "user" + i);
+					ps.setString(5, "1000AA");
+					ps.setString(6, passwordEncoder.encode("pw" + i));
+
+				} else if (i < 30) {
+					ps.setString(1, "1000"); // 2000 ´õÁ¸ºñÁî¿Â
+
+					ps.setString(2, "1000" + formattedId);
+
+					ps.setString(3, "ÀÌ°æÈ£" + i);
+					ps.setString(4, "user" + i);
+					ps.setString(5, "1000AB");
+					ps.setString(6, passwordEncoder.encode("pw" + i));
+
+				} else if (i < 40) {
+					ps.setString(1, "1000"); // 2000 ´õÁ¸ºñÁî¿Â
+
+					ps.setString(2, "1000" + formattedId);
+
+					ps.setString(3, "Àå¿ì¼®" + i);
+					ps.setString(4, "user" + i);
+					ps.setString(5, "1000AB");
+					ps.setString(6, passwordEncoder.encode("pw" + i));
+
+				} else if (i < 50) {
+					ps.setString(1, "1000"); // 2000 ´õÁ¸ºñÁî¿Â
+
+					ps.setString(2, "1000" + formattedId);
+
+					ps.setString(3, "°ü¸®ÀÚ" + i);
+					ps.setString(4, "admin" + i);
+					ps.setString(5, "1000AA");
+					ps.setString(6, passwordEncoder.encode("pw" + i));
+
+				} else {
+					ps.setString(1, "2000"); // ´õÁ¸
+					ps.setString(2, "2000" + formattedId);
+					ps.setString(3, "ÃÖÁ¾¿ø" + i);
+					ps.setString(4, "user" + i);
+					ps.setString(5, "2000AA");
+					ps.setString(6, passwordEncoder.encode("pw" + i));
 				}
 				ps.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} finally {
-				if(ps!= null) try {
-					ps.close();
-				} catch (Exception e2) {
-					e2.printStackTrace();
-				}
-				if(con!= null) try {
-					con.close();
-				} catch (Exception e3) {
-					e3.printStackTrace();
-				}
+				if (ps != null)
+					try {
+						ps.close();
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+				if (con != null)
+					try {
+						con.close();
+					} catch (Exception e3) {
+						e3.printStackTrace();
+					}
 			}
 		}
-		
-		
+
 	}
-	
+
 	@Test
 	public void testInsertempAuth() {
 		String sql = "INSERT INTO empauth(EMP_ID, AUTH ) VALUES(?,?)";
-		
+
 //		CREATE TABLE empauth(
 //				  EMP_ID VARCHAR(50),
 //				  AUTH VARCHAR(50),
 //				  PRIMARY KEY (EMP_ID) USING BTREE
 //				) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
-		
-		for(int i =0; i<100; i++) {
-			Connection con =null;
+
+		for (int i = 1; i < 51; i++) {
+			Connection con = null;
 			PreparedStatement ps = null;
 			try {
 				con = datasource.getConnection();
 				ps = con.prepareStatement(sql);
-				
-				if(i < 80) {
+
+				if (i < 40) {
 					ps.setString(1, "user" + i);
 					ps.setString(2, "ROLE_USER");
-				} else if(i < 90) {
-					ps.setString(1, "manager" + i);
-					ps.setString(2, "ROLE_MANAGER");
-				}else {
+				} else if (i < 50) {
 					ps.setString(1, "admin" + i);
 					ps.setString(2, "ROLE_ADMIN");
+				} else {
+					ps.setString(1, "user" + i);
+					ps.setString(2, "ROLE_USER");
 				}
 				ps.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} finally {
-				if(ps!= null) try {
-					ps.close();
-				} catch (Exception e2) {
-					e2.printStackTrace();
-				}
-				if(con!= null) try {
-					con.close();
-				} catch (Exception e3) {
-					e3.printStackTrace();
-				}
+				if (ps != null)
+					try {
+						ps.close();
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+				if (con != null)
+					try {
+						con.close();
+					} catch (Exception e3) {
+						e3.printStackTrace();
+					}
 			}
 		}
-		
-		
+
 	}
 }
