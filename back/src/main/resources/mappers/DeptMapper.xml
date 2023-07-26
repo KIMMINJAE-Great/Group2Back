@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dz.back.mapper.DeptMapper">
+	<resultMap type="com.dz.back.dto.DeptDTO" id="deptMap">
+		<id property="co_cd" column="CO_CD" />
+		<id property="dept_cd" column="DEPT_CD" />
+		<result property="dept_st" column="DEPT_ST" />
+		<result property="dept_nm" column="DEPT_NM" />
+		<result property="dept_tr" column="DEPT_TR" />
+		<result property="dept_addr1" column="DEPT_ADDR1" />
+		<result property="dept_addr2" column="DEPT_ADDR2" />
+		<result property="dept_fg" column="DEPT_FG" />
+	</resultMap>
+
+
+
+	<select id="getDeptList" resultMap="deptMap">
+		SELECT
+		dept.co_cd,
+		dept.dept_cd,
+		dept.dept_st,
+		dept.dept_nm,
+		dept.dept_tr,
+		dept.dept_addr1,
+		dept.dept_addr2,
+		dept.dept_fg
+		FROM
+		sdept AS dept
+	</select>
+
+	<select id="getDeptByCode" resultMap="deptMap">
+		SELECT
+		dept.co_cd,
+		dept.dept_cd,
+		dept.dept_st,
+		dept.dept_nm,
+		dept.dept_tr,
+		dept.dept_addr1,
+		dept.dept_addr2,
+		dept.dept_fg
+		FROM
+		sdept AS dept
+		WHERE
+		dept.dept_cd=#{dept_cd};
+	</select>
+
+	<insert id="insertDept" parameterType="com.dz.back.dto.DeptDTO" >
+		 INSERT INTO sdept (
+        co_cd,
+        dept_cd,
+        dept_st,
+        dept_nm,
+        dept_tr,
+        dept_addr1,
+        dept_addr2,
+        dept_fg
+    ) VALUES (
+        #{co_cd},
+        #{dept_cd},
+        #{dept_st},
+        #{dept_nm},
+        #{dept_tr},
+        #{dept_addr1},
+        #{dept_addr2},
+        #{dept_fg}
+    )
+
+	</insert>
+	
+	<delete id="deleteDept" parameterType="com.dz.back.dto.DeptDTO">
+	
+	DELETE FROM sdept WHERE sdept.dept_cd = #{dept_cd}
+	</delete>
+
+
+
+
+
+
+
+</mapper>
+
+
+

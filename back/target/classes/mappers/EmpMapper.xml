@@ -9,6 +9,19 @@
 		<result property="password" column="PASSWORD" />
 		<result property="dept_cd" column="DEPT_CD" />
 		<result property="emp_id" column="EMP_ID" />
+		<result property="gender" column="GENDER" />
+		<result property="app_password" column="APP_PASSWORD" />
+		<result property="emp_lang" column="EMP_LANG" />
+		<result property="emp_email1" column="EMP_EMAIL1" />
+		<result property="emp_email2" column="EMP_EMAIL2" />
+		<result property="emp_semail1" column="EMP_SEMAIL1" />
+		<result property="emp_semail2" column="EMP_SEMAIL2" />
+		<result property="emp_mobile" column="EMP_MOBILE" />
+		<result property="emp_post" column="EMP_POST" />
+		<result property="emp_hphone" column="EMP_HPHONE" />
+		<result property="emp_add" column="EMP_ADD" />
+		<result property="emp_hrd" column="EMP_HRD" />
+		<result property="emp_resi" column="EMP_RESI" />
 		<collection property="authList" resultMap="authMap" />
 	</resultMap>
 	<resultMap type="com.dz.back.dto.AuthDTO" id="authMap">
@@ -18,28 +31,127 @@
 
 
 	<select id="read" resultMap="empMap">
-		SELECT 
-		emp.co_cd, 
-		emp.emp_cd, 
-		emp.emp_nm, 
-		emp.dept_cd, 
-		emp.password, 
-		emp.emp_id, 
-		empa.auth 
+		SELECT
+		emp.co_cd,
+		emp.emp_cd,
+		emp.emp_nm,
+		emp.dept_cd,
+		emp.password,
+		emp.emp_id,
+		empa.auth
 		FROM
-		semp AS emp 
-		LEFT OUTER JOIN 
-		empauth AS empa 
-		ON 
-		emp.emp_id = empa.emp_id 
-		WHERE 
+		semp AS
+		emp
+		LEFT OUTER JOIN
+		empauth AS empa
+		ON
+		emp.emp_id = empa.emp_id
+		WHERE
 		emp.emp_id = #{username};
 	</select>
-	
+
 	<select id="readMauthList" resultType="com.dz.back.dto.MauthDTO">
-    <!-- select MENU_CD as menu_cd, MGROUP_CD as mgroup_cd, URL as url from mauth where EMP_CD = #{emp_cd} -->
-         SELECT MENU_CD as menucd, MGROUP_CD as mgroupcd, URL as url ,MENU_NM as menunm ,MGROUP_NM AS mgroupnm FROM mauth WHERE EMP_CD =  #{emp_cd} ORDER BY menucd;
-</select>
+		<!-- select MENU_CD as menu_cd, MGROUP_CD as mgroup_cd, URL as url from 
+			mauth where EMP_CD = #{emp_cd} -->
+		SELECT MENU_CD as menucd, MGROUP_CD as mgroupcd, URL as url ,MENU_NM
+		as menunm ,MGROUP_NM AS mgroupnm FROM mauth WHERE EMP_CD = #{emp_cd}
+		ORDER BY menucd;
+	</select>
+
+	<select id="readCardList" resultMap="empMap">
+		<!-- SELECT emp.emp_id, emp.emp_nm, emp.emp_hrd, emp.emp_email, emp.app_password, 
+			emp.gender, emp.emp_email, emp.emp_semail, emp.emp_mobile , emp.emp_hphone, 
+			emp.emp_add, emp.emp_resi, emp.emp_cd from semp as emp -->
+		SELECT
+		emp.emp_id,
+		emp.gender,
+		emp.emp_nm,
+		CAST(emp.emp_hrd AS
+		VARCHAR(255)) as emp_hrd,
+		emp.password,
+		emp.dept_cd,
+		emp.co_cd,
+		emp.emp_lang,
+		emp.app_password,
+		emp.emp_email1,
+		emp.emp_email2,
+		emp.emp_semail1,
+		emp.emp_semail2,
+		emp.emp_post,
+		emp.emp_mobile,
+		emp.emp_hphone,
+		emp.emp_add,
+		emp.emp_resi,
+		emp.emp_cd
+		FROM semp AS emp;
+
+	</select>
+
+	<!-- 회사코드를 기준으로 마지막 최대 사원번호를 가져오기 -->
+	<select id="searchEmpCd" resultType="String">
+		SELECT MAX(emp.emp_cd) FROM
+		semp AS emp WHERE emp.co_cd = #{cocd}
+	</select>
+	
+	<!-- 사번 중복확인 -->
+	<select id="validEmpCd" resultType="com.dz.back.dto.EmpDTO">
+		SELECT * FROM semp
+		AS emp WHERE emp.emp_cd = #{emp_cd}
+	</select>
+	
+	<!-- 사원등록 -->
+	<insert id="register" parameterType="com.dz.back.dto.EmpDTO">
+		INSERT INTO semp (
+		CO_CD,
+		EMP_CD,
+		EMP_NM,
+		DEPT_CD,
+		EMP_ID,
+		PASSWORD,
+		APP_PASSWORD,
+		GENDER,
+		EMP_LANG,
+		EMP_EMAIL1,
+		EMP_EMAIL2,
+		EMP_SEMAIL1,
+		EMP_SEMAIL2,
+		EMP_MOBILE,
+		EMP_HPHONE,
+		EMP_POST,
+		EMP_ADD,
+		EMP_HRD
+		)
+		VALUES
+		(#{co_cd},
+		#{emp_cd},
+		#{emp_nm},
+		#{dept_cd},
+		#{emp_id},
+		#{password},
+		#{app_password},
+		#{gender},
+		#{emp_lang},
+		#{emp_email1},
+		#{emp_email2},
+		#{emp_semail1},
+		#{emp_semail2},
+		#{emp_mobile},
+		#{emp_hphone},
+		#{emp_post},
+		#{emp_add},
+		#{emp_hrd})
+	</insert>
+
+
+	<!-- 아이디 찾기 -->
+	<select id="getEmpByUsername" parameterType="String"
+		resultType="com.dz.back.dto.EmpDTO">
+		SELECT * FROM semp WHERE emp_id = #{username}
+	</select>
+
+	<insert id="rolseSetUser" parameterType="String">
+		INSERT INTO empauth (EMP_ID,AUTH) VALUES (#{emp_id},'ROLE_USER')
+	</insert>
 
 </mapper>
 

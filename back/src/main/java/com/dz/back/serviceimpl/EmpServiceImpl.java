@@ -26,6 +26,7 @@ public class EmpServiceImpl implements EmpService  {
 //	@Autowired
 //	private BCryptPasswordEncoder passwordEncoder;
 
+//	사원 유무 확인
 	@Override
 	public EmpDTO getEmp(String id) {
 		
@@ -33,16 +34,40 @@ public class EmpServiceImpl implements EmpService  {
 	}
 
 	@Override
-	public void register(EmpDTO empDTO) {
-		System.out.println(empDTO.toString());
-		//empDTO.setPassword(passwordEncoder.encode(empDTO.getPassword()));
-		empDAO.register(empDTO);
-	}
-
-	@Override
 	public void logout() {
 		// TODO Auto-generated method stub
 
+	}
+//	사원목록 전체 불러오기 
+	@Override
+	public List<EmpDTO> readCardList(){
+		return empDAO.readCardList();
+	}
+	
+//	자동채번을 위한 CO_CD이용해 최대값 가져오기
+	@Override
+	public String searchEmpCd(String cocd) {
+		
+		return empDAO.searchEmpCd(cocd);
+	}
+	
+// 사원 등록
+	@Override
+	public int register(EmpDTO empDTO) {
+		System.out.println("service...........register 실행");
+		return empDAO.register(empDTO);
+	}
+
+	@Override
+	public EmpDTO validEmpCd(String empcd) {
+		System.out.println("service....... validEmpCd 실행 ");
+		return empDAO.validEmpCd(empcd);
+	}
+
+	@Override
+	public void rolseSetUser(String empid) {
+		empDAO.rolseSetUser(empid);
+		
 	}
 
 
