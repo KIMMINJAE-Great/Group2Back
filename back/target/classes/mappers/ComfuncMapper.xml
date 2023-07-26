@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dz.back.mapper.ComRegMapper">
+	
+	<!-- <insert id="registerCom" parameterType="com.dz.back.dto.ComDTO">
+		INSERT INTO sco
+		(CO_CD, CO_NM, CO_NK ) VALUES (#{co_cd}, #{co_nm}, #{co_nk})
+	</insert>
+	 -->
+	<!-- 회사코드로 회사 정보 다 찾기 -->
+	<select id="getComRegInfoByCocd" parameterType="String"
+		resultType="com.dz.back.dto.ComDTO">
+		SELECT * FROM sco WHERE co_cd = #{co_cd}
+	</select>
+	
+	
+	
+	
+	
+	<!-- 삭제 버튼 (데이터 삭제) 회사코드로 -->
+	<delete id="deleteComRegInfoByCocd" parameterType="String" >
+		DELETE FROM sco WHERE co_cd = #{co_cd}	
+	</delete>
+
+</mapper>
