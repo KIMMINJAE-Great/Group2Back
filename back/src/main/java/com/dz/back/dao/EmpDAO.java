@@ -45,6 +45,32 @@ public class EmpDAO {
 		sqlSession.getMapper(EmpMapper.class).rolseSetUser(empid);
 	}
 
+	public int updateEmp(EmpDTO empDTO) {
+		
+		return sqlSession.getMapper(EmpMapper.class).updateEmp(empDTO);
+	}
+
+
+	public EmpDTO getEmpCard(String emp_cd) {
+		
+		return sqlSession.getMapper(EmpMapper.class).getEmpCard(emp_cd);
+	}
+
+	public void deleteEmp(String emp_cd) {
+		sqlSession.getMapper(EmpMapper.class).deleteEmp(emp_cd);
+		
+	}
+
+	public void deleteAuth(String emp_id) {
+		sqlSession.getMapper(EmpMapper.class).deleteAuth(emp_id);
+		
+	}
+
+	public List<EmpDTO> empSearch(EmpDTO empSearch) {
+		
+		return sqlSession.getMapper(EmpMapper.class).empSearch(empSearch);
+	}
+
 }	
 
 

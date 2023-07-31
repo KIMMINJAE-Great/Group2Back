@@ -87,18 +87,44 @@
 
 	</select>
 
+	<select id="getEmpCard" resultMap="empMap">
+			SELECT
+	emp.emp_id,
+	emp.gender,
+	emp.emp_nm,
+	CAST(emp.emp_hrd AS VARCHAR(255)) as emp_hrd,
+	emp.password,
+	emp.dept_cd,
+	emp.co_cd,
+	emp.emp_lang,
+	emp.app_password,
+	emp.emp_email1,
+	emp.emp_email2,
+	emp.emp_semail1,
+	emp.emp_semail2,
+	emp.emp_post,
+	emp.emp_mobile,
+	emp.emp_hphone,
+	emp.emp_add,
+	emp.emp_resi,
+	emp.emp_cd
+FROM semp AS emp
+WHERE emp.emp_cd = #{emp_cd}
+	</select>
+
 	<!-- 회사코드를 기준으로 마지막 최대 사원번호를 가져오기 -->
 	<select id="searchEmpCd" resultType="String">
 		SELECT MAX(emp.emp_cd) FROM
 		semp AS emp WHERE emp.co_cd = #{cocd}
 	</select>
-	
+
 	<!-- 사번 중복확인 -->
 	<select id="validEmpCd" resultType="com.dz.back.dto.EmpDTO">
 		SELECT * FROM semp
-		AS emp WHERE emp.emp_cd = #{emp_cd}
+		AS emp
+		WHERE emp.emp_cd = #{emp_cd}
 	</select>
-	
+
 	<!-- 사원등록 -->
 	<insert id="register" parameterType="com.dz.back.dto.EmpDTO">
 		INSERT INTO semp (
@@ -142,6 +168,26 @@
 		#{emp_hrd})
 	</insert>
 
+<!-- 조회로 사원찾기 -->
+<select id="empSearch" parameterType="com.dz.back.dto.EmpDTO" resultMap="empMap">
+    SELECT * 
+    FROM semp
+    WHERE 1 = 1
+    <if test="co_cd != null">
+        AND co_cd = #{co_cd}
+    </if>
+    <if test="emp_id != null or emp_nm != null">
+        AND (emp_id LIKE CONCAT('%', #{emp_id}, '%') OR emp_nm LIKE CONCAT('%', #{emp_nm}, '%'))
+    </if>
+    <choose>
+        <when test="emp_resi != null and emp_resi == 'IS NULL'">
+            AND emp_resi IS NULL
+        </when>
+        <when test="emp_resi != null and emp_resi == 'IS NOT NULL'">
+            AND emp_resi IS NOT NULL
+        </when>
+    </choose>
+</select>
 
 	<!-- 아이디 찾기 -->
 	<select id="getEmpByUsername" parameterType="String"
@@ -150,9 +196,44 @@
 	</select>
 
 	<insert id="rolseSetUser" parameterType="String">
-		INSERT INTO empauth (EMP_ID,AUTH) VALUES (#{emp_id},'ROLE_USER')
+		INSERT INTO empauth
+		(EMP_ID,AUTH) VALUES (#{emp_id},'ROLE_USER')
 	</insert>
 
+
+	<update id="updateEmp" parameterType="com.dz.back.dto.EmpDTO">
+
+		UPDATE semp SET
+		CO_CD = #{co_cd},
+		EMP_CD = #{emp_cd},
+		EMP_NM = #{emp_nm},
+		EMP_ID = #{emp_id},
+		DEPT_CD = #{dept_cd},
+		APP_PASSWORD = #{app_password},
+		EMP_LANG= #{emp_lang},
+		EMP_EMAIL1= #{emp_email1},
+		EMP_EMAIL2 = #{emp_email2},
+		EMP_SEMAIL1 = #{emp_semail1},
+		EMP_SEMAIL2 = #{emp_semail2},
+		EMP_MOBILE = #{emp_mobile},
+		EMP_HPHONE = #{emp_hphone},
+		EMP_ADD = #{emp_add},
+		EMP_HRD = #{emp_hrd},
+		EMP_RESI = #{emp_resi},
+		EMP_POST = #{emp_post}
+		WHERE
+		EMP_ID = #{emp_id}
+	</update>
+
+
+<!-- 사원 삭제 -->
+<delete id="deleteEmp" parameterType="String">
+	DELETE FROM semp WHERE emp_cd = #{emp_cd}
+</delete>
+
+<delete id="deleteAuth" parameterType="String">
+DELETE FROM empauth WHERE emp_id = #{emp_id}
+</delete>
 </mapper>
 
 
