@@ -16,4 +16,9 @@ public interface EmpMapper {
 	String searchEmpCd(String cocd);
 	EmpDTO validEmpCd(String empcd);
 	void rolseSetUser(String empid);
+	int updateEmp(EmpDTO empDTO);
+	EmpDTO getEmpCard(String emp_cd);
+	void deleteEmp(String emp_cd);
+	void deleteAuth(String emp_id);
+	List<EmpDTO> empSearch(EmpDTO empSearch);
 }

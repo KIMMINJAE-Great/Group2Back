@@ -70,6 +70,34 @@ public class EmpServiceImpl implements EmpService  {
 		
 	}
 
+	@Override
+	public int updateEmp(EmpDTO empDTO) {
+		
+		return empDAO.updateEmp(empDTO);
+	}
+	
+	@Override
+	public EmpDTO getEmpCard(String emp_cd) {
+		return empDAO.getEmpCard(emp_cd);
+		
+	}
+	
+	@Override
+	public void deleteEmp(String emp_cd) {
+	empDAO.deleteEmp(emp_cd);
+		
+	}
+	@Override
+	public void deleteAuth(String emp_id) {
+		empDAO.deleteAuth(emp_id);
+		
+	}
+	@Override
+	public List<EmpDTO> empSearch(EmpDTO empSearch) {
+		
+		return empDAO.empSearch(empSearch);
+	}
+
 
 	
 }
