@@ -1,5 +1,10 @@
 Manifest-Version: 1.0
+<<<<<<< HEAD
 Built-By: GW
 Build-Jdk: 11.0.17
+=======
+Built-By: USER
+Build-Jdk: 11.0.19
+>>>>>>> 3ad1840f8e1693f92898bc32d24165f71d8ff016
 Created-By: Maven Integration for Eclipse
 

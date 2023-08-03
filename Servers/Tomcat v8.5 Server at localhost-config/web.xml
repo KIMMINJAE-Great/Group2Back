@@ -102,8 +102,15 @@
   <!--                                                                      -->
   <!--   allowPartialPut     Should the server treat an HTTP PUT request    -->
   <!--                       with a Range header as a partial PUT? Note     -->
+<<<<<<< HEAD
   <!--                       that RFC 7233 clarified that Range headers are -->
   <!--                       only valid for GET requests. [true]            -->
+=======
+  <!--                       that while RFC 7233 clarified that Range       -->
+  <!--                       headers only valid for GET requests, RFC 9110  -->
+  <!--                       (which obsoletes RFC 7233) now allows partial  -->
+  <!--                       puts. [true]                                   -->
+>>>>>>> 3ad1840f8e1693f92898bc32d24165f71d8ff016
 
     <servlet>
         <servlet-name>default</servlet-name>
@@ -349,7 +356,11 @@
   <!--                        the arguments to the OS. See the CGI How-To   -->
   <!--                        for more details. The default varies by       -->
   <!--                        platform.                                     -->
+<<<<<<< HEAD
   <!--                        Windows: [[a-zA-Z0-9\Q-_.\\/:\E]+]            -->
+=======
+  <!--                        Windows: [[\w\Q-.\\/:\E]+]            -->
+>>>>>>> 3ad1840f8e1693f92898bc32d24165f71d8ff016
   <!--                        Others:  [.*]                                 -->
   <!--                        Note that internally the CGI Servlet treats   -->
   <!--                        [.*] as a special case to improve performance -->
@@ -360,7 +371,11 @@
   <!--                        command line arguments must match else the    -->
   <!--                        request will be rejected. The default matches -->
   <!--                        the allowed values defined by RFC3875.        -->
+<<<<<<< HEAD
   <!--                        [[a-zA-Z0-9\Q%;/?:@&,$-_.!~*'()\E]+]          -->
+=======
+  <!--                        [[\w\Q%;/?:@&,$-.!~*'()\E]+]          -->
+>>>>>>> 3ad1840f8e1693f92898bc32d24165f71d8ff016
   <!--                                                                      -->
   <!--   enableCmdLineArguments                                             -->
   <!--                        Are command line parameters generated from    -->
@@ -2110,7 +2125,11 @@
     </mime-mapping>
     <mime-mapping>
         <extension>js</extension>
+<<<<<<< HEAD
         <mime-type>application/javascript</mime-type>
+=======
+        <mime-type>text/javascript</mime-type>
+>>>>>>> 3ad1840f8e1693f92898bc32d24165f71d8ff016
     </mime-mapping>
     <mime-mapping>
         <extension>jsf</extension>
