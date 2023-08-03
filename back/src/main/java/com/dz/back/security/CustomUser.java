@@ -6,9 +6,9 @@ import java.util.stream.Collectors;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
-import com.dz.back.dto.AuthDTO;
-import com.dz.back.dto.EmpDTO;
-import com.dz.back.dto.MauthDTO;
+import com.dz.back.userauth.dto.AuthDTO;
+import com.dz.back.userauth.dto.EmpDTO;
+import com.dz.back.userauth.dto.MauthDTO;
 
 public class CustomUser extends User {
 

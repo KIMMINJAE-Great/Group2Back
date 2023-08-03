@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
-encoding//src/main/java/com/dz/back/controller/ComRegController.java=UTF-8
-encoding//src/main/java/com/dz/back/controller/EmpController.java=UTF-8
-encoding//src/main/java/com/dz/back/dao/EmpDAO.java=UTF-8
+encoding//src/main/java/com/dz/back/acc/acc1000/acc1010/controller/ACC1010Controller.java=UTF-8
+encoding//src/main/java/com/dz/back/acc/acc1000/acc1010/dao/ACC1010DAO.java=UTF-8
+encoding//src/main/java/com/dz/back/acc/acc1000/acc1013/controller/ACC1013Controller.java=UTF-8
+encoding//src/main/java/com/dz/back/userauth/controller/UserAuthController.java=UTF-8
