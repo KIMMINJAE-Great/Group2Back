@@ -13,6 +13,8 @@ public interface ACC1011Mapper {
 
 	void deleteDept(String dept_cd);
 
-//	DeptDTO updateDept(DeptDTO dto);
+	int updateDept(DeptDTO dto);
+	
+	List<DeptDTO> deptSearch(DeptDTO deptSearch);
 //
 }
