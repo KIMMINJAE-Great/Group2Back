@@ -32,9 +32,6 @@ public class ComDTO {
 	private String url;
 	private String sort;
 	
-	
-
-	
 	@Override
 	public String toString() {
 		return "ComDTO [co_cd=" + co_cd + ", co_nm=" + co_nm + ", co_nk=" + co_nk + ", use_yn=" + use_yn + ", lng="
@@ -44,12 +41,6 @@ public class ComDTO {
 				+ ", opn_dt=" + opn_dt + ", cls_dt=" + cls_dt + ", ceo_nm=" + ceo_nm + ", res_nb=" + res_nb
 				+ ", domain=" + domain + ", ac_per=" + ac_per + ", ac_dt=" + ac_dt + ", acc_tp=" + acc_tp + ", url="
 				+ url + ", sort=" + sort + "]";
-	}
-	public String getCo_tel2() {
-		return co_tel2;
-	}
-	public void setCo_tel2(String co_tel2) {
-		this.co_tel2 = co_tel2;
 	}
 	public String getCo_cd() {
 		return co_cd;
@@ -104,6 +95,12 @@ public class ComDTO {
 	}
 	public void setCo_tel(String co_tel) {
 		this.co_tel = co_tel;
+	}
+	public String getCo_tel2() {
+		return co_tel2;
+	}
+	public void setCo_tel2(String co_tel2) {
+		this.co_tel2 = co_tel2;
 	}
 	public String getCo_fax() {
 		return co_fax;

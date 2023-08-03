@@ -1,29 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dz.back.acc.acc1000.acc1013.mapper.ACC1013Mapper">
+<resultMap type="com.dz.back.acc.acc1000.acc1013.dto.ComDTO" id="comMap">
+    <id property="co_cd" column="CO_CD" />
+    <id property="co_nm" column="CO_NM" />
+    <result property="co_nk" column="CO_NK" />
+    <result property="use_yn" column="USE_YN" />
+    <result property="lng" column="LNG" />
+    <result property="adm_cd" column="ADM_CD" />
+    <result property="bz_type" column="BZ_TYPE" />
+    <result property="bz_item" column="BZ_ITEM" />
+    <result property="co_tel" column="CO_TEL" />
+    <result property="co_tel2" column="CO_TEL2" />
+    <result property="co_fax" column="CO_FAX" />
+    <result property="reg_nb" column="REG_NB" />
+    <result property="cp_ct" column="CP_CT" />
+    <result property="cp_no" column="CP_NO" />
+    <result property="adr_zp" column="ADR_ZP" />
+    <result property="adr_inp" column="ADR_INP" />
+    <result property="adr_etc" column="ADR_ETC" />
+    <result property="est_dt" column="EST_DT" />
+    <result property="opn_dt" column="OPN_DT" />
+    <result property="cls_dt" column="CLS_DT" />
+    <result property="ceo_nm" column="CEO_NM" />
+    <result property="res_nb" column="RES_NB" />
+    <result property="domain" column="DOMAIN" />
+    <result property="ac_per" column="AC_PER" />
+    <result property="ac_dt" column="AC_DT" />
+    <result property="acc_tp" column="ACC_TP" />
+    <result property="url" column="URL" />
+    <result property="sort" column="SORT" />
+</resultMap>
 
-	<resultMap type="com.dz.back.acc.acc1000.acc1013.dto.ComDTO" id="comMap">
-		<id property="co_cd" column="CO_CD" />
-		<id property="co_nm" column="CO_NM" />
-		<result property="co_nk" column="CO_NK" />
-	</resultMap>
-	
-	<!-- <insert id="saveComRegInfo" parameterType="ComDTO">
-		INSERT INTO SCO (CO_CD, CO_NM, CO_NK)
-  		VALUES 
-  		(#{co_cd}, #{co_nm}, #{co_nk})
-	</insert> -->
-	
+
 	<insert id="saveComRegInfo" parameterType="ComDTO">
 		INSERT INTO SCO 
         (CO_CD, USE_YN, CO_NM, CO_NK, LNG, ADM_CD, BZ_TYPE, BZ_ITEM, CO_TEL, CO_TEL2, CO_FAX, REG_NB, CP_CT, CP_NO, ADR_ZP, ADR_INP, ADR_ETC, EST_DT, OPN_DT, CLS_DT, CEO_NM, RES_NB, DOMAIN, AC_PER, AC_DT, ACC_TP, URL, SORT)
         VALUES 
         (#{co_cd}, #{use_yn}, #{co_nm}, #{co_nk}, #{lng}, #{adm_cd}, #{bz_type}, #{bz_item}, #{co_tel}, #{co_tel2}, #{co_fax}, #{reg_nb}, #{cp_ct}, #{cp_no}, #{adr_zp}, #{adr_inp}, #{adr_etc}, #{est_dt}, #{opn_dt}, #{cls_dt}, #{ceo_nm}, #{res_nb}, #{domain}, #{ac_per}, #{ac_dt}, #{acc_tp}, #{url}, #{sort})
 	</insert>
+	
+	<!-- MyBatis XML 업데이트 문 -->
+	<update id="updateComRegInfoByCocd" parameterType="ComDTO">
+		UPDATE sco
+		SET		    
+		    adm_cd = #{adm_cd},
+		    co_nk = #{co_nk},
+		    bz_type = #{bz_type}
+		WHERE
+		    co_cd = #{co_cd}	
+	</update>
+	<!-- 
+	<update id="updateComRegInfoByCocd" parameterType="ComDTO">
+		UPDATE sco SET adm_cd = #{adm_cd} WHERE co_cd = #{co_cd}	
+	</update> -->
+	<!--회사 정보 걍 다 찾기 -->	
+	<!-- <select id="getAllComRegInfo" resultMap="comMap">
+		SELECT * FROM sco
+	</select> -->
+	<!--회사 코드로 회사 삭제 하는 코드  
+	-->
+	
+	<delete id="deleteComRegInfoByCocd" parameterType="String" >
+		DELETE FROM sco WHERE co_cd = #{co_cd}	
+	</delete>
 
 	<!--회사 정보 걍 다 찾기 -->	
 	<select id="getAllComRegInfo" resultMap="comMap">
 		SELECT * FROM sco
+	</select>
+	
+	<!--회사 코드로 회사 정모 모두 가져오는 코드  -->
+	<select id="getComRegInfoByCocd" parameterType="String"
+		resultType="ComDTO">
+		SELECT * FROM sco WHERE co_cd = #{co_cd}
 	</select>
 	
 
