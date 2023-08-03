@@ -10,7 +10,7 @@ import com.dz.back.acc.acc1000.acc1013.dto.ComDTO;
 import com.dz.back.acc.acc1000.acc1013.service.ACC1013Service;
 
 @Service
-public class ACC1013ServiceImpl {
+public class ACC1013ServiceImpl implements ACC1013Service{
 
 	@Autowired
 	private ACC1013DAO comRegDAO;
@@ -20,20 +20,9 @@ public class ACC1013ServiceImpl {
 		return comRegDAO.getComRegInfoByCocd(co_cd);
 	}
 	
-	//저장코드!!!! (저장/업데이트) (회사코드가 비어있다는것은 아무것도 입력안했을 때..라고 가정)
+	//저장코드!!!!
 	public void saveComRegInfo(ComDTO comDTO) {
-		String co_cd = comDTO.getCo_cd();
-		List<ComDTO> comRegInfoExist = comRegDAO.getComRegInfoByCocd(co_cd); 
-		System.out.println("저장이후에::"+co_cd);
-		System.out.println("comRegInfoExist"+comRegInfoExist);
-		if(comRegInfoExist !=null && !comRegInfoExist.isEmpty()) {  // 회사 정보가 존재하면 업데이트
-			
-			comRegDAO.updateComRegInfoByCocd(comDTO);
-			System.out.println("바꾼후???:"+comDTO);
-			
-		} else { // 회사 정보가 존재하지 않으면 저장
-			comRegDAO.saveComRegInfo(comDTO);
-		}
+		comRegDAO.saveComRegInfo(comDTO);
 	}
 	
 	//삭제코드!!!
@@ -41,11 +30,8 @@ public class ACC1013ServiceImpl {
 		comRegDAO.deleteComRegInfoByCocd(co_cd);
 	}
 	
-	
 	//회사정보 다가져오기
 	public List<ComDTO> getAllComRegInfo() {		
 		return comRegDAO.getAllComRegInfo();
 	}
-	
-
 }

@@ -25,7 +25,4 @@ public interface ACC1013Mapper {
 	
 	//select 회사에 있는 테이블 정보 다 불러옴
 	List<ComDTO> getAllComRegInfo();
-	
-	//update co_cd로 where co_cd = 회사코드 로 전부 업데이트 
-	void updateComRegInfoByCocd(ComDTO comDTO);
 }

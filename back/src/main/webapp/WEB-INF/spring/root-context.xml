@@ -40,8 +40,12 @@
 	</bean>
 	
 	
-	<mybatis-spring:scan base-package="com.dz.back.mapper"/>
-	<context:component-scan base-package="com.dz.back.repository, com.dz.back.service"/>
+	<mybatis-spring:scan base-package="com.dz.back.acc.acc1000.acc1010.mapper"/>
+	<mybatis-spring:scan base-package="com.dz.back.acc.acc1000.acc1011.mapper"/>
+	<mybatis-spring:scan base-package="com.dz.back.acc.acc1000.acc1012.mapper"/>
+	<mybatis-spring:scan base-package="com.dz.back.acc.acc1000.acc1013.mapper"/>
+	<mybatis-spring:scan base-package="com.dz.back.userauth.mapper"/>
+	
 	
 	<!-- chat -->
 <bean id="sqlSession"
