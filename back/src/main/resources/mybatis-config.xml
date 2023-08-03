@@ -7,7 +7,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	<settings>
 
 		<!-- 카멜 케이스 매핑 설정 -->
-		<setting name="mapUnderscoreToCamelCase" value="true" />
+		<!-- <setting name="mapUnderscoreToCamelCase" value="true" /> -->
 
 		<!-- 쿼리 결과 필드가 null인 경우, 누락되지 않도록 설정 -->
 		<setting name="callSettersOnNulls" value="true" />
@@ -17,7 +17,15 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 
 	</settings>
 
+
 	<typeAliases>
-		<package name="com.dz.back.dto" />
+		<package name="com.dz.back.acc.acc1000.acc1010.dto" />
+		<package name="com.dz.back.acc.acc1000.acc1011.dto" />
+		<package name="com.dz.back.acc.acc1000.acc1012.dto" />
+		<package name="com.dz.back.acc.acc1000.acc1013.dto" />
+		<package name="com.dz.back.userauth.dto" />
+		<package name="com.dz.back.acd.acd1000.acd1010.dto" />
+
 	</typeAliases>
+	
 </configuration>
