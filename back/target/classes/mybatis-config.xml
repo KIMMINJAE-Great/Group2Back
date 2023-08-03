@@ -24,6 +24,8 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<package name="com.dz.back.acc.acc1000.acc1012.dto" />
 		<package name="com.dz.back.acc.acc1000.acc1013.dto" />
 		<package name="com.dz.back.userauth.dto" />
+		<package name="com.dz.back.acd.acd1000.acd1010.dto" />
+
 	</typeAliases>
 	
 </configuration>
