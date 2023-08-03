@@ -6,11 +6,12 @@ import com.dz.back.acc.acc1000.acc1011.dto.DeptDTO;
 
 public interface ACC1011Service {
 	
-	List<DeptDTO> getCardDeptList();//Ä«µå¸®½ºÆ® °¡Á®¿À±â
-	DeptDTO getCardDept(String dept_cd); //Ä«µå °ª °¡Á®¿À±â
-	int addDept(DeptDTO dto);            // Ä«µå Ãß°¡
-	void deleteDept(String dept_cd);     // Ä«µå »èÁ¦
-//	void updateDept
+	List<DeptDTO> getCardDeptList();//ì¹´ë“œë¦¬ìŠ¤íŠ¸ ê°€ì ¸ì˜¤ê¸°
+    DeptDTO getCardDept(String dept_cd); //ì¹´ë“œ ê°’ ê°€ì ¸ì˜¤ê¸°
+    int addDept(DeptDTO dto);            // ì¹´ë“œ ì¶”ê°€
+    void deleteDept(String dept_cd);     // ì¹´ë“œ ì‚­ì œ
+    int updateDept(DeptDTO dto); //ì¹´ë“œ ìˆ˜ì •
+    List<DeptDTO> deptSearch(DeptDTO deptSearch);
 	
 
 }

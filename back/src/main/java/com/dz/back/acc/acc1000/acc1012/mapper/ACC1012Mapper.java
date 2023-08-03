@@ -1,17 +1,23 @@
 package com.dz.back.acc.acc1000.acc1012.mapper;
 
+import java.util.List;
 
 import com.dz.back.acc.acc1000.acc1010.dto.ACC1010EmpDTO;
 import com.dz.back.acc.acc1000.acc1012.dto.TradeManagementDTO;
 
-public interface  ACC1012Mapper {
+public interface ACC1012Mapper {
 
-	void register(TradeManagementDTO tradeManagementDTO);
-	
-	
-	
-	// TradeManagementDTO 의 모든 데이터 가져오기
-	TradeManagementDTO getAllData();
-	
-	 public void insertData(TradeManagementDTO tradeManagementDTO);
+	List<TradeManagementDTO> getStList();
+
+	TradeManagementDTO getStByCode(String tr_cd);
+
+	int insertStData(TradeManagementDTO tradeManagementDTO);
+
+	void updateStData(TradeManagementDTO tradeManagementDTO);
+
+	void deleteStData(String tr_cd);
+
+	String getMaxTrcd();
+
+	List<TradeManagementDTO> getSearchData(TradeManagementDTO dto);
 }

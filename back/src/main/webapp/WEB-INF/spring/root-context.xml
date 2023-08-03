@@ -45,8 +45,8 @@
 	<mybatis-spring:scan base-package="com.dz.back.acc.acc1000.acc1012.mapper"/>
 	<mybatis-spring:scan base-package="com.dz.back.acc.acc1000.acc1013.mapper"/>
 	<mybatis-spring:scan base-package="com.dz.back.userauth.mapper"/>
-	
-	
+	<mybatis-spring:scan base-package="com.dz.back.acd.acd1000.acd1010.mapper"/>
+	<mybatis-spring:scan base-package="com.dz.back.commons.codepicker.mapper"/>
 	<!-- chat -->
 <bean id="sqlSession"
 		class="org.mybatis.spring.SqlSessionTemplate">

@@ -7,12 +7,14 @@ import com.dz.back.acc.acc1000.acc1011.dto.DeptDTO;
 public interface ACC1011Mapper {
 	List<DeptDTO> getDeptList();
 
-	DeptDTO getDeptByCode(String dept_cd);
+    DeptDTO getDeptByCode(String dept_cd);
 
-	int insertDept(DeptDTO dto);
+    int insertDept(DeptDTO dto);
 
-	void deleteDept(String dept_cd);
+    void deleteDept(String dept_cd);
 
-//	DeptDTO updateDept(DeptDTO dto);
+    int updateDept(DeptDTO dto);
+
+    List<DeptDTO> deptSearch(DeptDTO deptSearch);
 //
 }
