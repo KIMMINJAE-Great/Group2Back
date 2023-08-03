@@ -7,9 +7,10 @@ import org.springframework.stereotype.Service;
 
 import com.dz.back.acc.acc1000.acc1011.dao.ACC1011DAO;
 import com.dz.back.acc.acc1000.acc1011.dto.DeptDTO;
+import com.dz.back.acc.acc1000.acc1011.service.ACC1011Service;
 
 @Service
-public class ACC1011ServiceImpl {
+public class ACC1011ServiceImpl implements ACC1011Service {
 	
 	@Autowired
 	private ACC1011DAO deptDAO;

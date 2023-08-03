@@ -50,10 +50,22 @@ grant codeBase "file:${java.home}/lib/ext/-" {
         permission java.security.AllPermission;
 };
 
+<<<<<<< HEAD
 
 // ========== CATALINA CODE PERMISSIONS =======================================
 
 
+=======
+// This permission is required when using javac to compile JSPs on Java 9
+// onwards
+//grant codeBase "jrt:/jdk.compiler" {
+//        permission java.security.AllPermission;
+//};
+
+
+// ========== CATALINA CODE PERMISSIONS =======================================
+
+>>>>>>> 3ad1840f8e1693f92898bc32d24165f71d8ff016
 // These permissions apply to the daemon code
 grant codeBase "file:${catalina.home}/bin/commons-daemon.jar" {
         permission java.security.AllPermission;
@@ -84,7 +96,10 @@ grant codeBase "file:${catalina.home}/bin/tomcat-juli.jar" {
 
         permission java.util.PropertyPermission "java.util.logging.config.class", "read";
         permission java.util.PropertyPermission "java.util.logging.config.file", "read";
+<<<<<<< HEAD
         permission java.util.PropertyPermission "org.apache.juli.AsyncLoggerPollInterval", "read";
+=======
+>>>>>>> 3ad1840f8e1693f92898bc32d24165f71d8ff016
         permission java.util.PropertyPermission "org.apache.juli.AsyncMaxRecordCount", "read";
         permission java.util.PropertyPermission "org.apache.juli.AsyncOverflowDropType", "read";
         permission java.util.PropertyPermission "org.apache.juli.ClassLoaderLogManager.debug", "read";
@@ -172,6 +187,7 @@ grant {
     permission java.lang.RuntimePermission
      "accessClassInPackage.org.apache.jasper.runtime.*";
 
+<<<<<<< HEAD
     // The cookie code needs these.
     permission java.util.PropertyPermission
      "org.apache.catalina.STRICT_SERVLET_COMPLIANCE", "read";
@@ -186,6 +202,11 @@ grant {
 
     // Applications need to access these packages to use the Servlet 4.0 Preview
     permission java.lang.RuntimePermission "accessClassInPackage.org.apache.catalina.servlet4preview.http";
+=======
+    // Applications using WebSocket need to be able to access these packages
+    permission java.lang.RuntimePermission "accessClassInPackage.org.apache.tomcat.websocket";
+    permission java.lang.RuntimePermission "accessClassInPackage.org.apache.tomcat.websocket.server";
+>>>>>>> 3ad1840f8e1693f92898bc32d24165f71d8ff016
 };
 
 

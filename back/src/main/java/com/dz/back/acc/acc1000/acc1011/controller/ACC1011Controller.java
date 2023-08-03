@@ -18,24 +18,23 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dz.back.acc.acc1000.acc1011.dto.DeptDTO;
-import com.dz.back.acc.acc1000.acc1011.serviceimpl.ACC1011ServiceImpl;
+import com.dz.back.acc.acc1000.acc1011.service.ACC1011Service;
+
 
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/depmanagement")
 public class ACC1011Controller {
-	
+
 	@Autowired
-	private ACC1011ServiceImpl deptService;
-	
-	
-	// ¸ğµç Ä«µå¸®½ºÆ® ¸ñ·Ï °¡Á®¿À±â
+	private ACC1011Service deptService;
+
+	// ëª¨ë“  ì¹´ë“œë¦¬ìŠ¤íŠ¸ ëª©ë¡ ê°€ì ¸ì˜¤ê¸°
 	@GetMapping
-	public ResponseEntity<List<DeptDTO>> getCardDeptList(){
-		
+	public ResponseEntity<List<DeptDTO>> getCardDeptList() {
+
 		List<DeptDTO> deptCardlist = deptService.getCardDeptList();
-//		System.out.println(deptCardlist);
-		
+
 		return ResponseEntity.ok(deptCardlist);
 	}
 	
@@ -56,14 +55,14 @@ public class ACC1011Controller {
                 if (status.isEmpty()) {
                     status = null;
                 }else if (status.equals("account")) {
-                    status = "È¸°è°ú";
+                    status = "íšŒê³„ê³¼";
 
                 } else if (status.equals("humanresource")) {
-                    status = "ÀÎ»ç°ú";
+                    status = "ì¸ì‚¬ê³¼";
                 }else if (status.equals("planning")) {
-                    status = "±âÈ¹°ú";
+                    status = "ê¸°íšê³¼";
                 }else if (status.equals("sales")) {
-                    status = "¿µ¾÷°ú";
+                    status = "ì˜ì—…ê³¼";
             }}
 
             DeptDTO deptSearch = new DeptDTO();
@@ -75,35 +74,35 @@ public class ACC1011Controller {
     }
 	
 	
-	//Ä«µå °ª °¡Á®¿À±â
+	//Ä«ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	@PostMapping("/getdept")
-	public ResponseEntity<DeptDTO> getCardDept(@RequestBody Map<String,String> dept_cd){
-		
+	public ResponseEntity<DeptDTO> getCardDept(@RequestBody Map<String, String> dept_cd) {
+
 		System.out.println(dept_cd);
-		
+
 		DeptDTO deptCard = deptService.getCardDept(dept_cd.get("dept_cd"));
 		System.out.println(deptCard);
-		
+
 		return ResponseEntity.ok(deptCard);
 	}
-	
-	//Ä«µå Ãß°¡
+//ì¹´ë“œ ì¶”ê°€
 	@PostMapping("/adddept")
-	public ResponseEntity<DeptDTO> addCardDept(@RequestBody DeptDTO dto){
-		
+	public ResponseEntity<DeptDTO> addCardDept(@RequestBody DeptDTO dto) {
+
 		int result = deptService.addDept(dto);
 		System.out.println(result);
-		 if(result==1) {
-			 return ResponseEntity.ok(dto);
-		 }else {
-			 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		 }
+		if (result == 1) {
+			System.out.println(dto);
+			return ResponseEntity.ok(dto);
+		} else {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
 	}
-	
-	//Ä«µå »èÁ¦
+
+	//ì¹´ë“œ ì‚­ì œ
 	@DeleteMapping("/deletedept/{dept_cd}")
 	public void deleteCardDept(@PathVariable String dept_cd) {
-	    deptService.deleteDept(dept_cd);
+		deptService.deleteDept(dept_cd);
 	}
 	@PutMapping("/updatedept")
     public ResponseEntity<DeptDTO> updateCardDept(@RequestBody DeptDTO dto) {
@@ -119,9 +118,18 @@ public class ACC1011Controller {
 
     }
 
-	
-	
+	@PutMapping("/updatedept")
+	public ResponseEntity<DeptDTO> updateCardDept(@RequestBody DeptDTO dto) {
+		System.out.println(dto);
 
-	
+		int result = deptService.updateDept(dto);
+		System.out.println(result);
+		if (result == 1) {
+			return ResponseEntity.ok(dto);
+		} else {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+
+	}
 
 }
