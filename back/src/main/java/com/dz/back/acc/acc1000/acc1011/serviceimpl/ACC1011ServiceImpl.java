@@ -14,26 +14,35 @@ public class ACC1011ServiceImpl {
 	@Autowired
 	private ACC1011DAO deptDAO;
 	
-	public List<DeptDTO> getCardDeptList(){
-		
-		return deptDAO.getDeptList();
-		
-	}
-	
-	public DeptDTO getCardDept(String dept_cd) {
-		System.out.println(dept_cd);
-		return deptDAO.getDeptByCode(dept_cd);
-	}
-	
-	public int addDept(DeptDTO dto) {
-		
-		
-		return deptDAO.insertDept(dto);
-	}
-	
-	public void deleteDept(String dept_cd) {
-		
-		deptDAO.deleteDept(dept_cd);
-	}
+	public List<DeptDTO> getCardDeptList() {
 
+        return deptDAO.getDeptList();
+
+    }
+
+    public DeptDTO getCardDept(String dept_cd) {
+        System.out.println(dept_cd);
+        return deptDAO.getDeptByCode(dept_cd);
+    }
+
+    public int addDept(DeptDTO dto) {
+
+        return deptDAO.insertDept(dto);
+    }
+
+    public void deleteDept(String dept_cd) {
+
+        deptDAO.deleteDept(dept_cd);
+    }
+
+    public int updateDept(DeptDTO dto) {
+
+        return deptDAO.updateDept(dto);
+    }
+
+
+    public List<DeptDTO> deptSearch(DeptDTO deptSearch) {
+
+        return deptDAO.deptSearch(deptSearch);
+    }
 }

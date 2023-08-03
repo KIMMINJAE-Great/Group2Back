@@ -17,25 +17,34 @@ public class ACC1011DAO {
 	@Autowired
 	SqlSession sqlsession;
 	
-	public List<DeptDTO> getDeptList() {		
-		return sqlsession.getMapper(ACC1011Mapper.class).getDeptList();
-	}
-	
-	public DeptDTO getDeptByCode(String dept_cd) {	
-		System.out.println(dept_cd);
-		return sqlsession.getMapper(ACC1011Mapper.class).getDeptByCode(dept_cd);	
-	}
-	
-	public int insertDept(DeptDTO dto) {
-		
-		return sqlsession.getMapper(ACC1011Mapper.class).insertDept(dto);
-	}
-	
-	public void deleteDept(String dept_cd) {
-		
-		sqlsession.getMapper(ACC1011Mapper.class).deleteDept(dept_cd);
-	}
-	
+	  public List<DeptDTO> getDeptList() {
+	        return sqlsession.getMapper(ACC1011Mapper.class).getDeptList();
+	    }
+
+	    public DeptDTO getDeptByCode(String dept_cd) {
+	        System.out.println(dept_cd);
+	        return sqlsession.getMapper(ACC1011Mapper.class).getDeptByCode(dept_cd);
+	    }
+
+	    public int insertDept(DeptDTO dto) {
+
+	        return sqlsession.getMapper(ACC1011Mapper.class).insertDept(dto);
+	    }
+
+	    public void deleteDept(String dept_cd) {
+
+	        sqlsession.getMapper(ACC1011Mapper.class).deleteDept(dept_cd);
+	    }
+
+	    public int updateDept(DeptDTO dto) {
+
+	        return sqlsession.getMapper(ACC1011Mapper.class).updateDept(dto);
+	    }
+
+	    public List<DeptDTO> deptSearch(DeptDTO deptSearch) {
+
+	        return sqlsession.getMapper(ACC1011Mapper.class).deptSearch(deptSearch);
+	    }
 
 
 }

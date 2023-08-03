@@ -33,50 +33,50 @@
 </resultMap>
 
 
-	<insert id="saveComRegInfo" parameterType="ComDTO">
-		INSERT INTO SCO 
+   <insert id="saveComRegInfo" parameterType="ComDTO">
+      INSERT INTO SCO 
         (CO_CD, USE_YN, CO_NM, CO_NK, LNG, ADM_CD, BZ_TYPE, BZ_ITEM, CO_TEL, CO_TEL2, CO_FAX, REG_NB, CP_CT, CP_NO, ADR_ZP, ADR_INP, ADR_ETC, EST_DT, OPN_DT, CLS_DT, CEO_NM, RES_NB, DOMAIN, AC_PER, AC_DT, ACC_TP, URL, SORT)
         VALUES 
         (#{co_cd}, #{use_yn}, #{co_nm}, #{co_nk}, #{lng}, #{adm_cd}, #{bz_type}, #{bz_item}, #{co_tel}, #{co_tel2}, #{co_fax}, #{reg_nb}, #{cp_ct}, #{cp_no}, #{adr_zp}, #{adr_inp}, #{adr_etc}, #{est_dt}, #{opn_dt}, #{cls_dt}, #{ceo_nm}, #{res_nb}, #{domain}, #{ac_per}, #{ac_dt}, #{acc_tp}, #{url}, #{sort})
-	</insert>
-	
-	<!-- MyBatis XML 업데이트 문 -->
-	<update id="updateComRegInfoByCocd" parameterType="ComDTO">
-		UPDATE sco
-		SET		    
-		    adm_cd = #{adm_cd},
-		    co_nk = #{co_nk},
-		    bz_type = #{bz_type}
-		WHERE
-		    co_cd = #{co_cd}	
-	</update>
-	<!-- 
-	<update id="updateComRegInfoByCocd" parameterType="ComDTO">
-		UPDATE sco SET adm_cd = #{adm_cd} WHERE co_cd = #{co_cd}	
-	</update> -->
-	<!--회사 정보 걍 다 찾기 -->	
-	<!-- <select id="getAllComRegInfo" resultMap="comMap">
-		SELECT * FROM sco
-	</select> -->
-	<!--회사 코드로 회사 삭제 하는 코드  
-	-->
-	
-	<delete id="deleteComRegInfoByCocd" parameterType="String" >
-		DELETE FROM sco WHERE co_cd = #{co_cd}	
-	</delete>
+   </insert>
+   
+   <!-- MyBatis XML 업데이트 문 -->
+   <update id="updateComRegInfoByCocd" parameterType="ComDTO">
+      UPDATE sco
+      SET          
+          adm_cd = #{adm_cd},
+          co_nk = #{co_nk},
+          bz_type = #{bz_type}
+      WHERE
+          co_cd = #{co_cd}   
+   </update>
+   <!-- 
+   <update id="updateComRegInfoByCocd" parameterType="ComDTO">
+      UPDATE sco SET adm_cd = #{adm_cd} WHERE co_cd = #{co_cd}   
+   </update> -->
+   <!--회사 정보 걍 다 찾기 -->   
+   <!-- <select id="getAllComRegInfo" resultMap="comMap">
+      SELECT * FROM sco
+   </select> -->
+   <!--회사 코드로 회사 삭제 하는 코드  
+   -->
+   
+   <delete id="deleteComRegInfoByCocd" parameterType="String" >
+      DELETE FROM sco WHERE co_cd = #{co_cd}   
+   </delete>
 
-	<!--회사 정보 걍 다 찾기 -->	
-	<select id="getAllComRegInfo" resultMap="comMap">
-		SELECT * FROM sco
-	</select>
-	
-	<!--회사 코드로 회사 정모 모두 가져오는 코드  -->
-	<select id="getComRegInfoByCocd" parameterType="String"
-		resultType="ComDTO">
-		SELECT * FROM sco WHERE co_cd = #{co_cd}
-	</select>
-	
+   <!--회사 정보 걍 다 찾기 -->   
+   <select id="getAllComRegInfo" resultMap="comMap">
+      SELECT * FROM sco
+   </select>
+   
+   <!--회사 코드로 회사 정모 모두 가져오는 코드  -->
+   <select id="getComRegInfoByCocd" parameterType="String"
+      resultType="ComDTO">
+      SELECT * FROM sco WHERE co_cd = #{co_cd}
+   </select>
+   
 
-	
+   
 
 </mapper>
