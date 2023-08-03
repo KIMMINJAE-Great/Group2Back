@@ -2,160 +2,156 @@ package com.dz.back.acc.acc1000.acc1012.dto;
 
 public class TradeManagementDTO {
 
-	private int auto_id;
+	private String co_cd;      /* íšŒì‚¬ì½”ë“œ */
+	private String tr_cd;      /* ê±°ë˜ì²˜ ì½”ë“œ */
+	private String tr_fg;      /* ê±°ë˜ì²˜ êµ¬ë¶„ */
+	private String tr_nm;      /* ê±°ë˜ì²˜ëª… */
+	private String reg_nb;     /* ì‚¬ì—…ì ë“±ë¡ ë²ˆí˜¸ */
+
+	private String tr_al; 	   /* ê±°ë˜ì²˜ ì•½ì¹­ */
+	private String tr_na;      /* êµ­ì  */
+	private String re_id;      /* ì£¼ë¯¼ë“±ë¡ë²ˆí˜¸ */
+	private String tr_ceo_nm;  /* ëŒ€í‘œìëª… */
+	private String tr_bt;      /* ì—…íƒœ */
+
+	private String tr_bc;      /* ì—…ì¢… */
+	private String tr_ps_cd;   /* ìš°í¸ë²ˆí˜¸ */
+	private String tr_ad1;     /* ê¸°ë³¸ ì£¼ì†Œ */
+	private String tr_ad2;     /* ìƒì„¸ ì£¼ì†Œ */
+	private String tr_pn;      /* ì „í™”ë²ˆí˜¸ */
+
+	private String tr_fn;      /* íŒ©ìŠ¤ë²ˆí˜¸ */
+	private String tr_hp;      /* í™ˆí˜ì´ì§€ ì£¼ì†Œ */
+	private String tr_email;   /* ì´ë©”ì¼ ì£¼ì†Œ */
+	private String tr_mn_cd;   /* ì£¼ë¥˜ì½”ë“œ */
+	private String tr_ct_cd;   /* êµ­ê°€ì½”ë“œ */
 	
-	private String bp_classification;  // °Å·¡Ã³±¸ºĞ
-	private String bp_name; // °Å·¡Ã³¸í
-	private String bp_code; // °Å·¡Ã³ÄÚµå
-	private String bp_abbreviation; // °Å·¡Ã³¾àÄª
-	private String com_reg_num; // »ç¾÷ÀÚµî·Ï¹øÈ£
-	
-	private String nationality; // ±¹Àû
-	private String res_reg_num; // ÁÖ¹Îµî·Ï¹øÈ£
-	private String rep_name; // ´ëÇ¥ÀÚ¸í
-	private String bus_conditions; // ¾÷ÅÂ
-	private String sectors; // ¾÷ÅÂ
-	
-	private String zip_code; // ¿ìÆí¹øÈ£
-	private String primary_address; // ±âº»ÁÖ¼Ò
-	private String detailed_address; // »ó¼¼ÁÖ¼Ò
-	private String phone_num; // ÀüÈ­¹øÈ£
-	private String fax_num; // ÆÑ½º¹øÈ£
-	
-	private String home_page; // È¨ÆäÀÌÁö
-	private String mail_address; // ¸ŞÀÏÁÖ¼Ò
-	private String main_code; // ÁÖ·ùÄÚµå
-	private String country_code; // ±¹°¡ÄÚµå
-	
-	public int getAuto_id() {
-		return auto_id;
+	public String getCo_cd() {
+		return co_cd;
 	}
-	public void setAuto_id(int auto_id) {
-		this.auto_id = auto_id;
+	public void setCo_cd(String co_cd) {
+		this.co_cd = co_cd;
 	}
-	public String getBp_classification() {
-		return bp_classification;
+	public String getTr_cd() {
+		return tr_cd;
 	}
-	public void setBp_classification(String bp_classification) {
-		this.bp_classification = bp_classification;
+	public void setTr_cd(String tr_cd) {
+		this.tr_cd = tr_cd;
 	}
-	public String getBp_name() {
-		return bp_name;
+	public String getTr_fg() {
+		return tr_fg;
 	}
-	public void setBp_name(String bp_name) {
-		this.bp_name = bp_name;
+	public void setTr_fg(String tr_fg) {
+		this.tr_fg = tr_fg;
 	}
-	public String getBp_code() {
-		return bp_code;
+	public String getTr_nm() {
+		return tr_nm;
 	}
-	public void setBp_code(String bp_code) {
-		this.bp_code = bp_code;
+	public void setTr_nm(String tr_nm) {
+		this.tr_nm = tr_nm;
 	}
-	public String getBp_abbreviation() {
-		return bp_abbreviation;
+	public String getReg_nb() {
+		return reg_nb;
 	}
-	public void setBp_abbreviation(String bp_abbreviation) {
-		this.bp_abbreviation = bp_abbreviation;
+	public void setReg_nb(String reg_nb) {
+		this.reg_nb = reg_nb;
 	}
-	public String getCom_reg_num() {
-		return com_reg_num;
+	public String getTr_al() {
+		return tr_al;
 	}
-	public void setCom_reg_num(String com_reg_num) {
-		this.com_reg_num = com_reg_num;
+	public void setTr_al(String tr_al) {
+		this.tr_al = tr_al;
 	}
-	public String getRes_reg_num() {
-		return res_reg_num;
+	public String getTr_na() {
+		return tr_na;
 	}
-	public void setNationality(String nationality) {
-		this.nationality = nationality;
+	public void setTr_na(String tr_na) {
+		this.tr_na = tr_na;
 	}
-	public String getNationality() {
-		return nationality;
+	public String getRe_id() {
+		return re_id;
 	}
-	public void setRes_reg_num(String res_reg_num) {
-		this.res_reg_num = res_reg_num;
+	public void setRe_id(String re_id) {
+		this.re_id = re_id;
 	}
-	public String getRep_name() {
-		return rep_name;
+	public String getTr_ceo_nm() {
+		return tr_ceo_nm;
 	}
-	public void setRep_name(String rep_name) {
-		this.rep_name = rep_name;
+	public void setTr_ceo_nm(String tr_ceo_nm) {
+		this.tr_ceo_nm = tr_ceo_nm;
 	}
-	public String getBus_conditions() {
-		return bus_conditions;
+	public String getTr_bt() {
+		return tr_bt;
 	}
-	public void setBus_conditions(String bus_conditions) {
-		this.bus_conditions = bus_conditions;
+	public void setTr_bt(String tr_bt) {
+		this.tr_bt = tr_bt;
 	}
-	public String getSectors() {
-		return sectors;
+	public String getTr_bc() {
+		return tr_bc;
 	}
-	public void setSectors(String sectors) {
-		this.sectors = sectors;
+	public void setTr_bc(String tr_bc) {
+		this.tr_bc = tr_bc;
 	}
-	public String getZip_code() {
-		return zip_code;
+	public String getTr_ps_cd() {
+		return tr_ps_cd;
 	}
-	public void setZip_code(String zip_code) {
-		this.zip_code = zip_code;
+	public void setTr_ps_cd(String tr_ps_cd) {
+		this.tr_ps_cd = tr_ps_cd;
 	}
-	public String getPrimary_address() {
-		return primary_address;
+	public String getTr_ad1() {
+		return tr_ad1;
 	}
-	public void setPrimary_address(String primary_address) {
-		this.primary_address = primary_address;
+	public void setTr_ad1(String tr_ad1) {
+		this.tr_ad1 = tr_ad1;
 	}
-	public String getDetailed_address() {
-		return detailed_address;
+	public String getTr_ad2() {
+		return tr_ad2;
 	}
-	public void setDetailed_address(String detailed_address) {
-		this.detailed_address = detailed_address;
+	public void setTr_ad2(String tr_ad2) {
+		this.tr_ad2 = tr_ad2;
 	}
-	public String getPhone_num() {
-		return phone_num;
+	public String getTr_pn() {
+		return tr_pn;
 	}
-	public void setPhone_num(String phone_num) {
-		this.phone_num = phone_num;
+	public void setTr_pn(String tr_pn) {
+		this.tr_pn = tr_pn;
 	}
-	public String getFax_num() {
-		return fax_num;
+	public String getTr_fn() {
+		return tr_fn;
 	}
-	public void setFax_num(String fax_num) {
-		this.fax_num = fax_num;
+	public void setTr_fn(String tr_fn) {
+		this.tr_fn = tr_fn;
 	}
-	public String getHome_page() {
-		return home_page;
+	public String getTr_hp() {
+		return tr_hp;
 	}
-	public void setHome_page(String home_page) {
-		this.home_page = home_page;
+	public void setTr_hp(String tr_hp) {
+		this.tr_hp = tr_hp;
 	}
-	public String getMail_address() {
-		return mail_address;
+	public String getTr_email() {
+		return tr_email;
 	}
-	public void setMail_address(String mail_address) {
-		this.mail_address = mail_address;
+	public void setTr_email(String tr_email) {
+		this.tr_email = tr_email;
 	}
-	public String getMain_code() {
-		return main_code;
+	public String getTr_mn_cd() {
+		return tr_mn_cd;
 	}
-	public void setMain_code(String main_code) {
-		this.main_code = main_code;
+	public void setTr_mn_cd(String tr_mn_cd) {
+		this.tr_mn_cd = tr_mn_cd;
 	}
-	public String getCountry_code() {
-		return country_code;
+	public String getTr_ct_cd() {
+		return tr_ct_cd;
 	}
-	public void setCountry_code(String country_code) {
-		this.country_code = country_code;
+	public void setTr_ct_cd(String tr_ct_cd) {
+		this.tr_ct_cd = tr_ct_cd;
 	}
-	
 	@Override
 	public String toString() {
-		return "TradeManagementDTO [auto_id=" + auto_id + ", bp_classification=" + bp_classification + ", bp_name="
-				+ bp_name + ", bp_code=" + bp_code + ", bp_abbreviation=" + bp_abbreviation + ", com_reg_num="
-				+ com_reg_num + ", nationality=" + nationality + ", res_reg_num=" + res_reg_num + ", rep_name="
-				+ rep_name + ", bus_conditions=" + bus_conditions + ", sectors=" + sectors + ", zip_code=" + zip_code
-				+ ", primary_address=" + primary_address + ", detailed_address=" + detailed_address + ", phone_num="
-				+ phone_num + ", fax_num=" + fax_num + ", home_page=" + home_page + ", mail_address=" + mail_address
-				+ ", main_code=" + main_code + ", country_code=" + country_code + "]";
+		return "TradeManagementDTO [co_cd=" + co_cd + ", tr_cd=" + tr_cd + ", tr_fg=" + tr_fg + ", tr_nm=" + tr_nm
+				+ ", reg_nb=" + reg_nb + ", tr_al=" + tr_al + ", tr_na=" + tr_na + ", re_id=" + re_id + ", tr_ceo_nm="
+				+ tr_ceo_nm + ", tr_bt=" + tr_bt + ", tr_bc=" + tr_bc + ", tr_ps_cd=" + tr_ps_cd + ", tr_ad1=" + tr_ad1
+				+ ", tr_ad2=" + tr_ad2 + ", tr_pn=" + tr_pn + ", tr_fn=" + tr_fn + ", tr_hp=" + tr_hp + ", tr_email="
+				+ tr_email + ", tr_mn_cd=" + tr_mn_cd + ", tr_ct_cd=" + tr_ct_cd + "]";
 	}
 }
