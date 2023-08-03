@@ -96,33 +96,10 @@
 		
 	</select>
 
-	
 
 
 
-<update id="updateDept" parameterType="com.dz.back.acc.acc1000.acc1011.dto.DeptDTO">UPDATE sdept SET co_cd =
-        #{co_cd},dept_st = #{dept_st},dept_nm = #{dept_nm},dept_tr =
-        #{dept_tr},dept_addr1 = #{dept_addr1},dept_addr2 =
-        #{dept_addr2},dept_fg = #{dept_fg}WHERE dept_cd = #{dept_cd};
-    </update>
-
-
-    <!-- 조회로 부서찾기 -->
-    <select id="deptSearch" parameterType="com.dz.back.acc.acc1000.acc1011.dto.DeptDTO"
-        resultMap="deptMap">
-        SELECT *
-        FROM sdept
-        WHERE 1 = 1
-        <if test="co_cd != null">
-            AND co_cd = #{co_cd}
-        </if>
-        <if test="dept_st != null">
-            AND dept_st = #{dept_st}
-        </if>
-
-
-    </select>
-
+  
 
 
 </mapper>
