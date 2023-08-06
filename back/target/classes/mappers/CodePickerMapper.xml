@@ -17,6 +17,33 @@
 	    WHERE car_nm LIKE CONCAT('%', #{name}, '%')
 	</select>
 	
+	
+	<select id="DeptfindByName" resultType="DeptDTO">
+	    SELECT * FROM sdept
+	    WHERE dept_nm LIKE CONCAT('%', #{name}, '%')
+	</select>
+	
+	
+	<!-- <select id="EmpfindByName" resultType="ACC1010EmpDTO"> 
+	    SELECT * FROM semp s, 
+	    WHERE emp_nm LIKE CONCAT('%', #{name}, '%')
+	</select> -->
+	
+	<!--semp의 emp_cd, emp_nm ,sdept의 dept_nm 을 조회해야한다..  -->
+	<resultMap id="EmpCodePickerMap" type="CodePickerDTO">
+	    <result property="emp_cd" column="emp_cd"/>
+	    <result property="emp_nm" column="emp_nm"/>
+	    <result property="dept_nm" column="dept_nm"/>
+	</resultMap>
+
+	<select id="EmpfindByName" resultMap="EmpCodePickerMap">
+		SELECT e.emp_cd AS emp_cd, e.emp_nm AS emp_nm, MAX(d.dept_nm) AS dept_nm
+		FROM semp e
+		JOIN sdept d ON e.co_cd=d.co_cd 
+		WHERE e.emp_nm LIKE CONCAT('%', #{name}, '%')
+		GROUP BY e.emp_cd, e.emp_nm
+</select>
+	
 	<!-- select * from sco
 	where case when coalesce(#{where}, '') = '' then '1'
 			   when (co_cd LIKE CONCAT('%', #{where}, '%') OR coNm LIKE CONCAT('%', #{where}, '%')) then '1'
