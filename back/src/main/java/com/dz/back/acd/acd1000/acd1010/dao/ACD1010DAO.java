@@ -18,7 +18,28 @@ public class ACD1010DAO {
 	SqlSession sqlSession;
 	
 	//모든 데이터 다 가져오는 코드
-		public List<CarDTO> getAllCarRegInfo() {
-			return sqlSession.getMapper(ACD1010Mapper.class).getAllCarRegInfo();
+		public List<CarDTO> getCarList() {
+			return sqlSession.getMapper(ACD1010Mapper.class).getCarList();
+		}
+
+		public CarDTO getRegcarCard(String car_cd) {
+			
+			return sqlSession.getMapper(ACD1010Mapper.class).getRegcarCard(car_cd);
+		}
+
+		public int addRegCar(CarDTO dto) {
+			
+			return  sqlSession.getMapper(ACD1010Mapper.class).addRegCar(dto);
+		}
+
+		public int updateRegCar(CarDTO dto) {
+			
+			return sqlSession.getMapper(ACD1010Mapper.class).updateRegCar(dto);
+		}
+
+		public void deleteRegCar(String car_cd) {
+			
+			sqlSession.getMapper(ACD1010Mapper.class).deleteRegCar(car_cd);
+			
 		}
 }
