@@ -1,44 +1,127 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.dz.back.acd.acd1000.acd1010.mapper.ACD1010Mapper">
+<mapper
+	namespace="com.dz.back.acd.acd1000.acd1010.mapper.ACD1010Mapper">
 
-	<resultMap type="com.dz.back.acd.acd1000.acd1010.dto.CarDTO" id="regcarMap">
+	<resultMap type="com.dz.back.acd.acd1000.acd1010.dto.CarDTO"
+		id="regcarMap">
 
-		<id property="co_cd" column="CO_CD" />
-		<id property="car_cd" column="CAR_CD" />
-		<result property="car_nb" column="CAR_NB" />
-		<result property="car_nm" column="CAR_NM" />
-		<result property="dept_cd" column="DEPT_CD" />
-		<result property="emp_cd" column="EMP_CD" />
-		<result property="duty" column="DUTY" />
-		<result property="use_yn" column="USE_YN" />
-		<result property="acct_cd" column="ACCT_CD" />
-		<result property="asset_cd" column="ASSET_CD" />
-		<result property="div_cd" column="DIV_CD" />
-		<result property="get_dt" column="GET_DT" />
-		<result property="expen_ty" column="EXPEN_TY" />
-		<result property="insur_yn" column="INSUR_YN" />
-		<result property="insur_tr_cd" column="INSUR_TR_CD" />
-		<result property="ifr_dt" column="IFR_DT" />
-		<result property="ito_dt" column="ITO_DT" />
-		<result property="lease_yn" column="LEASE_YN" />
-		<result property="lfr_dt" column="LFR_DT" />
-		<result property="lto_dt" column="LTO_DT" />
-		<result property="insert_id" column="INSERT_ID" />
-		<result property="insert_ip" column="INSERT_IP" />
-		<result property="insert_dt" column="INSERT_DT" />
-		<result property="modify_id" column="MODIFY_ID" />
-		<result property="modify_ip" column="MODIFY_IP" />
-		<result property="modify_dt" column="MODIFY_DT" />
-		<result property="biz_fg" column="BIZ_FG" />
-		<result property="disposal_dt" column="DISPOSAL_DT" />
-		
+		<id column="CO_CD" property="co_cd" />
+
+		<id column="CAR_CD" property="car_cd" />
+
+		<result column="CAR_NB" property="car_nb" />
+
+		<result column="CAR_NM" property="car_nm" />
+
+		<result column="GET_DT" property="get_dt" />
+
+		<result column="DISPOSAL_DT" property="disposal_dt" />
+
+		<result column="LEASE_YN" property="lease_yn" />
+
+		<result column="LFR_DT" property="lfr_dt" />
+
+		<result column="LTO_DT" property="lto_dt" />
+
+		<result column="INSUR_TR_CD" property="insur_tr_cd" />
+
+		<result column="IFR_DT" property="ifr_dt" />
+
+		<result column="ITO_DT" property="ito_dt" />
+
+		<result column="USE_YN" property="use_yn" />
+
 	</resultMap>
 
-	<select id="getAllCarRegInfo" resultMap="regcarMap">
-			SELECT * FROM abizcar
+	<select id="getCarList" resultMap="regcarMap">
+		SELECT * FROM abizcar
 	</select>
 
+	<select id="getRegcarCard" resultMap="regcarMap">
+		SELECT
+		abizcar.car_cd,
+		abizcar.car_nb,
+		abizcar.car_nm,
+		CAST(abizcar.get_dt AS VARCHAR(255)) as
+		get_dt,
+		CAST(abizcar.disposal_dt AS VARCHAR(255)) disposal_dt,
+		abizcar.lease_yn,
+		CAST(abizcar.lfr_dt AS VARCHAR(255)) as lfr_dt,
+		CAST(abizcar.lto_dt AS VARCHAR(255)) as lto_dt,
+		abizcar.insur_tr_cd,
+		CAST(abizcar.ifr_dt AS VARCHAR(255)) as ifr_dt,
+		CAST(abizcar.ito_dt AS
+		VARCHAR(255)) as ito_dt,
+		abizcar.use_yn
 
-	
+
+
+
+
+
+
+		FROM abizcar WHERE
+		abizcar.car_cd = #{car_cd}
+	</select>
+
+	<insert id="addRegCar"
+		parameterType="com.dz.back.acd.acd1000.acd1010.dto.CarDTO">
+		INSERT INTO abizcar (
+		CO_CD,
+		CAR_CD,
+		CAR_NB,
+		CAR_NM,
+		GET_DT,
+		DISPOSAL_DT,
+		LEASE_YN,
+		LFR_DT,
+		LTO_DT,
+		INSUR_TR_CD,
+		IFR_DT,
+		ITO_DT,
+		USE_YN
+		)
+		VALUES
+		('1000',
+		#{car_cd},
+		#{car_nb},
+		#{car_nm},
+		#{get_dt},
+		#{disposal_dt},
+		#{lease_yn},
+		#{lfr_dt},
+		#{lto_dt},
+		#{insur_tr_cd},
+		#{ifr_dt},
+		#{ito_dt},
+		#{use_yn})
+	</insert>
+
+	<update id="updateRegCar"
+		parameterType="com.dz.back.acd.acd1000.acd1010.dto.CarDTO">
+
+		UPDATE abizcar SET
+		CAR_CD = #{car_cd},
+		CAR_NB = #{car_nb},
+		CAR_NM = #{car_nm},
+		GET_DT = #{get_dt},
+		DISPOSAL_DT = #{disposal_dt},
+		LEASE_YN= #{lease_yn},
+		LFR_DT= #{lfr_dt},
+		LTO_DT = #{lto_dt},
+		INSUR_TR_CD = #{insur_tr_cd},
+		IFR_DT = #{ifr_dt},
+		ITO_DT = #{ito_dt},
+		USE_YN = #{use_yn}
+		WHERE
+		CAR_CD = #{car_cd}
+	</update>
+
+	<delete id="deleteRegCar" parameterType="String">
+		DELETE FROM abizcar WHERE car_cd = #{car_cd}
+	</delete>
+
+
+
 </mapper>
