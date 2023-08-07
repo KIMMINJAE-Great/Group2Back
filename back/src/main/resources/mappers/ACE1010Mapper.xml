@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dz.back.ace.ace1000.ace1010.mapper.ACE1010Mapper">
+	<resultMap type="com.dz.back.ace.ace1000.ace1010.dto.AbizCarPersonDTO" id="abizcarpersonMap">
+		<id property="co_cd" column="CO_CD" />
+		<id property="seq_nb" column="SEQ_NB" />
+		<id property="car_cd" column="CAR_CD" />
+		<id property="use_dt" column="USE_DT" />
+		<id property="emp_cd" column="EMP_CD" />
+		<result property="use_dt" column="USE_DT" />
+		<result property="start_time" column="START_TIME" />
+		<result property="end_time" column="END_TIME" />
+		<result property="dept_cd" column="DEPT_CD" />
+		<result property="use_fg" column="USE_FG" />
+		<result property="start_fg" column="START_FG" />
+		<result property="start_addr" column="START_ADDR" />
+		<result property="start_addr1" column="START_ADDR1" />
+		<result property="end_fg" column="END_FG" />
+		<result property="end_addr" column="END_ADDR" />
+		<result property="end_addr1" column="END_ADDR1" />
+		<result property="mileage_km" column="MILEAGE_KM" />
+		<result property="before_km" column="BEFORE_KM" />
+		<result property="after_km" column="AFTER_KM" />
+		<result property="send_yn" column="SEND_YN" />
+		<result property="insert_id" column="INSERT_ID" />
+		<result property="insert_ip" column="INSERT_IP" />
+		<result property="insert_dt" column="INSERT_DT" />
+		<result property="modify_id" column="MODIFY_ID" />
+		<result property="modify_ip" column="MODIFY_IP" />
+		<result property="modify_dt" column="MODIFY_DT" />
+		<result property="data_fg" column="DATA_FG" />
+	</resultMap>
+
+<select  id="getallcars" resultMap="abizcarpersonMap">
+select  
+abizcarperon.co_cd,
+abizcarperon.seq_nb,
+abizcarperon.car_cd,
+abizcarperon.use_dt,
+abizcarperon.emp_cd,
+abizcarperon.use_dt,
+abizcarperon.start_time,
+abizcarperon.end_time,
+abizcarperon.dept_cd,
+abizcarperon.use_fg,
+abizcarperon.start_fg,
+abizcarperon.start_addr,
+abizcarperon.start_addr1,
+abizcarperon.end_fg,
+abizcarperon.end_addr,
+abizcarperon.end_addr1,
+abizcarperon.mileage_km,
+abizcarperon.before_km,
+abizcarperon.after_km,
+abizcarperon.send_yn,
+abizcarperon.insert_id,
+abizcarperon.insert_ip,
+abizcarperon.modify_id,
+abizcarperon.modify_ip,
+abizcarperon.modify_dt,
+abizcarperon.data_fg
+from abizcar_person  as abizcarperon
+</select>
+
+
+	
+  
+
+
+</mapper>
