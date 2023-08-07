@@ -18,14 +18,25 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	</settings>
 
 
-	<typeAliases>
+	 <typeAliases>
 		<package name="com.dz.back.acc.acc1000.acc1010.dto" />
 		<package name="com.dz.back.acc.acc1000.acc1011.dto" />
 		<package name="com.dz.back.acc.acc1000.acc1012.dto" />
 		<package name="com.dz.back.acc.acc1000.acc1013.dto" />
 		<package name="com.dz.back.userauth.dto" />
 		<package name="com.dz.back.acd.acd1000.acd1010.dto" />
+		<package name="com.dz.back.ace.ace1000.ace1010.dto" />
 
 	</typeAliases>
+	<mappers>
+      <mapper resource="./mappers/ACC1010Mapper.xml"/>
+      <mapper resource="./mappers/ACC1011Mapper.xml"/>
+      <mapper resource="./mappers/ACC1012Mapper.xml"/>
+      <mapper resource="./mappers/ACC1013Mapper.xml"/>
+      <mapper resource="./mappers/ACD1010Mapper.xml"/>
+      <mapper resource="./mappers/CodePickerMapper.xml"/>
+      <mapper resource="./mappers/UserAuthMapper.xml"/>
+      <mapper resource="./mappers/ACE1010Mapper.xml"/>
+   </mappers>
 	
 </configuration>

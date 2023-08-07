@@ -118,18 +118,5 @@ public class ACC1011Controller {
 
     }
 
-	@PutMapping("/updatedept")
-	public ResponseEntity<DeptDTO> updateCardDept(@RequestBody DeptDTO dto) {
-		System.out.println(dto);
-
-		int result = deptService.updateDept(dto);
-		System.out.println(result);
-		if (result == 1) {
-			return ResponseEntity.ok(dto);
-		} else {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
-
-	}
-
+	
 }
