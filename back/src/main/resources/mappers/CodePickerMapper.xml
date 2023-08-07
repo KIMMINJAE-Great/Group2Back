@@ -37,11 +37,15 @@
 	</resultMap>
 
 	<select id="EmpfindByName" resultMap="EmpCodePickerMap">
-		SELECT e.emp_cd AS emp_cd, e.emp_nm AS emp_nm, MAX(d.dept_nm) AS dept_nm
+		SELECT 
+			e.emp_cd AS emp_cd, 
+			e.emp_nm AS emp_nm, 
+			d.dept_nm AS dept_nm
 		FROM semp e
-		JOIN sdept d ON e.co_cd=d.co_cd 
+		LEFT JOIN sdept d 
+		ON e.co_cd=d.co_cd 
 		WHERE e.emp_nm LIKE CONCAT('%', #{name}, '%')
-		GROUP BY e.emp_cd, e.emp_nm
+		GROUP BY e.emp_nm
 </select>
 	
 	<!-- select * from sco
