@@ -6,6 +6,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.dz.back.acc.acc1000.acc1012.dto.TradeManagementDTO;
+import com.dz.back.acc.acc1000.acc1012.mapper.ACC1012Mapper;
 import com.dz.back.acc.acc1000.acc1013.dto.ComDTO;
 import com.dz.back.acc.acc1000.acc1013.mapper.ACC1013Mapper;
 
@@ -51,5 +53,11 @@ public class ACC1013DAO {
 		System.out.println("회사 등록 정보 업데이트 실행됨!!!");
 
 		sqlSession.getMapper(ACC1013Mapper.class).updateComRegInfoByCocd(comDTO);
+	}
+	
+	//부서등록 카피코드
+	public ComDTO getStByCode(String co_cd) {
+		System.out.println(co_cd);
+		return sqlSession.getMapper(ACC1013Mapper.class).getStByCode(co_cd);
 	}
 }

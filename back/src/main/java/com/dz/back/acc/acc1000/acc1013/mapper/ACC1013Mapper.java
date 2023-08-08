@@ -2,6 +2,7 @@ package com.dz.back.acc.acc1000.acc1013.mapper;
 
 import java.util.List;
 
+import com.dz.back.acc.acc1000.acc1012.dto.TradeManagementDTO;
 import com.dz.back.acc.acc1000.acc1013.dto.ComDTO;
 
 
@@ -28,4 +29,7 @@ public interface ACC1013Mapper {
 		
 		//update co_cd로 where co_cd = 회사코드 로 전부 업데이트 
 		void updateComRegInfoByCocd(ComDTO comDTO);
+		
+		//부서코드카피
+		ComDTO getStByCode(String co_cd);
 }

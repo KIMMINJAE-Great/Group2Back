@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.dz.back.acc.acc1000.acc1010.dto.ACC1010EmpDTO;
 import com.dz.back.acc.acc1000.acc1011.dto.DeptDTO;
+import com.dz.back.acc.acc1000.acc1012.dto.TradeManagementDTO;
 import com.dz.back.acc.acc1000.acc1013.dto.ComDTO;
 import com.dz.back.acd.acd1000.acd1010.dto.CarDTO;
 import com.dz.back.commons.codepicker.mapper.CodePickerMapper;
@@ -18,7 +19,7 @@ public class CodePickerDAO {
 
 	@Autowired
 	SqlSession sqlSession;
-
+//comapny
 	public List<ComDTO> CompanyfindByName(String name) {
 		return sqlSession.getMapper(CodePickerMapper.class).CompanyfindByName(name);
 	}
@@ -26,6 +27,15 @@ public class CodePickerDAO {
 	public List<ComDTO> CompanyfindByCode(Integer code) {
 		return sqlSession.getMapper(CodePickerMapper.class).CompanyfindByCode(code);
 	}
+//trade
+	public List<TradeManagementDTO> TradefindByName(String name) {
+		return sqlSession.getMapper(CodePickerMapper.class).TradefindByName(name);
+	}
+
+	public List<TradeManagementDTO> TradefindByCode(Integer code) {
+		return sqlSession.getMapper(CodePickerMapper.class).TradefindByCode(code);
+	}	
+	
 	
 	public List<CarDTO> RegCarfindByName(String name) {
 		return sqlSession.getMapper(CodePickerMapper.class).RegCarfindByName(name);

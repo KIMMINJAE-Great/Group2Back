@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dz.back.acc.acc1000.acc1010.dto.ACC1010EmpDTO;
 import com.dz.back.acc.acc1000.acc1011.dto.DeptDTO;
+import com.dz.back.acc.acc1000.acc1012.dto.TradeManagementDTO;
 import com.dz.back.acc.acc1000.acc1013.dto.ComDTO;
 import com.dz.back.acd.acd1000.acd1010.dto.CarDTO;
 import com.dz.back.commons.codepicker.serviceImpl.CodePickerServiceImpl;
@@ -37,6 +38,13 @@ public class CodePickerController {
 		//
 		System.out.println("코드피커 회사 검색 컨트롤러 실행됨");
 		return codePickerServiceImpl.getCompanyByKeyword(keyword);
+	}
+	//거래처코드도움
+	@GetMapping("/trademanagement/searchinfo")
+	public List<TradeManagementDTO> SearchCodePickerTradeInfo(@RequestParam("value") String keyword) {
+		//
+		System.out.println("코드피커 회사 검색 컨트롤러 실행됨");
+		return codePickerServiceImpl.getTradeByKeyword(keyword);
 	}
 	
 	//차량코드도움

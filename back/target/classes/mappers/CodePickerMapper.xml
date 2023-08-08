@@ -2,14 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dz.back.commons.codepicker.mapper.CodePickerMapper">
 
+	<!-- company -->
 	<select id="CompanyfindByName" resultType="ComDTO">
 	    SELECT * FROM sco
 	    WHERE co_nm LIKE CONCAT('%', #{name}, '%')
 	</select>
-	
 	<select id="CompanyfindByCode" resultType="ComDTO">
 	    SELECT * FROM sco
 	    WHERE co_cd = #{code}
+	</select>
+	
+	<!-- trade -->
+	<select id="TradefindByName" resultType="TradeManagementDTO">
+	    SELECT * FROM strade
+	    WHERE tr_nm LIKE CONCAT('%', #{name}, '%')
+	</select>
+	<select id="TradefindByCode" resultType="TradeManagementDTO">
+	    SELECT * FROM strade
+	    WHERE tr_cd = #{code}
 	</select>
 	
 	<select id="RegCarfindByName" resultType="CarDTO">
