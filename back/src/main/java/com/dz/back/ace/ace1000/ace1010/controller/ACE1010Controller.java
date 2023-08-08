@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dz.back.ace.ace1000.ace1010.dto.AbizCarPersonDTO;
+import com.dz.back.ace.ace1000.ace1010.dto.SendYnDTO;
+import com.dz.back.ace.ace1000.ace1010.dto.StartEndFgDTO;
+import com.dz.back.ace.ace1000.ace1010.dto.UseFgDTO;
 import com.dz.back.ace.ace1000.ace1010.service.ACE1010Service;
 
 @RestController
@@ -19,7 +22,7 @@ public class ACE1010Controller {
 	
 	@Autowired
 	private ACE1010Service service;
-	
+//	Test 데이터 가져오기
 	@GetMapping("/getallcars")
 	public ResponseEntity<List<AbizCarPersonDTO>> getallcars(){
 		List<AbizCarPersonDTO> dto = service.getallcars();
@@ -27,4 +30,30 @@ public class ACE1010Controller {
 		return ResponseEntity.ok().body(dto);
 		
 	}
+	
+//	운행 구분
+	@GetMapping("/usefg")
+	public ResponseEntity<List<UseFgDTO>> usefg(){
+		List<UseFgDTO> dto = service.usefg();
+		System.out.println(dto.toString());
+		return ResponseEntity.ok().body(dto);
+	}
+	
+//	마감 유무
+	@GetMapping("/sendyn")
+	public ResponseEntity<List<SendYnDTO>> sendyn(){
+		List<SendYnDTO> dto = service.sendyn();
+		System.out.println(dto.toString());
+		return ResponseEntity.ok().body(dto);
+	}
+	
+	
+//	출발,도착 구분
+	@GetMapping("/startendfg")
+	public ResponseEntity<List<StartEndFgDTO>> startendfg(){
+		List<StartEndFgDTO> dto = service.startendfg();
+		System.out.println(dto.toString());
+		return ResponseEntity.ok().body(dto);
+	}
+	
 }
