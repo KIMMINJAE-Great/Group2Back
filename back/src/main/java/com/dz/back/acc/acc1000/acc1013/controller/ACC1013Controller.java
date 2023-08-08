@@ -6,12 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dz.back.acc.acc1000.acc1011.dto.DeptDTO;
 import com.dz.back.acc.acc1000.acc1013.dto.ComDTO;
 import com.dz.back.acc.acc1000.acc1013.serviceimpl.ACC1013ServiceImpl;
 
@@ -53,14 +56,22 @@ public class ACC1013Controller {
 		return new ResponseEntity<>("SCO 테이블에 회사정보 등록완료",HttpStatus.OK);
 	}
 	
-	//companyreg/delete 삭제코드
-	@PostMapping("/delete")
-	public ResponseEntity<Object> ComRegDelete(@RequestBody ComDTO comDTO) {
+	//companyreg/delete/{co_cd} 삭제코드
+	@DeleteMapping("/delete/{co_cd}")
+	public void ComRegDelete(@PathVariable String co_cd) {
 		System.out.println("/companyreg/delete 실행");
-		System.out.println(comDTO.getCo_cd());
-		acc1013ServiceImpl.deleteComRegInfoByCocd(comDTO.getCo_cd());
-		return new ResponseEntity<>("SCO 테이블에서 회사정보 삭제 완료",HttpStatus.OK);
+		acc1013ServiceImpl.deleteComRegInfoByCocd(co_cd);
+		
 	}
+	
+	//체크박스가 선택되었을때 한꺼번에 삭제하기(객체가 여러개 담겨있을땐 이게 실행됨)
+		 @DeleteMapping("/delete")
+		    public void deleteCheckedCoCd(@RequestBody List<ComDTO> comList) {
+		        for (ComDTO com : comList) {
+		        	System.out.println(com.getCo_cd());
+		        	acc1013ServiceImpl.deleteComRegInfoByCocd(com.getCo_cd());
+		        }
+		    }
 	
 	
 	//companyreg/search 카드리스트에 회사코드로 조회(회사등록 textfield에 넣기)

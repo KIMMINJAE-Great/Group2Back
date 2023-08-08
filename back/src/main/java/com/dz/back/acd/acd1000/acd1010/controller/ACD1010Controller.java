@@ -77,5 +77,15 @@ public class ACD1010Controller {
 		public void deleteRegCar(@PathVariable String car_cd) {
 			regcarService.deleteRegCar(car_cd);
 		}
+		
+		
+		//체크박스가 선택되었을때 한꺼번에 삭제하기
+		 @DeleteMapping("/deletecar")
+		    public void deleteCheckedCar(@RequestBody List<CarDTO> CarList) {
+		        for (CarDTO car : CarList) {
+
+		        	regcarService.deleteRegCar(car.getCar_cd());
+		        }
+		    }
 
 }
