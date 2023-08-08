@@ -1,6 +1,7 @@
 package com.dz.back.acc.acc1000.acc1013.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,12 +28,7 @@ public class ACC1013Controller {
 	@Autowired
 	private ACC1013ServiceImpl acc1013ServiceImpl;
 	
-//	@PostMapping("/companyreg")
-//	public ResponseEntity<Object> CompanyTestSearch(@RequestBody ComDTO comDTO) {
-//	    System.out.println("/company 뿌셔 TestCode 실행됨");
-//	    companyregServiceImpl.getConm(comDTO.getCo_cd());
-//	    return new ResponseEntity<>("회사등록에서 처리되는 코드..작업중.. 지속적 업데이트 셿쌰 삤궎", HttpStatus.OK);
-//	}
+
 	
 	//companyreg 가 실행되면 카드리스트한테 보내야함 (select 로 전부가져오기)
 	@GetMapping("/cardlist")
@@ -75,22 +72,28 @@ public class ACC1013Controller {
 	
 	
 	//companyreg/search 카드리스트에 회사코드로 조회(회사등록 textfield에 넣기)
-	@PostMapping("/selectCard")
-	public ResponseEntity<Object> SelectCard(@RequestBody ComDTO comDTO) {
-		
-		String co_cd = comDTO.getCo_cd();
-		List<ComDTO> result = acc1013ServiceImpl.getComRegInfoByCocd(co_cd);
-		System.out.println("result= "+result);
-		return new ResponseEntity<>(result,HttpStatus.OK);
-	}
-	
-//	//update 코드 (회사 정보로)
-//	@PostMapping("/update")
-//	public ResponseEntity<Object> UpdateCard(@RequestBody ComDTO comDTO) {
+//	@PostMapping("/selectCard")
+//	public ResponseEntity<Object> SelectCard(@RequestBody ComDTO comDTO) {
 //		
 //		String co_cd = comDTO.getCo_cd();
-//		companyregServiceImpl.updateComRegInfoByCocd(co_cd);
-//		
-//		return new ResponseEntity<>("업데이트 완료",HttpStatus.OK);
+//		List<ComDTO> result = acc1013ServiceImpl.getComRegInfoByCocd(co_cd);
+//		System.out.println("result= "+result);
+//		return new ResponseEntity<>(result,HttpStatus.OK);
 //	}
+	@PostMapping("/selectCard")
+	public ResponseEntity<ComDTO> SelectCard(@RequestBody Map<String, String> co_cd) {
+		
+		ComDTO scCard = acc1013ServiceImpl.getCardSt(co_cd.get("co_cd"));
+		
+		return ResponseEntity.ok(scCard);
+	}
+	
+	//update 코드 (회사 정보로)
+	@PutMapping("/update")
+	public ResponseEntity<ComDTO> UpdateCard(@RequestBody ComDTO comDTO) {
+		
+		acc1013ServiceImpl.updateComRegInfoByCocd(comDTO);
+		
+		return ResponseEntity.ok().build();
+	}
 }

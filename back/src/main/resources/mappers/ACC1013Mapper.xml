@@ -24,31 +24,53 @@
     <result property="cls_dt" column="CLS_DT" />
     <result property="ceo_nm" column="CEO_NM" />
     <result property="res_nb" column="RES_NB" />
+    <result property="res_nb2" column="RES_NB2" />
     <result property="domain" column="DOMAIN" />
     <result property="ac_per" column="AC_PER" />
     <result property="ac_dt" column="AC_DT" />
-    <result property="acc_tp" column="ACC_TP" />
-    <result property="url" column="URL" />
-    <result property="sort" column="SORT" />
+    <result property="acc_type" column="ACC_TYPE" />
+  
 </resultMap>
 
 
    <insert id="saveComRegInfo" parameterType="ComDTO">
       INSERT INTO SCO 
-        (CO_CD, USE_YN, CO_NM, CO_NK, LNG, ADM_CD, BZ_TYPE, BZ_ITEM, CO_TEL, CO_TEL2, CO_FAX, REG_NB, CP_CT, CP_NO, ADR_ZP, ADR_INP, ADR_ETC, EST_DT, OPN_DT, CLS_DT, CEO_NM, RES_NB, DOMAIN, AC_PER, AC_DT, ACC_TP, URL, SORT)
+        (CO_CD, USE_YN, CO_NM, CO_NK, LNG, ADM_CD, BZ_TYPE, BZ_ITEM, CO_TEL, CO_TEL2, CO_FAX, REG_NB, CP_CT, CP_NO, ADR_ZP, ADR_INP, ADR_ETC, EST_DT, OPN_DT, CLS_DT, CEO_NM, RES_NB, RES_NB2, AC_PER, AC_DT, ACC_TYPE)
         VALUES 
-        (#{co_cd}, #{use_yn}, #{co_nm}, #{co_nk}, #{lng}, #{adm_cd}, #{bz_type}, #{bz_item}, #{co_tel}, #{co_tel2}, #{co_fax}, #{reg_nb}, #{cp_ct}, #{cp_no}, #{adr_zp}, #{adr_inp}, #{adr_etc}, #{est_dt}, #{opn_dt}, #{cls_dt}, #{ceo_nm}, #{res_nb}, #{domain}, #{ac_per}, #{ac_dt}, #{acc_tp}, #{url}, #{sort})
+        (#{co_cd}, #{use_yn}, #{co_nm}, #{co_nk}, #{lng}, #{adm_cd}, #{bz_type}, #{bz_item}, #{co_tel}, #{co_tel2}, #{co_fax}, #{reg_nb}, #{cp_ct}, #{cp_no}, #{adr_zp}, #{adr_inp}, #{adr_etc}, #{est_dt}, #{opn_dt}, #{cls_dt}, #{ceo_nm}, #{res_nb}, #{res_nb2}, #{ac_per}, #{ac_dt}, #{acc_type})
    </insert>
    
    <!-- MyBatis XML 업데이트 문 -->
    <update id="updateComRegInfoByCocd" parameterType="ComDTO">
-      UPDATE sco
-      SET          
-          adm_cd = #{adm_cd},
-          co_nk = #{co_nk},
-          bz_type = #{bz_type}
-      WHERE
-          co_cd = #{co_cd}   
+	UPDATE sco SET
+		CO_CD = #{co_cd},
+		co_nm = #{co_nm},          
+	    USE_YN = #{use_yn},
+	    CO_NK = #{co_nk},
+	    LNG = #{lng},
+	    ADM_CD = #{adm_cd},
+	    BZ_TYPE = #{bz_type},
+	    BZ_ITEM = #{bz_item},
+	    CO_TEL = #{co_tel},
+	    CO_TEL2 = #{co_tel2},
+	    CO_FAX = #{co_fax},
+	    REG_NB = #{reg_nb},
+	    CP_CT = #{cp_ct},
+	    CP_NO = #{cp_no},
+	    ADR_ZP = #{adr_zp},
+	    ADR_INP = #{adr_inp},
+	    ADR_ETC = #{adr_etc},
+	    EST_DT = #{est_dt},
+	    OPN_DT = #{opn_dt},
+	    CLS_DT = #{cls_dt},
+	    CEO_NM = #{ceo_nm},
+	    RES_NB = #{res_nb},
+	    RES_NB2 = #{res_nb2},
+	    AC_PER = #{ac_per},
+	    AC_DT = #{ac_dt},
+	    ACC_TYPE = #{acc_type}
+	WHERE
+	    CO_CD = #{co_cd}
    </update>
    <!-- 
    <update id="updateComRegInfoByCocd" parameterType="ComDTO">
@@ -76,7 +98,15 @@
       SELECT * FROM sco WHERE co_cd = #{co_cd}
    </select>
    
-
+   <!-- 부서등록 카피코드 -->
+	<select id="getStByCode" resultMap="comMap">
+			SELECT
+			*
+			FROM
+			sco
+			WHERE
+			co_cd=#{co_cd};
+		</select>
    
 
 </mapper>

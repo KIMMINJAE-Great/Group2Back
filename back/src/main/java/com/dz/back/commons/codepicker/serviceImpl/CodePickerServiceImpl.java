@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.dz.back.acc.acc1000.acc1010.dto.ACC1010EmpDTO;
 import com.dz.back.acc.acc1000.acc1011.dto.DeptDTO;
+import com.dz.back.acc.acc1000.acc1012.dto.TradeManagementDTO;
 import com.dz.back.acc.acc1000.acc1013.dto.ComDTO;
 import com.dz.back.acd.acd1000.acd1010.dto.CarDTO;
 import com.dz.back.commons.codepicker.dao.CodePickerDAO;
@@ -32,6 +33,15 @@ public class CodePickerServiceImpl {
                return codePickerDAO.CompanyfindByName(keyword);
 		}
 	}
+	//숫자일경우 코드 번호(int) 검색, 문자일 경우 그대로 String으로 검색
+		public List<TradeManagementDTO> getTradeByKeyword(String keyword) {
+	        try {
+	        	   Integer co_cd = Integer.parseInt(keyword);
+	               return codePickerDAO.TradefindByCode(co_cd);
+	           } catch (NumberFormatException e) {
+	               return codePickerDAO.TradefindByName(keyword);
+			}
+		}
 	
 	public List<CarDTO> getRegCarByKeyword(String keyword) {
         try {
