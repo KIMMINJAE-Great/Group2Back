@@ -10,7 +10,6 @@
 		<id property="car_cd" column="CAR_CD" />
 		<id property="use_dt" column="USE_DT" />
 		<id property="emp_cd" column="EMP_CD" />
-		<result property="use_dt" column="USE_DT" />
 		<result property="start_time" column="START_TIME" />
 		<result property="end_time" column="END_TIME" />
 		<result property="dept_cd" column="DEPT_CD" />
@@ -41,7 +40,6 @@
 		abizcarperon.car_cd,
 		abizcarperon.use_dt,
 		abizcarperon.emp_cd,
-		abizcarperon.use_dt,
 		abizcarperon.start_time,
 		abizcarperon.end_time,
 		abizcarperon.dept_cd,
@@ -64,6 +62,38 @@
 		abizcarperon.data_fg
 		from abizcar_person as abizcarperon
 	</select>
+	
+	<select id="findallbycar" resultMap="abizcarpersonMap">
+	SELECT
+		abizcarperon.co_cd,
+		abizcarperon.seq_nb,
+		abizcarperon.car_cd,
+		abizcarperon.use_dt,
+		abizcarperon.emp_cd,
+		abizcarperon.start_time,
+		abizcarperon.end_time,
+		abizcarperon.dept_cd,
+		abizcarperon.use_fg,
+		abizcarperon.start_fg,
+		abizcarperon.start_addr,
+		abizcarperon.start_addr1,
+		abizcarperon.end_fg,
+		abizcarperon.end_addr,
+		abizcarperon.end_addr1,
+		abizcarperon.mileage_km,
+		abizcarperon.before_km,
+		abizcarperon.after_km,
+		abizcarperon.send_yn,
+		abizcarperon.insert_id,
+		abizcarperon.insert_ip,
+		abizcarperon.modify_id,
+		abizcarperon.modify_ip,
+		abizcarperon.modify_dt,
+		abizcarperon.data_fg
+		from abizcar_person as abizcarperon
+		WHERE abizcarperon.car_cd = #{car_cd}
+	</select>
+	
 	<!-- 운행 구분 -->
 	<resultMap
 		type="com.dz.back.ace.ace1000.ace1010.dto.UseFgDTO" id="UseFgDTO">
@@ -98,5 +128,73 @@
 		sctrl_s as sendyn
 	</select>
 
+<!-- 운행기록부 한 행 저장-->
+<insert id="insertAbizCarPerson" parameterType="com.dz.back.ace.ace1000.ace1010.dto.AbizCarPersonDTO" >
+	INSERT INTO
+	abizcar_person
+	(
+	CO_CD,
+		SEQ_NB,
+		CAR_CD,
+		USE_DT,
+		EMP_CD,
+		START_TIME,
+		END_TIME,
+		DEPT_CD,
+		USE_FG,
+		START_FG,
+		START_ADDR,
+		START_ADDR1,
+		END_FG,
+		END_ADDR,
+		END_ADDR1,
+		MILEAGE_KM,
+		BEFORE_KM,
+		AFTER_KM,
+		SEND_YN,
+		INSERT_ID,
+		INSERT_IP,
+		INSERT_DT,
+		MODIFY_ID,
+		MODIFY_IP,
+		MODIFY_DT
+		
+	) VALUES (
+		#{co_cd},
+		#{seq_nb},
+		#{car_cd},
+		#{use_dt},
+		#{emp_cd},
+		#{start_time},
+		#{end_time},
+		#{dept_cd},
+		#{use_fg},
+		#{start_fg},
+		#{start_addr},
+		#{start_addr1},
+		#{end_fg},
+		#{end_addr},
+		#{end_addr1},
+		#{mileage_km},
+		#{before_km},
+		#{after_km},
+		#{send_yn},
+		#{insert_id},
+		#{insert_ip},
+		#{insert_dt},
+		#{modify_id},
+		#{modify_ip},
+		#{modify_dt}
+		
+	)
+
+</insert>
+
+<!-- 차량의 최대 seq_nm 찾기 -->
+<select id="findMaxSeqNb"  parameterType="String" resultType="Integer"> 
+	SELECT COALESCE(Max(seq_nb),0) FROM abizcar_person WHERE car_cd = #{car_cd}
+	
+
+</select>
 
 </mapper>
