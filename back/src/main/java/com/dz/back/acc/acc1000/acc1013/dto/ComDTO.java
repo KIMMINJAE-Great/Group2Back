@@ -25,12 +25,15 @@ public class ComDTO {
 	private String cls_dt;
 	private String ceo_nm;
 	private String res_nb;
+	private String res_nb2;
 	private String domain;
 	private String ac_per;
 	private String ac_dt;
-	private String acc_tp;
-	private String url;
-	private String sort;
+	private String acc_type;
+	
+	
+	
+	
 	
 	@Override
 	public String toString() {
@@ -39,8 +42,8 @@ public class ComDTO {
 				+ ", co_tel2=" + co_tel2 + ", co_fax=" + co_fax + ", reg_nb=" + reg_nb + ", cp_ct=" + cp_ct + ", cp_no="
 				+ cp_no + ", adr_zp=" + adr_zp + ", adr_inp=" + adr_inp + ", adr_etc=" + adr_etc + ", est_dt=" + est_dt
 				+ ", opn_dt=" + opn_dt + ", cls_dt=" + cls_dt + ", ceo_nm=" + ceo_nm + ", res_nb=" + res_nb
-				+ ", domain=" + domain + ", ac_per=" + ac_per + ", ac_dt=" + ac_dt + ", acc_tp=" + acc_tp + ", url="
-				+ url + ", sort=" + sort + "]";
+				+ ", res_nb2=" + res_nb2 + ", domain=" + domain + ", ac_per=" + ac_per + ", ac_dt=" + ac_dt
+				+ ", acc_type=" + acc_type + "]";
 	}
 	public String getCo_cd() {
 		return co_cd;
@@ -174,6 +177,12 @@ public class ComDTO {
 	public void setRes_nb(String res_nb) {
 		this.res_nb = res_nb;
 	}
+	public String getRes_nb2() {
+		return res_nb2;
+	}
+	public void setRes_nb2(String res_nb2) {
+		this.res_nb2 = res_nb2;
+	}
 	public String getDomain() {
 		return domain;
 	}
@@ -192,24 +201,15 @@ public class ComDTO {
 	public void setAc_dt(String ac_dt) {
 		this.ac_dt = ac_dt;
 	}
-	public String getAcc_tp() {
-		return acc_tp;
+	public String getAcc_type() {
+		return acc_type;
 	}
-	public void setAcc_tp(String acc_tp) {
-		this.acc_tp = acc_tp;
+	public void setAcc_type(String acc_type) {
+		this.acc_type = acc_type;
 	}
-	public String getUrl() {
-		return url;
-	}
-	public void setUrl(String url) {
-		this.url = url;
-	}
-	public String getSort() {
-		return sort;
-	}
-	public void setSort(String sort) {
-		this.sort = sort;
-	}
+	
+	
+	
 	
 	
 

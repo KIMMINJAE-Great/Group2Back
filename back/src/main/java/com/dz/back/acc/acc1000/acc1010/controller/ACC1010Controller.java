@@ -40,6 +40,7 @@ import com.dz.back.acc.acc1000.acc1010.dto.ACC1010MauthDTO;
 import com.dz.back.acc.acc1000.acc1010.dto.MenuDTO;
 import com.dz.back.acc.acc1000.acc1010.service.ACC1010Service;
 import com.dz.back.acc.acc1000.acc1010.serviceimpl.ACC1010Serviceimpl;
+import com.dz.back.acc.acc1000.acc1011.dto.DeptDTO;
 import com.dz.back.commons.Commons;
 
 @CrossOrigin(origins = "*")
@@ -215,6 +216,27 @@ public class ACC1010Controller {
 		empService.deleteAuth(dto.getEmp_id());
 		empService.deleteEmp(emp_cd);
 	}
+	
+	//체크박스가 선택되었을때 한꺼번에 삭제하기
+		 @DeleteMapping("/delete")
+		    public void deleteCheckedEmp(@RequestBody List<ACC1010EmpDTO> empList) {
+			 
+			    ACC1010MauthDTO dto2 = new ACC1010MauthDTO();
+			 
+			 
+		        for (ACC1010EmpDTO emp : empList) {
+		        	 	empService.deleteEmp(emp.getEmp_cd());
+		        	 	
+		        	 	dto2.setEmpcd(emp.getEmp_cd());
+		        	 	empService.deleteMauth(dto2);
+		        	 	empService.deleteAuth(emp.getEmp_id());
+		        	 	empService.deleteEmp(emp.getEmp_cd());
+		        	 	
+		        	 	
+		        	
+		        }
+		    }
+	
 	
 //	카드에서 사원의 메뉴권한 요청
 	@GetMapping("/getmauth/{emp_cd}")

@@ -44,7 +44,7 @@ public class ACC1012Controller {
 
 		TradeManagementDTO stCard = acc1012Service.getCardSt(tr_cd.get("tr_cd"));
 		System.out.println(stCard);
-
+System.out.println(stCard);
 		return ResponseEntity.ok(stCard);
 	}
 

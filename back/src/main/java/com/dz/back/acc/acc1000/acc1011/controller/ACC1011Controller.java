@@ -104,6 +104,19 @@ public class ACC1011Controller {
 	public void deleteCardDept(@PathVariable String dept_cd) {
 		deptService.deleteDept(dept_cd);
 	}
+	
+	//체크박스가 선택되었을때 한꺼번에 삭제하기
+	 @DeleteMapping("/deletedept")
+	    public void deleteCheckedDept(@RequestBody List<DeptDTO> deptList) {
+	        for (DeptDTO dept : deptList) {
+	        	System.out.println(dept.getDept_cd());
+	            deptService.deleteDept(dept.getDept_cd());
+	        }
+	    }
+	
+	
+	
+	
 	@PutMapping("/updatedept")
     public ResponseEntity<DeptDTO> updateCardDept(@RequestBody DeptDTO dto) {
         System.out.println(dto);
