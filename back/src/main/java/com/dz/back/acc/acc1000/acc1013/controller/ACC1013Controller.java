@@ -46,9 +46,25 @@ public class ACC1013Controller {
 		System.out.println("받은 직후 co_cd는?"+comDTO.getCo_cd());
 //		companyregServiceImpl.getComRegInfoByCocd(comDTO.getCo_cd());
 		
-		
+		ComDTO dto = comDTO;
+		System.out.println("dto 내용물 한번 보기" +dto.toString());
+		String datetimeString = comDTO.getEst_dt();
+		String datetimeString2 = comDTO.getOpn_dt();
+		 if (datetimeString != null && datetimeString.length() >= 10) {
+		        String dateString = datetimeString.substring(0, 10);
+		        dto.setEst_dt(dateString);
+		    } else {
+		    	dto.setEst_dt(null);
+		    }
+		 if (datetimeString2 != null && datetimeString.length() >= 10) {
+		        String dateString = datetimeString.substring(0, 10);
+		        dto.setOpn_dt(dateString);
+		    } else {
+		    	dto.setOpn_dt(null);
+		    }
+		 
 		System.out.println("실행이전:" +comDTO);
-		acc1013ServiceImpl.saveComRegInfo(comDTO);
+		acc1013ServiceImpl.saveComRegInfo(dto);
 		System.out.println("실행이후"+comDTO);
 		return new ResponseEntity<>("SCO 테이블에 회사정보 등록완료",HttpStatus.OK);
 	}
@@ -91,8 +107,23 @@ public class ACC1013Controller {
 	//update 코드 (회사 정보로)
 	@PutMapping("/update")
 	public ResponseEntity<ComDTO> UpdateCard(@RequestBody ComDTO comDTO) {
-		
-		acc1013ServiceImpl.updateComRegInfoByCocd(comDTO);
+		ComDTO dto = comDTO;
+		System.out.println("dto 내용물 한번 보기" +dto.toString());
+		String datetimeString = comDTO.getEst_dt();
+		String datetimeString2 = comDTO.getOpn_dt();
+		 if (datetimeString != null && datetimeString.length() >= 10) {
+		        String dateString = datetimeString.substring(0, 10);
+		        dto.setEst_dt(dateString);
+		    } else {
+		    	dto.setEst_dt(null);
+		    }
+		 if (datetimeString2 != null && datetimeString.length() >= 10) {
+		        String dateString = datetimeString.substring(0, 10);
+		        dto.setOpn_dt(dateString);
+		    } else {
+		    	dto.setOpn_dt(null);
+		    }
+		acc1013ServiceImpl.updateComRegInfoByCocd(dto);
 		
 		return ResponseEntity.ok().build();
 	}
