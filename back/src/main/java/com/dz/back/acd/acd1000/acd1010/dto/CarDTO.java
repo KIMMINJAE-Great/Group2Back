@@ -107,6 +107,10 @@ public class CarDTO {
 	public void setUse_yn(String use_yn) {
 		this.use_yn = use_yn;
 	}
+	public void setAbizcarNBNM(String abizcarNBNM) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 
 }
