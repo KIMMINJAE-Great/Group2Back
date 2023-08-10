@@ -44,7 +44,7 @@
    <update id="updateComRegInfoByCocd" parameterType="ComDTO">
 	UPDATE sco SET
 		CO_CD = #{co_cd},
-		co_nm = #{co_nm},          
+		CO_NM = #{co_nm},          
 	    USE_YN = #{use_yn},
 	    CO_NK = #{co_nk},
 	    LNG = #{lng},
