@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.dz.back.acc.acc1000.acc1011.dto.DeptDTO;
+import com.dz.back.acc.acc1000.acc1012.dto.TradeManagementDTO;
 import com.dz.back.acc.acc1000.acc1013.dao.ACC1013DAO;
 import com.dz.back.acc.acc1000.acc1013.dto.ComDTO;
 
@@ -22,18 +24,10 @@ public class ACC1013ServiceImpl {
 	
 	//저장코드!!!! (저장/업데이트) (회사코드가 비어있다는것은 아무것도 입력안했을 때..라고 가정)
 	public void saveComRegInfo(ComDTO comDTO) {
-		String co_cd = comDTO.getCo_cd();
-		List<ComDTO> comRegInfoExist = acc1013dao.getComRegInfoByCocd(co_cd); 
-		System.out.println("저장이후에::"+co_cd);
-		System.out.println("comRegInfoExist"+comRegInfoExist);
-		if(comRegInfoExist !=null && !comRegInfoExist.isEmpty()) {  // 회사 정보가 존재하면 업데이트
-			
-			acc1013dao.updateComRegInfoByCocd(comDTO);
-			System.out.println("바꾼후???:"+comDTO);
-			
-		} else { // 회사 정보가 존재하지 않으면 저장
-			acc1013dao.saveComRegInfo(comDTO);
-		}
+
+		
+		acc1013dao.saveComRegInfo(comDTO);
+		
 	}
 	
 	//삭제코드!!!
@@ -47,5 +41,14 @@ public class ACC1013ServiceImpl {
 		return acc1013dao.getAllComRegInfo();
 	}
 	
+	public void updateComRegInfoByCocd(ComDTO comDTO) {
+		acc1013dao.updateComRegInfoByCocd(comDTO);
+	}
+	
+	//부서등록 카피 코드
+	public ComDTO getCardSt(String co_cd) {
+		System.out.println(co_cd);
+		return acc1013dao.getStByCode(co_cd);
+	}
 
 }

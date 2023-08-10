@@ -16,4 +16,10 @@ public interface ACE1010Service {
 	public List<SendYnDTO> sendyn();
 
 	public List<StartEndFgDTO> startendfg();
+
+	public int insertAbizCarPerson(AbizCarPersonDTO dto);
+
+	public Integer findMaxSeqNb(String car_cd);
+
+	public List<AbizCarPersonDTO> findallbycar(String car_cd);
 }

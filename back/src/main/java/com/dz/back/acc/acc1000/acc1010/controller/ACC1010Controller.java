@@ -145,7 +145,7 @@ public class ACC1010Controller {
 	        String autoCempCd = empService.searchEmpCd(empDTO.getCo_cd());
 	        
 	        System.out.println("autoCempCd...................." + autoCempCd);
-	        
+//	        만약 네자리수로 입력되어 있는 사원번호가 있다면 아래의 앞에서 4자리를 잘라내는것 때문에 다시 000001부터 시작해서 duplicate 오류발생
 	        int num =0 ;
 	        if(autoCempCd.length() == 10) {
 	        	num = Integer.parseInt(autoCempCd.substring(4));
