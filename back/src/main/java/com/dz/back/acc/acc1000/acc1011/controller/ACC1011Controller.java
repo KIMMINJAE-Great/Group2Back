@@ -74,7 +74,7 @@ public class ACC1011Controller {
     }
 	
 	
-	//ī�� �� ��������
+//	카드 클릭시 정보가져오기
 	@PostMapping("/getdept")
 	public ResponseEntity<DeptDTO> getCardDept(@RequestBody Map<String, String> dept_cd) {
 
