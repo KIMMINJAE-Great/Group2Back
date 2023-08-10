@@ -36,5 +36,22 @@ public class ACE1010Serviceimpl implements ACE1010Service {
 	public List<StartEndFgDTO> startendfg() {
 		return dao.startendfg();
 	}
+	@Override
+	public int insertAbizCarPerson(AbizCarPersonDTO dto) {
+		
+		 return dao.insertAbizCarPerson(dto);
+	}
+	
+//	차량의 최대 seq_nb를 가져온다.
+	@Override
+	public Integer findMaxSeqNb(String car_cd) {
+		
+		return dao.findMaxSeqNb(car_cd);
+	}
+	@Override
+	public List<AbizCarPersonDTO> findallbycar(String car_cd) {
+		// TODO Auto-generated method stub
+		return dao.findallbycar(car_cd);
+	}
 
 }

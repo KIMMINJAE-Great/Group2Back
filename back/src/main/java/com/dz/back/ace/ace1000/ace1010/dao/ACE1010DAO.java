@@ -42,4 +42,21 @@ public class ACE1010DAO {
 		
 		return sqlSession.getMapper(ACE1010Mapper.class).startendfg();
 	}
+
+// Test 款青扁废何 历厘 
+	public int insertAbizCarPerson(AbizCarPersonDTO dto) {
+		
+		 return sqlSession.getMapper(ACE1010Mapper.class).insertAbizCarPerson(dto);
+	}
+
+
+	public Integer findMaxSeqNb(String car_cd) {
+		
+		return sqlSession.getMapper(ACE1010Mapper.class).findMaxSeqNb(car_cd);
+	}
+
+
+	public List<AbizCarPersonDTO> findallbycar(String car_cd) {
+		return sqlSession.getMapper(ACE1010Mapper.class).findallbycar(car_cd);
+	}
 }
