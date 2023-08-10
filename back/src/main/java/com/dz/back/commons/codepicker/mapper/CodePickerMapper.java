@@ -14,15 +14,16 @@ import com.dz.back.acd.acd1000.acd1010.dto.CarDTO;
 
 public interface CodePickerMapper {
 	//company
-	List<ComDTO> CompanyfindByName(@Param("name") String name);
-    List<ComDTO> CompanyfindByCode(@Param("code") Integer code);
+	List<ComDTO> searchCompanyByKeyword(@Param("keyword") String keyword);
     //trade
-    List<TradeManagementDTO> TradefindByName(@Param("name") String name);
-    List<TradeManagementDTO> TradefindByCode(@Param("code") Integer code);
+    List<TradeManagementDTO> searchTradeByKeyword(@Param("keyword") String keyword);
     //car
-    List<CarDTO> RegCarfindByName(@Param("name") String name);
-    //dept
-    List<DeptDTO> DeptfindByName(@Param("name") String name);    
-    //emp
-    List<ACC1010EmpDTO> EmpfindByName(@Param("name") String name);
+    List<CarDTO> searchCarByKeyword(@Param("keyword") String keyword);
+
+//    //dept
+//    List<DeptDTO> DeptfindByName(@Param("name") String name);  
+//    List<DeptDTO> DeptfindByCode(@Param("code") Integer code);   
+//    //emp
+//    List<ACC1010EmpDTO> EmpfindByName(@Param("name") String name);
+    
 }

@@ -20,36 +20,37 @@ public class CodePickerDAO {
 	@Autowired
 	SqlSession sqlSession;
 //comapny
-	public List<ComDTO> CompanyfindByName(String name) {
-		return sqlSession.getMapper(CodePickerMapper.class).CompanyfindByName(name);
+	public List<ComDTO> searchCompanyByKeyword(String keyword) {
+		 return sqlSession.getMapper(CodePickerMapper.class).searchCompanyByKeyword(keyword);
 	}
 
-	public List<ComDTO> CompanyfindByCode(Integer code) {
-		return sqlSession.getMapper(CodePickerMapper.class).CompanyfindByCode(code);
-	}
 //trade
-	public List<TradeManagementDTO> TradefindByName(String name) {
-		return sqlSession.getMapper(CodePickerMapper.class).TradefindByName(name);
+	public List<TradeManagementDTO> searchTradeByKeyword(String keyword) {
+		 return sqlSession.getMapper(CodePickerMapper.class).searchTradeByKeyword(keyword);
 	}
 
-	public List<TradeManagementDTO> TradefindByCode(Integer code) {
-		return sqlSession.getMapper(CodePickerMapper.class).TradefindByCode(code);
-	}	
 	
+	//regcar
+	public List<CarDTO> searchCarByKeyword(String keyword) {
+	    return sqlSession.getMapper(CodePickerMapper.class).searchCarByKeyword(keyword);
+	}
 	
-	public List<CarDTO> RegCarfindByName(String name) {
-		return sqlSession.getMapper(CodePickerMapper.class).RegCarfindByName(name);
-	}
-	public List<DeptDTO> DeptfindByName(String name) {
-		return sqlSession.getMapper(CodePickerMapper.class).DeptfindByName(name);
-	}
-	public List<ACC1010EmpDTO> EmpfindByName(String name) throws Exception {
-	    try {
-	    	System.out.println("여기서 문제발생?");
-	        return sqlSession.getMapper(CodePickerMapper.class).EmpfindByName(name);
-	    } catch (Exception e) {
-	        // Optionally, log the error here.
-	        throw new Exception("DB에 에러 발생함", e);
-	    }
-	}
+//	//dept
+//	public List<DeptDTO> DeptfindByName(String name) {
+//		return sqlSession.getMapper(CodePickerMapper.class).DeptfindByName(name);
+//	}
+//	public List<DeptDTO> DeptfindByCode(Integer code) {
+//		return sqlSession.getMapper(CodePickerMapper.class).DeptfindByCode(code);
+//	}
+//	
+//	
+//	public List<ACC1010EmpDTO> EmpfindByName(String name) throws Exception {
+//	    try {
+//	    	System.out.println("여기서 문제발생?");
+//	        return sqlSession.getMapper(CodePickerMapper.class).EmpfindByName(name);
+//	    } catch (Exception e) {
+//	        // Optionally, log the error here.
+//	        throw new Exception("DB에 에러 발생함", e);
+//	    }
+//	}
 }
