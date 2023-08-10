@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dz.back.acc.acc1000.acc1010.dto.ACC1010EmpDTO;
@@ -35,6 +36,36 @@ public class ACD1010Controller {
 		System.out.println(carCardList);
 		return ResponseEntity.ok(carCardList);
 	}
+	
+	
+	@GetMapping("/carsearch")
+    public ResponseEntity<List<CarDTO>> carSearch(@RequestParam(required = false) String lease_yn) {
+
+        List<CarDTO> carSearchList;
+        if (lease_yn == "" || lease_yn.equals("all")) {
+            carSearchList = regcarService.getCardCarList();
+        } else {
+        	if(lease_yn != null && lease_yn.isEmpty()) {
+        		lease_yn = null;
+        	}
+
+            if (lease_yn != null) {
+                if (lease_yn.isEmpty()) {
+                	lease_yn = null;
+                } else if (lease_yn.equals("owned")) {
+                	lease_yn = "1";
+                }else if (lease_yn.equals("rented")) {
+                	lease_yn = "2";
+                }else if (lease_yn.equals("leased")) {
+                	lease_yn = "3";
+            }}
+
+            CarDTO carSearch = new CarDTO();
+            carSearch.setLease_yn(lease_yn);
+            carSearchList = regcarService.carSearch(carSearch);
+        }
+        return ResponseEntity.ok().body(carSearchList);
+    }
 
 //	카드 클릭시 정보가져오기
 	@PostMapping("/getRegcarCard")

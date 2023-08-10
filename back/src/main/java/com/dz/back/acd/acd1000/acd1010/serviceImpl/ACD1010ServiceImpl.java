@@ -38,4 +38,9 @@ public class ACD1010ServiceImpl {
 		regcarDAO.deleteRegCar(car_cd);
 		
 	}
+
+	public List<CarDTO> carSearch(CarDTO carSearch) {
+		
+		return regcarDAO.carSearch(carSearch);
+	}
 }
