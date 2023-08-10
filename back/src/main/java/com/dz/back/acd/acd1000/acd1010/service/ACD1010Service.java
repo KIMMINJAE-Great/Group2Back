@@ -16,6 +16,8 @@ public interface ACD1010Service {
 	
 	void deleteRegCar(String car_cd);
 	
+	List<CarDTO> carSearch(CarDTO carSearch);
+	
 	
 
 }

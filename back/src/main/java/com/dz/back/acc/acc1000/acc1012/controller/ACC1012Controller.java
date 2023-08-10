@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dz.back.acc.acc1000.acc1011.dto.DeptDTO;
 import com.dz.back.acc.acc1000.acc1012.dto.TradeManagementDTO;
 import com.dz.back.acc.acc1000.acc1012.serviceimpl.ACC1012Serviceimpl;
 
@@ -44,7 +45,7 @@ public class ACC1012Controller {
 
 		TradeManagementDTO stCard = acc1012Service.getCardSt(tr_cd.get("tr_cd"));
 		System.out.println(stCard);
-System.out.println(stCard);
+		System.out.println(stCard);
 		return ResponseEntity.ok(stCard);
 	}
 
@@ -113,13 +114,22 @@ System.out.println(stCard);
 				: ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 	}
 
-	/* 거래처관리 - 기본등록사항 삭제 - DELETE */
+	/* 거래처관리 - 기본등록사항 삭제 - 체크박스 선택 1개만 DELETE */
 	@DeleteMapping("/deleteSt/{tr_cd}")
 	public ResponseEntity<Object> deleteSt(@PathVariable String tr_cd) {
 		System.out.println("/tradeManagement/deleteSt 실행됨");
 		acc1012Service.deleteStData(tr_cd);
 
 		return ResponseEntity.ok().build();
+	}
+
+	/* 거래처관리 - 기본등록사항 삭제 - 체크박스 선택 2개 이상 DELETE */
+	@DeleteMapping("/deleteSt")
+	public void deleteCheckedSt(@RequestBody List<TradeManagementDTO> stradeList) {
+		for (TradeManagementDTO st : stradeList) {
+			System.out.println(st.getTr_cd());
+			acc1012Service.deleteStData(st.getTr_cd());
+		}
 	}
 
 	/* 거래처관리 - 기본등록사항 수정 - UPDATE */
