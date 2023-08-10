@@ -30,8 +30,10 @@ public class CodePickerController {
 	private CodePickerServiceImpl codePickerServiceImpl;
 	
 
-	private static final Logger logger = LoggerFactory.getLogger(CodePickerController.class);
+	
 
+	/* codepicker was changed to only use 3 */
+	
 	//회사코드도움
 	@GetMapping("/company/searchinfo")
 	public List<ComDTO> SearchCodePickerCompanyInfo(@RequestParam("value") String keyword) {
@@ -54,39 +56,23 @@ public class CodePickerController {
 		System.out.println("코드피커 차량 (Test)검색 컨트롤러 실행됨");
 		return codePickerServiceImpl.getRegCarByKeyword(keyword);
 	}
-	//부서코드도움
-	@GetMapping("/depmanagement/searchinfo")
-	public List<DeptDTO> SearchCodePickerDeptInfo(@RequestParam("value") String keyword) {
-		//
-		System.out.println("코드피커 부서 (Test)검색 컨트롤러 실행됨");
-		return codePickerServiceImpl.getDeptByKeyword(keyword);
-	}
-	
-//	//사원코드도움
-//	@GetMapping("/empmanagement/searchinfo")
-//	public ResponseEntity<List<ACC1010EmpDTO>> SearchCodePickerEmpInfo(@RequestParam("value") String keyword) {
+//	//부서코드도움
+//	@GetMapping("/depmanagement/searchinfo")
+//	public List<DeptDTO> SearchCodePickerDeptInfo(@RequestParam("value") String keyword) {
 //		//
-//		System.out.println("코드피커 사원 검색 컨트롤러 실행됨");		
-//		return codePickerServiceImpl.getEmpByKeyword(keyword);
+//		System.out.println("코드피커 부서 (Test)검색 컨트롤러 실행됨");
+//		return codePickerServiceImpl.getDeptByKeyword(keyword);
 //	}
 	
-	@GetMapping("/empmanagement/searchinfo")
-	public ResponseEntity<List<ACC1010EmpDTO>> SearchCodePickerEmpInfo(@RequestParam("value") String keyword) {
-	    System.out.println("코드피커 사원 검색 컨트롤러 실행됨");
-	    ResponseEntity<List<ACC1010EmpDTO>> response = codePickerServiceImpl.getEmpByKeyword(keyword);
-
-	    logger.info("Response: {}", response);
-
-	    return response;
-	}
 	
-	@GetMapping("/codepicker/company")
-	public void SearchCodePickerCompany() {
-		
-	}
+//	@GetMapping("/empmanagement/searchinfo")
+//	public ResponseEntity<List<ACC1010EmpDTO>> SearchCodePickerEmpInfo(@RequestParam("value") String keyword) {
+//	    System.out.println("코드피커 사원 검색 컨트롤러 실행됨");
+//	    ResponseEntity<List<ACC1010EmpDTO>> response = codePickerServiceImpl.getEmpByKeyword(keyword);
+//
+//	    logger.info("Response: {}", response);
+//
+//	    return response;
+//	}
 	
-	@GetMapping("/codepicker/emp")
-	public void SearchCodePickerEmp() {
-		
-	}
 }

@@ -42,4 +42,9 @@ public class ACD1010DAO {
 			sqlSession.getMapper(ACD1010Mapper.class).deleteRegCar(car_cd);
 			
 		}
+
+		public List<CarDTO> carSearch(CarDTO carSearch) {
+			
+			return sqlSession.getMapper(ACD1010Mapper.class).carSearch(carSearch);
+		}
 }

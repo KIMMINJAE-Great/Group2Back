@@ -119,8 +119,23 @@
 	</update>
 
 	<delete id="deleteRegCar" parameterType="String">
-		DELETE FROM abizcar WHERE car_cd = #{car_cd}
+		DELETE FROM abizcar
+		WHERE car_cd = #{car_cd}
 	</delete>
+
+	<select id="carSearch"
+		parameterType="com.dz.back.acd.acd1000.acd1010.dto.CarDTO"
+		resultMap="regcarMap">
+		SELECT *
+		FROM abizcar
+		WHERE 1 = 1
+		<!-- <if test="co_cd != null">
+			AND co_cd = #{co_cd}
+		</if> -->
+		<if test="lease_yn != null">
+			AND lease_yn = #{lease_yn}
+		</if>
+	</select>
 
 
 
