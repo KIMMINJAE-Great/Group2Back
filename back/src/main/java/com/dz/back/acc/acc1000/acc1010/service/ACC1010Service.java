@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.dz.back.acc.acc1000.acc1010.dto.ACC1010EmpDTO;
 import com.dz.back.acc.acc1000.acc1010.dto.ACC1010MauthDTO;
+import com.dz.back.acc.acc1000.acc1010.dto.MenuDTO;
 
 public interface ACC1010Service {
 
@@ -24,4 +25,5 @@ public interface ACC1010Service {
 	int insertMauth (ACC1010MauthDTO dto);
 	void deleteMauth(ACC1010MauthDTO dto);
 	int checkEmpId(String emp_id);
+	 MenuDTO searchMenu(String menucd);
 }

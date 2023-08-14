@@ -104,6 +104,7 @@ public class ACC1010Serviceimpl implements ACC1010Service  {
 		return empDAO.getMauth(emp_cd);
 	}
 //메뉴 가져오기
+	@Override
 	public MenuDTO searchMenu(String menucd) {
 		return empDAO.searchMenu(menucd);
 	}
