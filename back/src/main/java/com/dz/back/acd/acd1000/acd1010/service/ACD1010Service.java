@@ -18,6 +18,6 @@ public interface ACD1010Service {
 	
 	List<CarDTO> carSearch(CarDTO carSearch);
 	
-	
+	CarDTO findCar (String car_cd);
 
 }

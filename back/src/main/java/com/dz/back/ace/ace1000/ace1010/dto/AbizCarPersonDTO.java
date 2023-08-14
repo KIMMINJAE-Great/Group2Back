@@ -28,6 +28,7 @@ public class AbizCarPersonDTO {
 	private String modify_ip;
 	private String modify_dt;
 	private String data_fg;
+	private String rmk_dc;
 	
 	public String getStart_fg() {
 		return start_fg;
@@ -36,7 +37,12 @@ public class AbizCarPersonDTO {
 		this.start_fg = start_fg;
 	}
 	
-	
+	public String getRmk_dc() {
+		return rmk_dc;
+	}
+	public void setRmk_dc(String rmk_dc) {
+		this.rmk_dc = rmk_dc;
+	}
 	public String getCo_cd() {
 		return co_cd;
 	}
@@ -187,8 +193,6 @@ public class AbizCarPersonDTO {
 	public void setData_fg(String data_fg) {
 		this.data_fg = data_fg;
 	}
-	
-
 	@Override
 	public String toString() {
 		return "AbizCarPersonDTO [co_cd=" + co_cd + ", seq_nb=" + seq_nb + ", car_cd=" + car_cd + ", use_dt=" + use_dt
@@ -198,8 +202,11 @@ public class AbizCarPersonDTO {
 				+ end_addr1 + ", mileage_km=" + mileage_km + ", before_km=" + before_km + ", after_km=" + after_km
 				+ ", send_yn=" + send_yn + ", insert_id=" + insert_id + ", insert_ip=" + insert_ip + ", insert_dt="
 				+ insert_dt + ", modify_id=" + modify_id + ", modify_ip=" + modify_ip + ", modify_dt=" + modify_dt
-				+ ", data_fg=" + data_fg + "]";
+				+ ", data_fg=" + data_fg + ", rmk_dc=" + rmk_dc + "]";
 	}
+	
+
+	
 	
 	
 }

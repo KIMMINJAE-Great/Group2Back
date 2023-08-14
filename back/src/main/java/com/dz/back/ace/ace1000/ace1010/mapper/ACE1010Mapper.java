@@ -22,4 +22,6 @@ public interface ACE1010Mapper {
 	public Integer findMaxSeqNb(String car_cd);
 
 	public List<AbizCarPersonDTO> findallbycar(String car_cd);
+
+	public int updateAbizCarPerson(AbizCarPersonDTO dto);
 }

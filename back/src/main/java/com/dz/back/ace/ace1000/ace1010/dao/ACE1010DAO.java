@@ -59,4 +59,10 @@ public class ACE1010DAO {
 	public List<AbizCarPersonDTO> findallbycar(String car_cd) {
 		return sqlSession.getMapper(ACE1010Mapper.class).findallbycar(car_cd);
 	}
+
+
+	public int updateAbizCarPerson(AbizCarPersonDTO dto) {
+		System.out.println(dto.toString());
+		return sqlSession.getMapper(ACE1010Mapper.class).updateAbizCarPerson(dto);
+	}
 }

@@ -7,10 +7,11 @@ import org.springframework.stereotype.Service;
 
 import com.dz.back.acd.acd1000.acd1010.dao.ACD1010DAO;
 import com.dz.back.acd.acd1000.acd1010.dto.CarDTO;
+import com.dz.back.acd.acd1000.acd1010.service.ACD1010Service;
 
 
 @Service
-public class ACD1010ServiceImpl {
+public class ACD1010ServiceImpl implements ACD1010Service{
 	
 	@Autowired
 	ACD1010DAO regcarDAO;
@@ -43,4 +44,12 @@ public class ACD1010ServiceImpl {
 		
 		return regcarDAO.carSearch(carSearch);
 	}
+
+	@Override
+	public CarDTO findCar(String car_cd) {
+		
+		return regcarDAO.findCar(car_cd);
+	}
+	
+	
 }

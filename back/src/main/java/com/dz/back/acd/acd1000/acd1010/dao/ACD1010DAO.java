@@ -47,4 +47,8 @@ public class ACD1010DAO {
 			
 			return sqlSession.getMapper(ACD1010Mapper.class).carSearch(carSearch);
 		}
+
+		public CarDTO findCar(String car_cd) {
+			return sqlSession.getMapper(ACD1010Mapper.class).findCar(car_cd);
+		}
 }

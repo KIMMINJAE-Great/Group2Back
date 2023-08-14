@@ -10,6 +10,8 @@
 		<id property="car_cd" column="CAR_CD" />
 		<id property="use_dt" column="USE_DT" />
 		<id property="emp_cd" column="EMP_CD" />
+		
+		<result property="rmk_dc" column="RMK_DC" />
 		<result property="start_time" column="START_TIME" />
 		<result property="end_time" column="END_TIME" />
 		<result property="dept_cd" column="DEPT_CD" />
@@ -35,63 +37,66 @@
 
 	<select id="getallcars" resultMap="abizcarpersonMap">
 		select
-		abizcarperon.co_cd,
-		abizcarperon.seq_nb,
-		abizcarperon.car_cd,
-		abizcarperon.use_dt,
-		abizcarperon.emp_cd,
-		abizcarperon.start_time,
-		abizcarperon.end_time,
-		abizcarperon.dept_cd,
-		abizcarperon.use_fg,
-		abizcarperon.start_fg,
-		abizcarperon.start_addr,
-		abizcarperon.start_addr1,
-		abizcarperon.end_fg,
-		abizcarperon.end_addr,
-		abizcarperon.end_addr1,
-		abizcarperon.mileage_km,
-		abizcarperon.before_km,
-		abizcarperon.after_km,
-		abizcarperon.send_yn,
-		abizcarperon.insert_id,
-		abizcarperon.insert_ip,
-		abizcarperon.modify_id,
-		abizcarperon.modify_ip,
-		abizcarperon.modify_dt,
-		abizcarperon.data_fg
-		from abizcar_person as abizcarperon
+		abizcarperson.co_cd,
+		abizcarperson.seq_nb,
+		abizcarperson.car_cd,
+		abizcarperson.use_dt,
+		abizcarperson.emp_cd,
+		abizcarperson.start_time,
+		abizcarperson.end_time,
+		abizcarperson.dept_cd,
+		abizcarperson.use_fg,
+		abizcarperson.start_fg,
+		abizcarperson.start_addr,
+		abizcarperson.start_addr1,
+		abizcarperson.end_fg,
+		abizcarperson.end_addr,
+		abizcarperson.end_addr1,
+		abizcarperson.mileage_km,
+		abizcarperson.before_km,
+		abizcarperson.after_km,
+		abizcarperson.send_yn,
+		abizcarperson.insert_id,
+		abizcarperson.insert_ip,
+		abizcarperson.modify_id,
+		abizcarperson.modify_ip,
+		abizcarperson.modify_dt,
+		abizcarperson.data_fg
+		from abizcar_person as abizcarperson
 	</select>
 	
 	<select id="findallbycar" resultMap="abizcarpersonMap">
 	SELECT
-		abizcarperon.co_cd,
-		abizcarperon.seq_nb,
-		abizcarperon.car_cd,
-		abizcarperon.use_dt,
-		abizcarperon.emp_cd,
-		abizcarperon.start_time,
-		abizcarperon.end_time,
-		abizcarperon.dept_cd,
-		abizcarperon.use_fg,
-		abizcarperon.start_fg,
-		abizcarperon.start_addr,
-		abizcarperon.start_addr1,
-		abizcarperon.end_fg,
-		abizcarperon.end_addr,
-		abizcarperon.end_addr1,
-		abizcarperon.mileage_km,
-		abizcarperon.before_km,
-		abizcarperon.after_km,
-		abizcarperon.send_yn,
-		abizcarperon.insert_id,
-		abizcarperon.insert_ip,
-		abizcarperon.modify_id,
-		abizcarperon.modify_ip,
-		abizcarperon.modify_dt,
-		abizcarperon.data_fg
-		from abizcar_person as abizcarperon
-		WHERE abizcarperon.car_cd = #{car_cd}
+		abizcarperson.co_cd,
+		abizcarperson.seq_nb,
+		abizcarperson.car_cd,
+		abizcarperson.use_dt,
+		abizcarperson.emp_cd,
+		abizcarperson.start_time,
+		abizcarperson.end_time,
+		abizcarperson.dept_cd,
+		abizcarperson.use_fg,
+		abizcarperson.start_fg,
+		abizcarperson.start_addr,
+		abizcarperson.start_addr1,
+		abizcarperson.end_fg,
+		abizcarperson.end_addr,
+		abizcarperson.end_addr1,
+		abizcarperson.mileage_km,
+		abizcarperson.before_km,
+		abizcarperson.after_km,
+		abizcarperson.send_yn,
+		abizcarperson.insert_id,
+		abizcarperson.insert_ip,
+		abizcarperson.modify_id,
+		abizcarperson.modify_ip,
+		abizcarperson.modify_dt,
+		abizcarperson.rmk_dc,
+		abizcarperson.data_fg
+		from abizcar_person as abizcarperson
+		WHERE abizcarperson.car_cd = #{car_cd}
+		
+		ORDER BY abizcarperson.use_dt ASC, abizcarperson.start_time ASC
 	</select>
 	
 	<!-- 운행 구분 -->
@@ -157,7 +162,8 @@
 		INSERT_DT,
 		MODIFY_ID,
 		MODIFY_IP,
-		MODIFY_DT
+		MODIFY_DT,
+		RMK_DC
 		
 	) VALUES (
 		#{co_cd},
@@ -184,11 +190,44 @@
 		#{insert_dt},
 		#{modify_id},
 		#{modify_ip},
-		#{modify_dt}
+		#{modify_dt},
+		#{rmk_dc}
 		
 	)
 
 </insert>
+
+<!-- 운행기록부 한 행 저장-->
+<update id="updateAbizCarPerson" parameterType="com.dz.back.ace.ace1000.ace1010.dto.AbizCarPersonDTO" >
+	UPDATE abizcar_person SET
+	
+		CO_CD = #{co_cd},
+		SEQ_NB = #{seq_nb},
+		CAR_CD = #{car_cd},
+		USE_DT = #{use_dt},
+		EMP_CD = #{emp_cd},
+		START_TIME = #{start_time},
+		END_TIME = #{end_time},
+		DEPT_CD = #{dept_cd},
+		USE_FG = #{use_fg},
+		START_FG = #{start_fg},
+		START_ADDR = #{start_addr},
+		START_ADDR1 = #{start_addr1},
+		END_FG = #{end_fg},
+		END_ADDR = #{end_addr},
+		END_ADDR1 = #{end_addr1},
+		MILEAGE_KM = #{mileage_km},
+		BEFORE_KM = #{before_km},
+		AFTER_KM = #{after_km},
+		SEND_YN = #{send_yn},
+		MODIFY_ID = #{modify_id},
+		MODIFY_IP = #{modify_ip},
+		MODIFY_DT= #{modify_dt},
+		RMK_DC = #{rmk_dc}
+		
+	WHERE SEQ_NB = #{seq_nb} AND CAR_CD = #{car_cd}
+
+</update>
 
 <!-- 차량의 최대 seq_nm 찾기 -->
 <select id="findMaxSeqNb"  parameterType="String" resultType="Integer"> 

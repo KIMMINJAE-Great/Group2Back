@@ -9,7 +9,7 @@
 		<id column="CO_CD" property="co_cd" />
 
 		<id column="CAR_CD" property="car_cd" />
-
+		<result column="EMP_CD" property="emp_cd"/>
 		<result column="CAR_NB" property="car_nb" />
 
 		<result column="CAR_NM" property="car_nm" />
@@ -136,7 +136,10 @@
 			AND lease_yn = #{lease_yn}
 		</if>
 	</select>
-
+<!-- 민재추가 -->
+	<select id="findCar" resultMap="regcarMap"> 
+		SELECT * from abizcar WHERE car_cd = #{car_cd}
+	</select>
 
 
 </mapper>

@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 public class CarDTO {
 	private String co_cd;
+	private String emp_cd;
 	private String car_cd;
 	private String car_nb;
 	private String car_nm;
@@ -19,19 +20,27 @@ public class CarDTO {
 	public String getCo_cd() {
 		return co_cd;
 	}
+	
+	
+	
 	@Override
 	public String toString() {
-		return "CarDTO [co_cd=" + co_cd + ", car_cd=" + car_cd + ", car_nb=" + car_nb + ", car_nm=" + car_nm
-				+ ", get_dt=" + get_dt + ", disposal_dt=" + disposal_dt + ", lease_yn=" + lease_yn + ", lfr_dt="
-				+ lfr_dt + ", lto_dt=" + lto_dt + ", insur_tr_cd=" + insur_tr_cd + ", ifr_dt=" + ifr_dt + ", ito_dt="
-				+ ito_dt + ", use_yn=" + use_yn + ", getCo_cd()=" + getCo_cd() + ", getCar_cd()=" + getCar_cd()
-				+ ", getCar_nb()=" + getCar_nb() + ", getCar_nm()=" + getCar_nm() + ", getGet_dt()=" + getGet_dt()
-				+ ", getDisposal_dt()=" + getDisposal_dt() + ", getLease_yn()=" + getLease_yn() + ", getLfr_dt()="
-				+ getLfr_dt() + ", getLto_dt()=" + getLto_dt() + ", getInsur_tr_cd()=" + getInsur_tr_cd()
-				+ ", getIfr_dt()=" + getIfr_dt() + ", getIto_dt()=" + getIto_dt() + ", getUse_yn()=" + getUse_yn()
-				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString()
-				+ "]";
+		return "CarDTO [co_cd=" + co_cd + ", emp_cd=" + emp_cd + ", car_cd=" + car_cd + ", car_nb=" + car_nb
+				+ ", car_nm=" + car_nm + ", get_dt=" + get_dt + ", disposal_dt=" + disposal_dt + ", lease_yn="
+				+ lease_yn + ", lfr_dt=" + lfr_dt + ", lto_dt=" + lto_dt + ", insur_tr_cd=" + insur_tr_cd + ", ifr_dt="
+				+ ifr_dt + ", ito_dt=" + ito_dt + ", use_yn=" + use_yn + "]";
 	}
+
+
+
+	public String getEmp_cd() {
+		return emp_cd;
+	}
+
+	public void setEmp_cd(String emp_cd) {
+		this.emp_cd = emp_cd;
+	}
+
 	public void setCo_cd(String co_cd) {
 		this.co_cd = co_cd;
 	}

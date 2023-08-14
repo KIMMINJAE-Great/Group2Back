@@ -25,5 +25,8 @@ public interface ACD1010Mapper {
 
 
 	List<CarDTO> carSearch(CarDTO carSearch);
+
+
+	CarDTO findCar(String car_cd);
 	
 }

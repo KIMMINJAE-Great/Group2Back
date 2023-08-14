@@ -53,5 +53,10 @@ public class ACE1010Serviceimpl implements ACE1010Service {
 		// TODO Auto-generated method stub
 		return dao.findallbycar(car_cd);
 	}
+	@Override
+	public int updateAbizCarPerson(AbizCarPersonDTO dto) {
+		
+		return dao.updateAbizCarPerson(dto);
+	}
 
 }
