@@ -67,11 +67,11 @@ public class ACD1010Controller {
         return ResponseEntity.ok().body(carSearchList);
     }
 
-//   Ä«ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-   @PostMapping("/getRegcarCard")
-   public ResponseEntity<CarDTO> getEmpCard(@RequestBody Map<String, String> car_cd) {
-      CarDTO dto = regcarService.getRegcarCard(car_cd.get("car_cd"));
-      return ResponseEntity.ok().body(dto);
+//	ì¹´å ì™ì˜™ í´å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™å ì™ì˜™å ì™ì˜™å ì™ì˜™å ì™ì˜™
+	@PostMapping("/getRegcarCard")
+	public ResponseEntity<CarDTO> getEmpCard(@RequestBody Map<String, String> car_cd) {
+		CarDTO dto = regcarService.getRegcarCard(car_cd.get("car_cd"));
+		return ResponseEntity.ok().body(dto);
 
    }
    
@@ -79,40 +79,50 @@ public class ACD1010Controller {
    public ResponseEntity<String> getCarsInfo() {
        List<CarDTO> carCardList = regcarService.getCardCarList();
 
-       //  ´  „ — Š” carCardListë¥  CarDTOë¡  ×çìŠ¤ Œ… •˜  ¤ê³   –ˆ œ¼ ‚˜,  ´  œ Š” ë¦¬ìŠ¤ Š¸ ˜  š” †Œë¥  ê°   ¸   •¼  •© ‹ˆ ‹¤.
-       if (!carCardList.isEmpty()) {
-           CarDTO carDTO = carCardList.get(0);
+	    // ï¿½ì” ï¿½ìŸ¾ï¿½ë¿‰ï¿½ë’— carCardListç‘œï¿½ CarDTOæ¿¡ï¿½ ï§¦ë¨¯ë’ªï¿½ë˜¿ï¿½ë¸¯ï¿½ì ®æ€¨ï¿½ ï¿½ë»½ï¿½ì‘ï¿½êµ¹, ï¿½ì” ï¿½ì £ï¿½ë’— ç”±ÑŠë’ªï¿½ë“ƒï¿½ì“½ ï¿½ìŠ‚ï¿½ëƒ¼ç‘œï¿½ åª›ï¿½ï¿½ì¡‡ï¿½ï¿½ï¿½ë¹ ï¿½ë¹€ï¿½ë•²ï¿½ë–.
+	    if (!carCardList.isEmpty()) {
+	        CarDTO carDTO = carCardList.get(0);
 
            String abizcarNBNM = carDTO.getCar_nb() + '.' + carDTO.getCar_nm();
 
-           CarDTO responseDTO = new CarDTO();
-           responseDTO.setAbizcarNBNM(abizcarNBNM);
-           System.out.println("getCarsInfo  ‹¤ –‰ !!!!!!!!");
-           System.out.println("responseDTO :" + responseDTO);
-           System.out.println("abizcarNBNM :" + abizcarNBNM);
+	        CarDTO responseDTO = new CarDTO();
+	        responseDTO.setAbizcarNBNM(abizcarNBNM);
+	        System.out.println("getCarsInfo ï¿½ë–ï¿½ë»¾ !!!!!!!!");
+	        System.out.println("responseDTO :" + responseDTO);
+	        System.out.println("abizcarNBNM :" + abizcarNBNM);
 
-           return ResponseEntity.ok().body(abizcarNBNM);
-       } else {
-           // ×ºŒì•½ carCardListê°  ë¹„ì–´ ˆ ‹¤×¼  Òú˜ë¦¬ •   ‚´ š© „  —¬ê¸°ì— ì¶”ê  •˜ „¸ š”.
-           return ResponseEntity.notFound().build();
-       }
-   }
+	        return ResponseEntity.ok().body(abizcarNBNM);
+	    } else {
+	        // ï§ëš¯ë¹Ÿ carCardListåª›ï¿½ é®ê¾©ë¼±ï¿½ì—³ï¿½ë–ï§ï¿½ ï§£ì„â”ï¿½ë¸· ï¿½ê¶¡ï¿½ìŠœï¿½ì“£ ï¿½ë¿¬æ¹²ê³—ë¿‰ ç•°ë¶½ï¿½ï¿½ë¸¯ï¿½ê½­ï¿½ìŠ‚.
+	        return ResponseEntity.notFound().build();
+	    }
+	}
 
 
-   // Ä«ï¿½ï¿½ ï¿½ß°ï¿½
-   @PostMapping("/addcar")
-   public ResponseEntity<CarDTO> addRegCar(@RequestBody CarDTO dto) {
-      
-      
-       // ¿øº»Çü½Ä¿¡¼­ Ã³À½ºÎÅÍ 10ÀÚ¸®±îÁö¸¸ Àß¶ó¼­ 
-       String GetDt = dto.getGet_dt().substring(0, 10);
-       String DisposalDt = dto.getDisposal_dt().substring(0, 10);
-       String LfrDt = dto.getLfr_dt().substring(0, 10);
-       String LtoDt = dto.getLto_dt().substring(0, 10);
-       String IfrDt = dto.getIfr_dt().substring(0, 10);
-       String ItoDt = dto.getIto_dt().substring(0, 10);
+	// ì¹´å ì™ì˜™ å ìŒ©ê³¤ì˜™
+	@PostMapping("/addcar")
+	public ResponseEntity<CarDTO> addRegCar(@RequestBody CarDTO dto) {
+		
+		
+		 // ì›ë³¸í˜•ì‹ì—ì„œ ì²˜ìŒë¶€í„° 10ìë¦¬ê¹Œì§€ë§Œ ì˜ë¼ì„œ 
+	    String GetDt = dto.getGet_dt().substring(0, 10);
+	    String DisposalDt = dto.getDisposal_dt().substring(0, 10);
+	    String LfrDt = dto.getLfr_dt().substring(0, 10);
+	    String LtoDt = dto.getLto_dt().substring(0, 10);
+	    String IfrDt = dto.getIfr_dt().substring(0, 10);
+	    String ItoDt = dto.getIto_dt().substring(0, 10);
 
-       // ³¯Â¥¸¦ ÀÚ¸¥ °ªÀ¸·Î DTO ¼öÁ¤
+	    // ë‚ ì§œë¥¼ ìë¥¸ ê°’ìœ¼ë¡œ DTO ìˆ˜ì •
+	    dto.setGet_dt(GetDt);
+	    dto.setDisposal_dt(DisposalDt);
+	    dto.setLfr_dt(LfrDt);
+	    dto.setLto_dt(LtoDt);
+	    dto.setIfr_dt(IfrDt);
+	    dto.setIto_dt(ItoDt);
+	    
+		
+
+       // ï¿½ï¿½Â¥ï¿½ï¿½ ï¿½Ú¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ DTO ï¿½ï¿½ï¿½ï¿½
        dto.setGet_dt(GetDt);
        dto.setDisposal_dt(DisposalDt);
        dto.setLfr_dt(LfrDt);
@@ -122,19 +132,26 @@ public class ACD1010Controller {
        
       
 
-      int result = regcarService.addRegCar(dto);
-      System.out.println(result);
-      if (result == 1) {
-         System.out.println(dto);
-         return ResponseEntity.ok(dto);
-      } else {
-         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-      }
-   }
+	// ì¹´å ì™ì˜™ å ìŒ©ê³¤ì˜™
+	@PutMapping("/updatecar")
+	public ResponseEntity<CarDTO> updateRegCar(@RequestBody CarDTO dto) {
 
-   // Ä«ï¿½ï¿½ ï¿½ß°ï¿½
-   @PutMapping("/updatecar")
-   public ResponseEntity<CarDTO> updateRegCar(@RequestBody CarDTO dto) {
+		int result = regcarService.updateRegCar(dto);
+		System.out.println(result);
+		if (result == 1) {
+			System.out.println(dto);
+			return ResponseEntity.ok(dto);
+		} else {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+
+		
+		
+		//ì²´í¬ë°•ìŠ¤ê°€ ì„ íƒë˜ì—ˆì„ë•Œ í•œêº¼ë²ˆì— ì‚­ì œí•˜ê¸°
+		 @DeleteMapping("/deletecar")
+		    public void deleteCheckedCar(@RequestBody List<CarDTO> CarList) {
+		        for (CarDTO car : CarList) {
 
       int result = regcarService.updateRegCar(dto);
       System.out.println(result);
@@ -153,7 +170,7 @@ public class ACD1010Controller {
       }
       
       
-      //Ã¼Å©¹Ú½º°¡ ¼±ÅÃµÇ¾úÀ»¶§ ÇÑ²¨¹ø¿¡ »èÁ¦ÇÏ±â
+      //Ã¼Å©ï¿½Ú½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ÃµÇ¾ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ²ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
        @DeleteMapping("/deletecar")
           public void deleteCheckedCar(@RequestBody List<CarDTO> CarList) {
               for (CarDTO car : CarList) {
