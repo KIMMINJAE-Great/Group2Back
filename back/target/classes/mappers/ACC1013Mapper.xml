@@ -5,13 +5,13 @@
     <id property="co_cd" column="CO_CD" />
     <id property="co_nm" column="CO_NM" />
     <result property="co_nk" column="CO_NK" />
+    <result property="emp_nm" column="EMP_NM" />
     <result property="use_yn" column="USE_YN" />
     <result property="lng" column="LNG" />
     <result property="adm_cd" column="ADM_CD" />
     <result property="bz_type" column="BZ_TYPE" />
     <result property="bz_item" column="BZ_ITEM" />
     <result property="co_tel" column="CO_TEL" />
-    <result property="co_tel2" column="CO_TEL2" />
     <result property="co_fax" column="CO_FAX" />
     <result property="reg_nb" column="REG_NB" />
     <result property="cp_ct" column="CP_CT" />
@@ -24,7 +24,6 @@
     <result property="cls_dt" column="CLS_DT" />
     <result property="ceo_nm" column="CEO_NM" />
     <result property="res_nb" column="RES_NB" />
-    <result property="res_nb2" column="RES_NB2" />
     <result property="domain" column="DOMAIN" />
     <result property="ac_per" column="AC_PER" />
     <result property="ac_dt" column="AC_DT" />
@@ -35,9 +34,9 @@
 
    <insert id="saveComRegInfo" parameterType="ComDTO">
       INSERT INTO SCO 
-        (CO_CD, USE_YN, CO_NM, CO_NK, LNG, ADM_CD, BZ_TYPE, BZ_ITEM, CO_TEL, CO_TEL2, CO_FAX, REG_NB, CP_CT, CP_NO, ADR_ZP, ADR_INP, ADR_ETC, EST_DT, OPN_DT, CLS_DT, CEO_NM, RES_NB, RES_NB2, AC_PER, AC_DT, ACC_TYPE)
+        (CO_CD, USE_YN, CO_NM, EMP_NM, CO_NK, LNG, ADM_CD, BZ_TYPE, BZ_ITEM, CO_TEL, CO_FAX, REG_NB, CP_CT, CP_NO, ADR_ZP, ADR_INP, ADR_ETC, EST_DT, OPN_DT, CLS_DT, CEO_NM, RES_NB, AC_PER, AC_DT, ACC_TYPE)
         VALUES 
-        (#{co_cd}, #{use_yn}, #{co_nm}, #{co_nk}, #{lng}, #{adm_cd}, #{bz_type}, #{bz_item}, #{co_tel}, #{co_tel2}, #{co_fax}, #{reg_nb}, #{cp_ct}, #{cp_no}, #{adr_zp}, #{adr_inp}, #{adr_etc}, #{est_dt}, #{opn_dt}, #{cls_dt}, #{ceo_nm}, #{res_nb}, #{res_nb2}, #{ac_per}, #{ac_dt}, #{acc_type})
+        (#{co_cd}, #{use_yn},  #{co_nm}, #{emp_nm}, #{co_nk}, #{lng}, #{adm_cd}, #{bz_type}, #{bz_item}, #{co_tel}, #{co_fax}, #{reg_nb}, #{cp_ct}, #{cp_no}, #{adr_zp}, #{adr_inp}, #{adr_etc}, #{est_dt}, #{opn_dt}, #{cls_dt}, #{ceo_nm}, #{res_nb}, #{ac_per}, #{ac_dt}, #{acc_type})
    </insert>
    
    <!-- MyBatis XML 업데이트 문 -->
@@ -52,7 +51,6 @@
 	    BZ_TYPE = #{bz_type},
 	    BZ_ITEM = #{bz_item},
 	    CO_TEL = #{co_tel},
-	    CO_TEL2 = #{co_tel2},
 	    CO_FAX = #{co_fax},
 	    REG_NB = #{reg_nb},
 	    CP_CT = #{cp_ct},
@@ -65,7 +63,6 @@
 	    CLS_DT = #{cls_dt},
 	    CEO_NM = #{ceo_nm},
 	    RES_NB = #{res_nb},
-	    RES_NB2 = #{res_nb2},
 	    AC_PER = #{ac_per},
 	    AC_DT = #{ac_dt},
 	    ACC_TYPE = #{acc_type}

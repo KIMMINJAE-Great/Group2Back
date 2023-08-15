@@ -6,13 +6,13 @@ public class ComDTO {
 	private String co_cd;
 	private String co_nm;
 	private String co_nk;
+	private String emp_nm;
 	private String use_yn;
 	private String lng;
 	private String adm_cd;
 	private String bz_type;
 	private String bz_item;
 	private String co_tel;
-	private String co_tel2;
 	private String co_fax;
 	private String reg_nb;
 	private String cp_ct;
@@ -25,7 +25,6 @@ public class ComDTO {
 	private String cls_dt;
 	private String ceo_nm;
 	private String res_nb;
-	private String res_nb2;
 	private String domain;
 	private String ac_per;
 	private String ac_dt;
@@ -35,16 +34,34 @@ public class ComDTO {
 	
 	
 	
+	
+	
+	
+	
 	@Override
 	public String toString() {
-		return "ComDTO [co_cd=" + co_cd + ", co_nm=" + co_nm + ", co_nk=" + co_nk + ", use_yn=" + use_yn + ", lng="
-				+ lng + ", adm_cd=" + adm_cd + ", bz_type=" + bz_type + ", bz_item=" + bz_item + ", co_tel=" + co_tel
-				+ ", co_tel2=" + co_tel2 + ", co_fax=" + co_fax + ", reg_nb=" + reg_nb + ", cp_ct=" + cp_ct + ", cp_no="
+		return "ComDTO [co_cd=" + co_cd + ", co_nm=" + co_nm + ", co_nk=" + co_nk + ", emp_nm=" + emp_nm + ", use_yn="
+				+ use_yn + ", lng=" + lng + ", adm_cd=" + adm_cd + ", bz_type=" + bz_type + ", bz_item=" + bz_item
+				+ ", co_tel=" + co_tel + ", co_fax=" + co_fax + ", reg_nb=" + reg_nb + ", cp_ct=" + cp_ct + ", cp_no="
 				+ cp_no + ", adr_zp=" + adr_zp + ", adr_inp=" + adr_inp + ", adr_etc=" + adr_etc + ", est_dt=" + est_dt
 				+ ", opn_dt=" + opn_dt + ", cls_dt=" + cls_dt + ", ceo_nm=" + ceo_nm + ", res_nb=" + res_nb
-				+ ", res_nb2=" + res_nb2 + ", domain=" + domain + ", ac_per=" + ac_per + ", ac_dt=" + ac_dt
-				+ ", acc_type=" + acc_type + "]";
+				+ ", domain=" + domain + ", ac_per=" + ac_per + ", ac_dt=" + ac_dt + ", acc_type=" + acc_type + "]";
 	}
+
+
+
+	public String getEmp_nm() {
+		return emp_nm;
+	}
+
+
+
+	public void setEmp_nm(String emp_nm) {
+		this.emp_nm = emp_nm;
+	}
+
+
+
 	public String getCo_cd() {
 		return co_cd;
 	}
@@ -98,12 +115,6 @@ public class ComDTO {
 	}
 	public void setCo_tel(String co_tel) {
 		this.co_tel = co_tel;
-	}
-	public String getCo_tel2() {
-		return co_tel2;
-	}
-	public void setCo_tel2(String co_tel2) {
-		this.co_tel2 = co_tel2;
 	}
 	public String getCo_fax() {
 		return co_fax;
@@ -177,12 +188,6 @@ public class ComDTO {
 	public void setRes_nb(String res_nb) {
 		this.res_nb = res_nb;
 	}
-	public String getRes_nb2() {
-		return res_nb2;
-	}
-	public void setRes_nb2(String res_nb2) {
-		this.res_nb2 = res_nb2;
-	}
 	public String getDomain() {
 		return domain;
 	}
@@ -207,10 +212,15 @@ public class ComDTO {
 	public void setAcc_type(String acc_type) {
 		this.acc_type = acc_type;
 	}
-	
-	
-	
-	
-	
 
+
+
+
+
+	
+	
+	
 }
+	
+	
+	
