@@ -1,5 +1,6 @@
 package com.dz.back.ace.ace1000.ace1010.controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,6 +73,14 @@ public class ACE1010Controller {
 	public ResponseEntity<String> insert(@RequestBody AbizCarPersonDTO dto) {
 		System.out.println("테슽 실행........... : " + dto.toString());
 
+//		입력 데이터 시간 중복 및 이전날짜 입력 방지
+		String checkTimeResult = service.checkUseDtAndStartTime(dto);
+		if(checkTimeResult.equals("before data exist")) {
+			return ResponseEntity.ok().body("before data exist");
+		} else if(checkTimeResult.equals("same time data exist")) {
+			return ResponseEntity.ok().body("same time data exist");
+		}
+
 //		insert하기위해 가공할 AbbizcarpersonDTO 생성
 		AbizCarPersonDTO acpdto = dto;
 		System.out.println(dto.getCar_cd());
@@ -106,18 +115,30 @@ public class ACE1010Controller {
 	@PutMapping("/update")
 	public ResponseEntity<String> update(@RequestBody AbizCarPersonDTO dto) {
 		System.out.println("업데이트 시작");
-		AbizCarPersonDTO fdto = dto;
+		System.out.println(dto.toString());
+//		입력 데이터 시간 중복 및 이전날짜 입력 방지
+		String checkTimeResult = service.checkUseDtAndStartTime(dto);
+		if(checkTimeResult.equals("before data exist")) {
+			return ResponseEntity.ok().body("before data exist");
+		} else if(checkTimeResult.equals("same time data exist")) {
+			return ResponseEntity.ok().body("same time data exist");
+		} else if(checkTimeResult.equals("same time exist at working row")) {
+			System.out.println("중복되는게 있어야 나오는거");
+			return ResponseEntity.ok().body("same time exist at working row");
+		}
+		
+		AbizCarPersonDTO finalDto = dto;
 		String datetimeString = dto.getUse_dt();
 		if (datetimeString != null && datetimeString.length() >= 10) {
 			String dateString = datetimeString.substring(0, 10);
-			fdto.setUse_dt(dateString);
+			finalDto.setUse_dt(dateString);
 		} else {
-			fdto.setUse_dt(null);
+			finalDto.setUse_dt(null);
 		}
 
-		int result = service.updateAbizCarPerson(fdto);
+		int result = service.updateAbizCarPerson(finalDto);
 		System.out.println("엥 몇인거야 " + result);
-		System.out.println(fdto.toString());
+		System.out.println(finalDto.toString());
 		if (result == 1) {
 			return ResponseEntity.ok().body("update success");
 		} else {
@@ -127,19 +148,21 @@ public class ACE1010Controller {
 
 //	운행기록부 조회
 	@GetMapping("/searchcarforabizperson")
-	public ResponseEntity<?> findallbycar(@RequestParam String car_cd) {
+	public ResponseEntity<?> findallbycar(@RequestParam String car_cd,@RequestParam String startDate, @RequestParam String endDate) {
 		System.out.println("findallbycar호출........");
 
 		System.out.println(car_cd);
 
 		CarDTO cdto = regcarService.findCar(car_cd);
+		System.out.println(cdto);
 	
 		if (cdto == null) {
 			return ResponseEntity.ok().body("not found");
 		} else if (cdto.getUse_yn().equals("N") ) {
 			return ResponseEntity.ok().body("not using");
 		} else {
-			List<AbizCarPersonDTO> dto = service.findallbycar(car_cd);
+			
+			List<AbizCarPersonDTO> dto = service.findallbycar(car_cd, startDate, endDate);
 
 			if (dto == null || dto.isEmpty()) {
 				dto = new ArrayList<>(); // 리스트 초기화

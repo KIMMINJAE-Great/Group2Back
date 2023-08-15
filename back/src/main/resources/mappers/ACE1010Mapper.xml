@@ -10,7 +10,7 @@
 		<id property="car_cd" column="CAR_CD" />
 		<id property="use_dt" column="USE_DT" />
 		<id property="emp_cd" column="EMP_CD" />
-		
+
 		<result property="rmk_dc" column="RMK_DC" />
 		<result property="start_time" column="START_TIME" />
 		<result property="end_time" column="END_TIME" />
@@ -64,9 +64,9 @@
 		abizcarperson.data_fg
 		from abizcar_person as abizcarperson
 	</select>
-	
+
 	<select id="findallbycar" resultMap="abizcarpersonMap">
-	SELECT
+		SELECT
 		abizcarperson.co_cd,
 		abizcarperson.seq_nb,
 		abizcarperson.car_cd,
@@ -94,11 +94,49 @@
 		abizcarperson.rmk_dc,
 		abizcarperson.data_fg
 		from abizcar_person as abizcarperson
-		WHERE abizcarperson.car_cd = #{car_cd}
-		
+		WHERE
+		abizcarperson.car_cd = #{car_cd}
+		 AND abizcarperson.use_dt BETWEEN #{startDate} AND #{endDate} 
 		ORDER BY abizcarperson.use_dt ASC, abizcarperson.start_time ASC
 	</select>
 	
+	<select id="findallbycarByCarCd" resultMap="abizcarpersonMap">
+		SELECT
+		abizcarperson.co_cd,
+		abizcarperson.seq_nb,
+		abizcarperson.car_cd,
+		abizcarperson.use_dt,
+		abizcarperson.emp_cd,
+		abizcarperson.start_time,
+		abizcarperson.end_time,
+		abizcarperson.dept_cd,
+		abizcarperson.use_fg,
+		abizcarperson.start_fg,
+		abizcarperson.start_addr,
+		abizcarperson.start_addr1,
+		abizcarperson.end_fg,
+		abizcarperson.end_addr,
+		abizcarperson.end_addr1,
+		abizcarperson.mileage_km,
+		abizcarperson.before_km,
+		abizcarperson.after_km,
+		abizcarperson.send_yn,
+		abizcarperson.insert_id,
+		abizcarperson.insert_ip,
+		abizcarperson.modify_id,
+		abizcarperson.modify_ip,
+		abizcarperson.modify_dt,
+		abizcarperson.rmk_dc,
+		abizcarperson.data_fg
+		from abizcar_person as abizcarperson
+		WHERE
+		abizcarperson.car_cd = #{car_cd}
+		ORDER BY abizcarperson.use_dt ASC, abizcarperson.start_time ASC
+	</select>
+	
+	
+	
+
 	<!-- 운행 구분 -->
 	<resultMap
 		type="com.dz.back.ace.ace1000.ace1010.dto.UseFgDTO" id="UseFgDTO">
@@ -112,13 +150,15 @@
 	</select>
 	<!-- 출발 도착구분 -->
 	<resultMap
-		type="com.dz.back.ace.ace1000.ace1010.dto.StartEndFgDTO" id="StartEndFgDTO">
+		type="com.dz.back.ace.ace1000.ace1010.dto.StartEndFgDTO"
+		id="StartEndFgDTO">
 		<id property="p_id" column="P_ID" />
 		<id property="p_nm" column="P_NM" />
 	</resultMap>
 
 	<select id="startendfg" resultMap="StartEndFgDTO">
-		SELECT startendfg.P_ID, startendfg.P_NM FROM
+		SELECT startendfg.P_ID,
+		startendfg.P_NM FROM
 		sctrl_p as startendfg
 	</select>
 	<!-- 마감 유무 -->
@@ -129,16 +169,18 @@
 	</resultMap>
 
 	<select id="sendyn" resultMap="SendYnDTO">
-		SELECT sendyn.S_ID, sendyn.S_NM FROM
+		SELECT sendyn.S_ID, sendyn.S_NM
+		FROM
 		sctrl_s as sendyn
 	</select>
 
-<!-- 운행기록부 한 행 저장-->
-<insert id="insertAbizCarPerson" parameterType="com.dz.back.ace.ace1000.ace1010.dto.AbizCarPersonDTO" >
-	INSERT INTO
-	abizcar_person
-	(
-	CO_CD,
+	<!-- 운행기록부 한 행 저장 -->
+	<insert id="insertAbizCarPerson"
+		parameterType="com.dz.back.ace.ace1000.ace1010.dto.AbizCarPersonDTO">
+		INSERT INTO
+		abizcar_person
+		(
+		CO_CD,
 		SEQ_NB,
 		CAR_CD,
 		USE_DT,
@@ -164,8 +206,8 @@
 		MODIFY_IP,
 		MODIFY_DT,
 		RMK_DC
-		
-	) VALUES (
+
+		) VALUES (
 		#{co_cd},
 		#{seq_nb},
 		#{car_cd},
@@ -192,15 +234,16 @@
 		#{modify_ip},
 		#{modify_dt},
 		#{rmk_dc}
-		
-	)
 
-</insert>
+		)
 
-<!-- 운행기록부 한 행 저장-->
-<update id="updateAbizCarPerson" parameterType="com.dz.back.ace.ace1000.ace1010.dto.AbizCarPersonDTO" >
-	UPDATE abizcar_person SET
-	
+	</insert>
+
+	<!-- 운행기록부 한 행 저장 -->
+	<update id="updateAbizCarPerson"
+		parameterType="com.dz.back.ace.ace1000.ace1010.dto.AbizCarPersonDTO">
+		UPDATE abizcar_person SET
+
 		CO_CD = #{co_cd},
 		SEQ_NB = #{seq_nb},
 		CAR_CD = #{car_cd},
@@ -213,27 +256,58 @@
 		START_FG = #{start_fg},
 		START_ADDR = #{start_addr},
 		START_ADDR1 = #{start_addr1},
-		END_FG = #{end_fg},
+		END_FG =
+		#{end_fg},
 		END_ADDR = #{end_addr},
 		END_ADDR1 = #{end_addr1},
-		MILEAGE_KM = #{mileage_km},
+		MILEAGE_KM =
+		#{mileage_km},
 		BEFORE_KM = #{before_km},
 		AFTER_KM = #{after_km},
-		SEND_YN = #{send_yn},
+		SEND_YN
+		= #{send_yn},
 		MODIFY_ID = #{modify_id},
 		MODIFY_IP = #{modify_ip},
 		MODIFY_DT= #{modify_dt},
 		RMK_DC = #{rmk_dc}
-		
-	WHERE SEQ_NB = #{seq_nb} AND CAR_CD = #{car_cd}
 
-</update>
+		WHERE SEQ_NB = #{seq_nb} AND CAR_CD = #{car_cd}
 
-<!-- 차량의 최대 seq_nm 찾기 -->
-<select id="findMaxSeqNb"  parameterType="String" resultType="Integer"> 
-	SELECT COALESCE(Max(seq_nb),0) FROM abizcar_person WHERE car_cd = #{car_cd}
+	</update>
+
+	<!-- 차량의 최대 seq_nm 찾기 -->
+	<select id="findMaxSeqNb" parameterType="String"
+		resultType="Integer">
+		SELECT COALESCE(Max(seq_nb),0) FROM abizcar_person WHERE car_cd = #{car_cd}
+
+
+	</select>
+	<select id="updateTimeCheck" resultType="Integer" ><!-- abizcarpersonMap -->
+		SELECT COUNT(*)
+		FROM abizcar_person
+		WHERE USE_DT = #{use_dt}
+		AND (
+		(#{start_time} BETWEEN START_TIME AND END_TIME) OR
+		(#{end_time} BETWEEN START_TIME AND END_TIME) OR
+		(START_TIME = #{start_time}) OR
+		(START_TIME = #{end_time}) OR
+		(END_TIME = #{start_time}) OR
+		(END_TIME = #{end_time})
+		)
+		AND SEQ_NB != #{seq_nb};
+	</select>
 	
+<!-- start_time이 전 행의 end_time과 겨치기 허용
+	<select id="updateTimeCheck" resultType="Integer" >abizcarpersonMap
+    SELECT COUNT(*)
+    FROM abizcar_person
+    WHERE USE_DT = #{use_dt}
+    AND (
+    (#{start_time} >= START_TIME AND #{start_time} < END_TIME) OR
+    (#{end_time} > START_TIME AND #{end_time} <= END_TIME)
+    )
+    AND SEQ_NB != #{seq_nb};
+</select> -->
 
-</select>
 
 </mapper>

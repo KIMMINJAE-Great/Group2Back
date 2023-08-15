@@ -2,6 +2,7 @@ package com.dz.back.ace.ace1000.ace1010.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -56,13 +57,23 @@ public class ACE1010DAO {
 	}
 
 
-	public List<AbizCarPersonDTO> findallbycar(String car_cd) {
-		return sqlSession.getMapper(ACE1010Mapper.class).findallbycar(car_cd);
+	public List<AbizCarPersonDTO> findallbycar(@Param("car_cd") String car_cd, @Param("startDate") String startDate, @Param("endDate") String endDate) {
+		return sqlSession.getMapper(ACE1010Mapper.class).findallbycar(car_cd,startDate, endDate);
+	}
+	
+	public List<AbizCarPersonDTO> findallbycarByCarCd(String car_cd) {
+		return sqlSession.getMapper(ACE1010Mapper.class).findallbycarByCarCd(car_cd);
 	}
 
 
 	public int updateAbizCarPerson(AbizCarPersonDTO dto) {
 		System.out.println(dto.toString());
 		return sqlSession.getMapper(ACE1010Mapper.class).updateAbizCarPerson(dto);
+	}
+
+
+	public int updateTimeCheck(AbizCarPersonDTO dto) {
+		
+		return sqlSession.getMapper(ACE1010Mapper.class).updateTimeCheck(dto);
 	}
 }

@@ -4,10 +4,10 @@ import java.time.LocalDateTime;
 
 public class CarDTO {
 	private String co_cd;
-	private String emp_cd;
 	private String car_cd;
 	private String car_nb;
 	private String car_nm;
+	private String emp_cd;
 	private String get_dt;
 	private String disposal_dt;
 	private String lease_yn;

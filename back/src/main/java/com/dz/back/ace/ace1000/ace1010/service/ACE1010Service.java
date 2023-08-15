@@ -20,8 +20,14 @@ public interface ACE1010Service {
 	public int insertAbizCarPerson(AbizCarPersonDTO dto);
 
 	public Integer findMaxSeqNb(String car_cd);
-
+// 날짜 포함 운행기록부 검색
+	public List<AbizCarPersonDTO> findallbycar(String car_cd,String startDate, String endDate);
+//	car_cd로만 운행기록부 검색
 	public List<AbizCarPersonDTO> findallbycar(String car_cd);
 
 	public int updateAbizCarPerson(AbizCarPersonDTO dto);
+	
+	public String checkUseDtAndStartTime (AbizCarPersonDTO dto);
+	
+	public int updateTimeCheck(AbizCarPersonDTO dto);
 }
