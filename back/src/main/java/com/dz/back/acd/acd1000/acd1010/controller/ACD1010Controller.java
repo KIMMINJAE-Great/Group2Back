@@ -150,27 +150,26 @@ public class ACD1010Controller {
 		
 		//체크박스가 선택되었을때 한꺼번에 삭제하기
 		 @DeleteMapping("/deletecar")
-		    public void deleteCheckedCar(@RequestBody List<CarDTO> CarList) {
-		        for (CarDTO car : CarList) {
+         public void deleteCheckedCar(@RequestBody List<CarDTO> CarList) {
+            for (CarDTO car : CarList) {
 
-      int result = regcarService.updateRegCar(dto);
-      System.out.println(result);
-      if (result == 1) {
-         System.out.println(dto);
-         return ResponseEntity.ok(dto);
-      } else {
-         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-      }
-   }
-   
+               int result = regcarService.updateRegCar(dto);
+               System.out.println(result);
+               if (result == 1) {
+                  System.out.println(dto);
+                  return ResponseEntity.ok(dto);
+               } else {
+                  return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+               }
+            }
+         }
+
    //ī�� ����
       @DeleteMapping("/deletecar/{car_cd}")
       public void deleteRegCar(@PathVariable String car_cd) {
          regcarService.deleteRegCar(car_cd);
       }
       
-      
-      //üũ�ڽ��� ���õǾ����� �Ѳ����� �����ϱ�
        @DeleteMapping("/deletecar")
           public void deleteCheckedCar(@RequestBody List<CarDTO> CarList) {
               for (CarDTO car : CarList) {
