@@ -133,6 +133,7 @@ public class ACE1010Controller {
 		System.out.println(car_cd);
 
 		CarDTO cdto = regcarService.findCar(car_cd);
+		System.out.println(cdto);
 	
 		if (cdto == null) {
 			return ResponseEntity.ok().body("not found");

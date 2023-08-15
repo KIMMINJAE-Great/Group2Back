@@ -67,7 +67,7 @@ public class ACD1010Controller {
         return ResponseEntity.ok().body(carSearchList);
     }
 
-//	ī�� Ŭ���� ������������
+//	카占쏙옙 클占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙
 	@PostMapping("/getRegcarCard")
 	public ResponseEntity<CarDTO> getEmpCard(@RequestBody Map<String, String> car_cd) {
 		CarDTO dto = regcarService.getRegcarCard(car_cd.get("car_cd"));
@@ -79,7 +79,7 @@ public class ACD1010Controller {
 	public ResponseEntity<String> getCarsInfo() {
 	    List<CarDTO> carCardList = regcarService.getCardCarList();
 
-	    // 이전에는 carCardList를 CarDTO로 캐스팅하려고 했으나, 이제는 리스트의 요소를 가져와야 합니다.
+	    // �씠�쟾�뿉�뒗 carCardList瑜� CarDTO濡� 罹먯뒪�똿�븯�젮怨� �뻽�쑝�굹, �씠�젣�뒗 由ъ뒪�듃�쓽 �슂�냼瑜� 媛��졇���빞 �빀�땲�떎.
 	    if (!carCardList.isEmpty()) {
 	        CarDTO carDTO = carCardList.get(0);
 
@@ -87,21 +87,40 @@ public class ACD1010Controller {
 
 	        CarDTO responseDTO = new CarDTO();
 	        responseDTO.setAbizcarNBNM(abizcarNBNM);
-	        System.out.println("getCarsInfo 실행 !!!!!!!!");
+	        System.out.println("getCarsInfo �떎�뻾 !!!!!!!!");
 	        System.out.println("responseDTO :" + responseDTO);
 	        System.out.println("abizcarNBNM :" + abizcarNBNM);
 
 	        return ResponseEntity.ok().body(abizcarNBNM);
 	    } else {
-	        // 만약 carCardList가 비어있다면 처리할 내용을 여기에 추가하세요.
+	        // 留뚯빟 carCardList媛� 鍮꾩뼱�엳�떎硫� 泥섎━�븷 �궡�슜�쓣 �뿬湲곗뿉 異붽��븯�꽭�슂.
 	        return ResponseEntity.notFound().build();
 	    }
 	}
 
 
-	// ī�� �߰�
+	// 카占쏙옙 占쌩곤옙
 	@PostMapping("/addcar")
 	public ResponseEntity<CarDTO> addRegCar(@RequestBody CarDTO dto) {
+		
+		
+		 // 원본형식에서 처음부터 10자리까지만 잘라서 
+	    String GetDt = dto.getGet_dt().substring(0, 10);
+	    String DisposalDt = dto.getDisposal_dt().substring(0, 10);
+	    String LfrDt = dto.getLfr_dt().substring(0, 10);
+	    String LtoDt = dto.getLto_dt().substring(0, 10);
+	    String IfrDt = dto.getIfr_dt().substring(0, 10);
+	    String ItoDt = dto.getIto_dt().substring(0, 10);
+
+	    // 날짜를 자른 값으로 DTO 수정
+	    dto.setGet_dt(GetDt);
+	    dto.setDisposal_dt(DisposalDt);
+	    dto.setLfr_dt(LfrDt);
+	    dto.setLto_dt(LtoDt);
+	    dto.setIfr_dt(IfrDt);
+	    dto.setIto_dt(ItoDt);
+	    
+		
 
 		int result = regcarService.addRegCar(dto);
 		System.out.println(result);
@@ -113,7 +132,7 @@ public class ACD1010Controller {
 		}
 	}
 
-	// ī�� �߰�
+	// 카占쏙옙 占쌩곤옙
 	@PutMapping("/updatecar")
 	public ResponseEntity<CarDTO> updateRegCar(@RequestBody CarDTO dto) {
 
@@ -127,14 +146,14 @@ public class ACD1010Controller {
 		}
 	}
 	
-	//ī�� ����
+	//카占쏙옙 占쏙옙占쏙옙
 		@DeleteMapping("/deletecar/{car_cd}")
 		public void deleteRegCar(@PathVariable String car_cd) {
 			regcarService.deleteRegCar(car_cd);
 		}
 		
 		
-		//üũ�ڽ��� ���õǾ����� �Ѳ����� �����ϱ�
+		//체크박스가 선택되었을때 한꺼번에 삭제하기
 		 @DeleteMapping("/deletecar")
 		    public void deleteCheckedCar(@RequestBody List<CarDTO> CarList) {
 		        for (CarDTO car : CarList) {
