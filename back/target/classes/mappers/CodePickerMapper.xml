@@ -29,6 +29,16 @@
 			car_cd LIKE CONCAT('%', #{keyword}, '%')
 	</select>
 	
+	
+	
+	<!-- car -->
+	<select id="searchDrivingByKeyword" resultType="AbizCarPersonDTO">
+		SELECT * FROM abizcar_person
+		WHERE
+			car_nm LIKE CONCAT('%', #{keyword}, '%')
+			OR
+			car_cd LIKE CONCAT('%', #{keyword}, '%')
+	</select>
 	<!--semp의 emp_cd, emp_nm ,sdept의 dept_nm 을 조회해야한다..  -->
 	<!-- <resultMap id="EmpCodePickerMap" type="CodePickerDTO">
 	    <result property="emp_cd" column="emp_cd"/>
