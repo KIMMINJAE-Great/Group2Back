@@ -3,6 +3,7 @@ package com.dz.back.ace.ace1000.ace1010.service;
 import java.util.List;
 
 import com.dz.back.ace.ace1000.ace1010.dto.AbizCarPersonDTO;
+import com.dz.back.ace.ace1000.ace1010.dto.AperStartaccInfoDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.SendYnDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.StartEndFgDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.UseFgDTO;
@@ -20,9 +21,9 @@ public interface ACE1010Service {
 	public int insertAbizCarPerson(AbizCarPersonDTO dto);
 
 	public Integer findMaxSeqNb(String car_cd);
-// ³¯Â¥ Æ÷ÇÔ ¿îÇà±â·ÏºÎ °Ë»ö
+// ï¿½ï¿½Â¥ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ïºï¿½ ï¿½Ë»ï¿½
 	public List<AbizCarPersonDTO> findallbycar(String car_cd,String startDate, String endDate);
-//	car_cd·Î¸¸ ¿îÇà±â·ÏºÎ °Ë»ö
+//	car_cdï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ïºï¿½ ï¿½Ë»ï¿½
 	public List<AbizCarPersonDTO> findallbycar(String car_cd);
 
 	public int updateAbizCarPerson(AbizCarPersonDTO dto);
@@ -30,4 +31,13 @@ public interface ACE1010Service {
 	public String checkUseDtAndStartTime (AbizCarPersonDTO dto);
 	
 	public int updateTimeCheck(AbizCarPersonDTO dto);
+
+	public int insertStartaccKm(AperStartaccInfoDTO aperStartaccInfoDTO);
+
+	public int checkAperStart(AperStartaccInfoDTO aperStartaccInfoDTO);
+
+	public int updateStartaccKm(AperStartaccInfoDTO aperStartaccInfoDTO);
+	
+	public String selectStartaccKm (String car_cd);
+
 }

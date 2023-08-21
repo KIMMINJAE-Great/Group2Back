@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.dz.back.ace.ace1000.ace1010.dao.ACE1010DAO;
 import com.dz.back.ace.ace1000.ace1010.dto.AbizCarPersonDTO;
+import com.dz.back.ace.ace1000.ace1010.dto.AperStartaccInfoDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.SendYnDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.StartEndFgDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.UseFgDTO;
@@ -46,7 +47,7 @@ public class ACE1010Serviceimpl implements ACE1010Service {
 		 return dao.insertAbizCarPerson(dto);
 	}
 	
-//	Â÷·®ÀÇ ÃÖ´ë seq_nb¸¦ °¡Á®¿Â´Ù.
+//	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ seq_nbï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Â´ï¿½.
 	@Override
 	public Integer findMaxSeqNb(String car_cd) {
 		
@@ -54,14 +55,14 @@ public class ACE1010Serviceimpl implements ACE1010Service {
 	}
 	@Override
 	public List<AbizCarPersonDTO> findallbycar(String car_cd,String startDate, String endDate) {
-		System.out.println("±â°£µé¾î°£ ¿îÇà±â·ÏºÎ Á¶È¸");
+		System.out.println("ï¿½â°£ï¿½ï¿½î°£ ï¿½ï¿½ï¿½ï¿½ï¿½Ïºï¿½ ï¿½ï¿½È¸");
 		System.out.println("car_cd : "+ car_cd);
 		// TODO Auto-generated method stub
 		return dao.findallbycar(car_cd, startDate, endDate);
 	}
 	@Override
 	public List<AbizCarPersonDTO> findallbycar(String car_cd) {
-		System.out.println("±â°£ÀÌ ¾Èµé¾î°£ ¿îÇà±â·ÏºÎ Á¶È¸");
+		System.out.println("ï¿½â°£ï¿½ï¿½ ï¿½Èµï¿½î°£ ï¿½ï¿½ï¿½ï¿½ï¿½Ïºï¿½ ï¿½ï¿½È¸");
 		// TODO Auto-generated method stub
 		return dao.findallbycarByCarCd(car_cd);
 	}
@@ -74,33 +75,33 @@ public class ACE1010Serviceimpl implements ACE1010Service {
 	@Override
 	public String checkUseDtAndStartTime(AbizCarPersonDTO dto) {
 		
-//		½Ã°£ 10ÀÚ¸®·Î ¸ÂÃß±â
+//		ï¿½Ã°ï¿½ 10ï¿½Ú¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ß±ï¿½
 		String insertUseDt = dto.getUse_dt();
 		
 		if (insertUseDt != null && insertUseDt.length() >= 10) {
 			 insertUseDt = insertUseDt.substring(0, 10);
 			 dto.setUse_dt(insertUseDt);
 		}
-		System.out.println("¼öÁ¤½Ã use_dt ÇüÅÂ È®ÀÎ");
+		System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ use_dt ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½");
 		System.out.println(insertUseDt);
 		
-//		ÀÔ·Â½Ã ½Ã°£ È®ÀÎ 
+//		ï¿½Ô·Â½ï¿½ ï¿½Ã°ï¿½ È®ï¿½ï¿½ 
 		List<AbizCarPersonDTO> dtoForMaxUsedto  = findallbycar(dto.getCar_cd());
 		
 		AbizCarPersonDTO checkFinalInsertUseDtAndStartTime = new AbizCarPersonDTO();
 		
 		String checkInsertUseDt ="";
 		
-//		Á¦ÀÏ ¸¶Áö¸· ¿îÇàÀÏÀÚ °¡Á®¿À±â
+//		ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		if(!dtoForMaxUsedto.isEmpty()) {
 			checkFinalInsertUseDtAndStartTime = dtoForMaxUsedto.get(dtoForMaxUsedto.size() -1);
 			checkInsertUseDt=checkFinalInsertUseDtAndStartTime.getUse_dt();
 		} 
 		
 		
-		if(dto.getSeq_nb() > 0) { //¼öÁ¤
+		if(dto.getSeq_nb() > 0) { //ï¿½ï¿½ï¿½ï¿½
 			
-			// seq_nb°¡ ÀÏÄ¡ÇÏ´Â °´Ã¼ Ã£±â
+			// seq_nbï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½Ï´ï¿½ ï¿½ï¿½Ã¼ Ã£ï¿½ï¿½
 	        Optional<AbizCarPersonDTO> matchedDtoOpt = dtoForMaxUsedto.stream()
 	            .filter(d -> Objects.equals(d.getSeq_nb(), dto.getSeq_nb()))
 	            .findFirst();
@@ -108,10 +109,10 @@ public class ACE1010Serviceimpl implements ACE1010Service {
 	        if (matchedDtoOpt.isPresent()) {
 	            AbizCarPersonDTO matchedDto = matchedDtoOpt.get();
 	            
-	            // insertUseDt¿Í matchedDtoÀÇ use_dt¸¦ ºñ±³
+	            // insertUseDtï¿½ï¿½ matchedDtoï¿½ï¿½ use_dtï¿½ï¿½ ï¿½ï¿½
 	            if (Objects.equals(insertUseDt, matchedDto.getUse_dt())) {
-	                // ¿©±â¼­ ¼öÁ¤À» ÁøÇàÇÕ´Ï´Ù.
-	                System.out.println("¼öÁ¤ ½ÃÀÛ");
+	                // ï¿½ï¿½ï¿½â¼­ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
+	                System.out.println("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 	                int updateTimeCheckResult = updateTimeCheck(dto);
 	                System.out.println(updateTimeCheckResult);
 	                if(updateTimeCheckResult > 0) {
@@ -123,13 +124,13 @@ public class ACE1010Serviceimpl implements ACE1010Service {
 	                return "before data exist";
 	            }
 	        } 
-		} else { //½Å±Ô ÀÔ·Â
+		} else { //ï¿½Å±ï¿½ ï¿½Ô·ï¿½
 			
 
 			if(dtoForMaxUsedto == null ||dtoForMaxUsedto.isEmpty()) {
 				return "ok";
 			} else {
-				System.out.println("½Ã°£È®ÀÎ¿ë DTO");
+				System.out.println("ï¿½Ã°ï¿½È®ï¿½Î¿ï¿½ DTO");
 				System.out.println(checkFinalInsertUseDtAndStartTime.toString());
 				
 				
@@ -165,6 +166,24 @@ public class ACE1010Serviceimpl implements ACE1010Service {
 		
 		return dao.updateTimeCheck(dto);
 	}
+	@Override
+	public int insertStartaccKm(AperStartaccInfoDTO aperStartaccInfoDTO) {
+		return dao.insertStartaccKm(aperStartaccInfoDTO);
+	}
 	
+	@Override
+	public int checkAperStart(AperStartaccInfoDTO aperStartaccInfoDTO) {
+		return dao.checkAperStart(aperStartaccInfoDTO);
+	}
+	
+	@Override
+	public int updateStartaccKm(AperStartaccInfoDTO aperStartaccInfoDTO) {
+		return dao.updateStartaccKm(aperStartaccInfoDTO);
+	}
+	
+	@Override
+	public String selectStartaccKm(String car_cd) {
+		return dao.selectStartaccKm(car_cd);
+	}
 
 }

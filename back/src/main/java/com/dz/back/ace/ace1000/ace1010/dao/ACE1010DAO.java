@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.dz.back.acc.acc1000.acc1010.dto.ACC1010EmpDTO;
 import com.dz.back.acc.acc1000.acc1010.mapper.ACC1010Mapper;
 import com.dz.back.ace.ace1000.ace1010.dto.AbizCarPersonDTO;
+import com.dz.back.ace.ace1000.ace1010.dto.AperStartaccInfoDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.SendYnDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.StartEndFgDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.UseFgDTO;
@@ -44,7 +45,7 @@ public class ACE1010DAO {
 		return sqlSession.getMapper(ACE1010Mapper.class).startendfg();
 	}
 
-// Test ¿îÇà±â·ÏºÎ ÀúÀå 
+// Test ï¿½ï¿½ï¿½ï¿½ï¿½Ïºï¿½ ï¿½ï¿½ï¿½ï¿½ 
 	public int insertAbizCarPerson(AbizCarPersonDTO dto) {
 		
 		 return sqlSession.getMapper(ACE1010Mapper.class).insertAbizCarPerson(dto);
@@ -75,5 +76,24 @@ public class ACE1010DAO {
 	public int updateTimeCheck(AbizCarPersonDTO dto) {
 		
 		return sqlSession.getMapper(ACE1010Mapper.class).updateTimeCheck(dto);
+	}
+
+
+	public int insertStartaccKm(AperStartaccInfoDTO aperStartaccInfoDTO) {
+		return sqlSession.getMapper(ACE1010Mapper.class).insertStartaccKm(aperStartaccInfoDTO);
+	}
+
+
+	public int checkAperStart(AperStartaccInfoDTO aperStartaccInfoDTO) {
+		return sqlSession.getMapper(ACE1010Mapper.class).checkAperStart(aperStartaccInfoDTO);
+	}
+
+
+	public int updateStartaccKm(AperStartaccInfoDTO aperStartaccInfoDTO) {
+		return sqlSession.getMapper(ACE1010Mapper.class).updateStartaccKm(aperStartaccInfoDTO);
+	}
+	
+	public String selectStartaccKm(String car_cd) {
+		return sqlSession.getMapper(ACE1010Mapper.class).selectStartaccKm(car_cd);
 	}
 }

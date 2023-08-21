@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.dz.back.ace.ace1000.ace1010.dto.AbizCarPersonDTO;
+import com.dz.back.ace.ace1000.ace1010.dto.AperStartaccInfoDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.SendYnDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.StartEndFgDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.UseFgDTO;
@@ -30,5 +31,13 @@ public interface ACE1010Mapper {
 	public int updateAbizCarPerson(AbizCarPersonDTO dto);
 
 	public int updateTimeCheck(AbizCarPersonDTO dto);
+
+	public int insertStartaccKm(AperStartaccInfoDTO aperStartaccInfoDTO);
+
+	public int checkAperStart(AperStartaccInfoDTO aperStartaccInfoDTO);
+
+	public int updateStartaccKm(AperStartaccInfoDTO aperStartaccInfoDTO);
+	
+	public String selectStartaccKm(String car_cd);
 
 }
