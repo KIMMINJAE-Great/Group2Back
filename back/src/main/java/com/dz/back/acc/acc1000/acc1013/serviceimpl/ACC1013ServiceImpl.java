@@ -3,6 +3,7 @@ package com.dz.back.acc.acc1000.acc1013.serviceimpl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.dz.back.acc.acc1000.acc1011.dto.DeptDTO;
@@ -23,10 +24,16 @@ public class ACC1013ServiceImpl {
 	}
 	
 	//저장코드!!!! (저장/업데이트) (회사코드가 비어있다는것은 아무것도 입력안했을 때..라고 가정)
-	public void saveComRegInfo(ComDTO comDTO) {
-
+	public boolean saveComRegInfo(ComDTO comDTO) {
+		try {
+			acc1013dao.saveComRegInfo(comDTO);
+			return true;
+			//데이터무결성 위반시
+		} catch (DataIntegrityViolationException e) {
+			return false;
+		}
 		
-		acc1013dao.saveComRegInfo(comDTO);
+		
 		
 	}
 	
