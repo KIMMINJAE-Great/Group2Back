@@ -6,7 +6,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,9 +18,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dz.back.acc.acc1000.acc1010.dto.ACC1010EmpDTO;
+import com.dz.back.acc.acc1000.acc1010.dto.ACC1010MauthDTO;
 import com.dz.back.acd.acd1000.acd1010.dto.CarDTO;
 import com.dz.back.acd.acd1000.acd1010.serviceImpl.ACD1010ServiceImpl;
 import com.dz.back.ace.ace1000.ace1010.dto.AbizCarPersonDTO;
+import com.dz.back.ace.ace1000.ace1010.dto.AutoCalcMileageDTO;
+import com.dz.back.ace.ace1000.ace1010.dto.DeleteRequestAbizCarPersonDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.SendYnDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.StartEndFgDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.UseFgDTO;
@@ -163,7 +169,7 @@ public class ACE1010Controller {
 		} else {
 			
 			List<AbizCarPersonDTO> dto = service.findallbycar(car_cd, startDate, endDate);
-
+			//int startacc = service.getstartaccfordivision(dto.get(0).getCar_cd());
 			if (dto == null || dto.isEmpty()) {
 				dto = new ArrayList<>(); // 리스트 초기화
 				AbizCarPersonDTO newDto = new AbizCarPersonDTO();
@@ -178,12 +184,53 @@ public class ACE1010Controller {
 					item.setCar_cd(cdto.getCar_cd());
 				}
 			}
-
+			
 			System.out.println("처음 불러올때");
 			System.out.println(dto.toString());
 			return ResponseEntity.ok().body(dto);
 		}
 
 	}
+	
+	@DeleteMapping("/deleteabizcarperson")
+	public ResponseEntity<Integer> deleteAbizcarPerson(@RequestBody List<DeleteRequestAbizCarPersonDTO> dto){
+		
+//	
+	        	int result = service.deleteAbizcarPerson(dto);
+	        	
+        	return ResponseEntity.ok().body(result);
+		
+	      
+	}
 
+	@PostMapping("/autocalcmileage") 
+	public ResponseEntity<Integer> updateAutoCalcMileage (@RequestBody AutoCalcMileageDTO dto){
+		System.out.println(dto.toString());
+		
+		int result = service.updateAutoCalcMileage(dto);
+		
+			return ResponseEntity.ok().body(result);
+		
+	}
+	
+
+
+//	안분에 사용할 기초거리 가져오기
+	@GetMapping("/getstartaccfordivision")
+	public ResponseEntity<Integer> getstartaccfordivision(@RequestParam String car_cd){
+		
+		int result = service.getstartaccfordivision(car_cd);
+		
+		return ResponseEntity.ok().body(result);
+	}
+	
+	
+//	운행기록 안분 계산 
+	@PostMapping("/savedivisiondistance")
+	public ResponseEntity<?> savedivisiondistance(@RequestBody List<AutoCalcMileageDTO> dto){
+		System.out.println("안분 컨트롤러");
+		System.out.println(dto.toString());
+			int result = service.savedivisiondistance(dto);
+		return ResponseEntity.ok().body(result);
+	}
 }
