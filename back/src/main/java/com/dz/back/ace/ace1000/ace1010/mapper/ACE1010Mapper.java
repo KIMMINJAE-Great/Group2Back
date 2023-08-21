@@ -5,6 +5,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.dz.back.ace.ace1000.ace1010.dto.AbizCarPersonDTO;
+import com.dz.back.ace.ace1000.ace1010.dto.AutoCalcMileageDTO;
+import com.dz.back.ace.ace1000.ace1010.dto.DeleteRequestAbizCarPersonDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.SendYnDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.StartEndFgDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.UseFgDTO;
@@ -31,4 +33,19 @@ public interface ACE1010Mapper {
 
 	public int updateTimeCheck(AbizCarPersonDTO dto);
 
+	public int deleteAbizcarPerson(List<DeleteRequestAbizCarPersonDTO> dto);
+	
+	public int updateMileageForeach(List<AbizCarPersonDTO> dto);
+	
+	public List<AbizCarPersonDTO> findAllSeqNbNotSendY (String car_cd);
+	
+	public void updateOnlyOneMileage(AutoCalcMileageDTO dto);
+	
+//	public int updateAutoCalcMileage(List<AbizCarPersonDTO> dto);
+	
+//	public List<AbizCarPersonDTO> selectByCarCdAndSeqNbGreaterThan(AutoCalcMileageDTO dto);
+
+	public int getstartaccfordivision(String car_cd);
+
+	public void savedivisiondistance(List<AutoCalcMileageDTO> dto);
 }

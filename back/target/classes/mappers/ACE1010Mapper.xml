@@ -96,10 +96,12 @@
 		from abizcar_person as abizcarperson
 		WHERE
 		abizcarperson.car_cd = #{car_cd}
-		 AND abizcarperson.use_dt BETWEEN #{startDate} AND #{endDate} 
-		ORDER BY abizcarperson.use_dt ASC, abizcarperson.start_time ASC
+		AND abizcarperson.use_dt BETWEEN
+		#{startDate} AND #{endDate}
+		ORDER BY abizcarperson.use_dt ASC,
+		abizcarperson.start_time ASC
 	</select>
-	
+
 	<select id="findallbycarByCarCd" resultMap="abizcarpersonMap">
 		SELECT
 		abizcarperson.co_cd,
@@ -131,11 +133,12 @@
 		from abizcar_person as abizcarperson
 		WHERE
 		abizcarperson.car_cd = #{car_cd}
-		ORDER BY abizcarperson.use_dt ASC, abizcarperson.start_time ASC
+		ORDER BY abizcarperson.use_dt ASC,
+		abizcarperson.start_time ASC
 	</select>
-	
-	
-	
+
+
+
 
 	<!-- 운행 구분 -->
 	<resultMap
@@ -245,20 +248,24 @@
 		UPDATE abizcar_person SET
 
 		CO_CD = #{co_cd},
-		SEQ_NB = #{seq_nb},
+		SEQ_NB =
+		#{seq_nb},
 		CAR_CD = #{car_cd},
 		USE_DT = #{use_dt},
 		EMP_CD = #{emp_cd},
 		START_TIME = #{start_time},
 		END_TIME = #{end_time},
-		DEPT_CD = #{dept_cd},
+		DEPT_CD =
+		#{dept_cd},
 		USE_FG = #{use_fg},
 		START_FG = #{start_fg},
-		START_ADDR = #{start_addr},
+		START_ADDR =
+		#{start_addr},
 		START_ADDR1 = #{start_addr1},
 		END_FG =
 		#{end_fg},
-		END_ADDR = #{end_addr},
+		END_ADDR
+		= #{end_addr},
 		END_ADDR1 = #{end_addr1},
 		MILEAGE_KM =
 		#{mileage_km},
@@ -268,46 +275,134 @@
 		= #{send_yn},
 		MODIFY_ID = #{modify_id},
 		MODIFY_IP = #{modify_ip},
-		MODIFY_DT= #{modify_dt},
+		MODIFY_DT=
+		#{modify_dt},
 		RMK_DC = #{rmk_dc}
 
-		WHERE SEQ_NB = #{seq_nb} AND CAR_CD = #{car_cd}
+		WHERE SEQ_NB = #{seq_nb} AND CAR_CD =
+		#{car_cd}
 
 	</update>
 
 	<!-- 차량의 최대 seq_nm 찾기 -->
 	<select id="findMaxSeqNb" parameterType="String"
 		resultType="Integer">
-		SELECT COALESCE(Max(seq_nb),0) FROM abizcar_person WHERE car_cd = #{car_cd}
+		SELECT COALESCE(Max(seq_nb),0) FROM abizcar_person WHERE
+		car_cd = #{car_cd}
 
 
 	</select>
-	<select id="updateTimeCheck" resultType="Integer" ><!-- abizcarpersonMap -->
+	<select id="updateTimeCheck" resultType="Integer"><!-- abizcarpersonMap -->
 		SELECT COUNT(*)
 		FROM abizcar_person
 		WHERE USE_DT = #{use_dt}
 		AND (
 		(#{start_time} BETWEEN START_TIME AND END_TIME) OR
-		(#{end_time} BETWEEN START_TIME AND END_TIME) OR
+		(#{end_time} BETWEEN
+		START_TIME AND END_TIME) OR
 		(START_TIME = #{start_time}) OR
-		(START_TIME = #{end_time}) OR
+		(START_TIME
+		= #{end_time}) OR
 		(END_TIME = #{start_time}) OR
 		(END_TIME = #{end_time})
 		)
 		AND SEQ_NB != #{seq_nb};
 	</select>
-	
-<!-- start_time이 전 행의 end_time과 겨치기 허용
-	<select id="updateTimeCheck" resultType="Integer" >abizcarpersonMap
-    SELECT COUNT(*)
-    FROM abizcar_person
-    WHERE USE_DT = #{use_dt}
-    AND (
-    (#{start_time} >= START_TIME AND #{start_time} < END_TIME) OR
-    (#{end_time} > START_TIME AND #{end_time} <= END_TIME)
-    )
-    AND SEQ_NB != #{seq_nb};
-</select> -->
 
+	<!-- start_time이 전 행의 end_time과 겨치기 허용 <select id="updateTimeCheck" resultType="Integer" 
+		>abizcarpersonMap SELECT COUNT(*) FROM abizcar_person WHERE USE_DT = #{use_dt} 
+		AND ( (#{start_time} >= START_TIME AND #{start_time} < END_TIME) OR (#{end_time} 
+		> START_TIME AND #{end_time} <= END_TIME) ) AND SEQ_NB != #{seq_nb}; </select> -->
+
+
+	<!-- 운행기록 삭제 -->
+	<delete id="deleteAbizcarPerson" parameterType="java.util.List">
+		<foreach collection="list" item="record" separator=";">
+			DELETE FROM
+			abizcar_person
+			WHERE abizcar_person.SEQ_NB = #{record.seq_nb}
+			AND
+			abizcar_person.CAR_CD = #{record.car_cd}
+		</foreach>
+	</delete>
+
+	<!-- seq_nb가 제일 낮은 거부터 오름차순으로 운행기록 가져오기 -->
+	<select id="findAllSeqNbNotSendY" resultMap="abizcarpersonMap">
+		SELECT
+		abizcar_person.seq_nb,
+		abizcar_person.car_cd,
+		abizcar_person.mileage_km,
+		abizcar_person.before_km,
+		abizcar_person.after_km
+		FROM
+		abizcar_person
+		WHERE
+		abizcar_person.car_cd = #{car_cd}
+
+		AND abizcar_person.SEND_YN = '2'
+
+		ORDER BY
+
+		abizcar_person.SEQ_NB ASC
+
+	</select>
+
+	<select id="rownumAbizcarPersonNotSendY">
+
+
+
+	</select>
+
+	<!-- /운행기록 삭제 -->
+	<!-- 주행거리 변경시 seq_nb 이상의 데이터 주행전, 주행후 자동 계산 -->
+	<!-- <select id="selectByCarCdAndSeqNb" resultType="abizcarpersonMap"> SELECT 
+		* FROM abizcar_person WHERE CAR_CD = #{car_cd} AND SEQ_NB = #{seq_nb} </select> -->
+
+
+	<update id="updateOnlyOneMileage"
+		parameterType="com.dz.back.ace.ace1000.ace1010.dto.AutoCalcMileageDTO">
+		UPDATE abizcar_person SET
+		MILEAGE_KM = #{mileage_km},
+		AFTER_KM = BEFORE_KM + #{mileage_km}
+		WHERE CAR_CD = #{car_cd} AND
+		SEQ_NB = #{seq_nb}
+	</update>
+
+	<!-- <select id="selectByCarCdAndSeqNbGreaterThan" resultMap="abizcarpersonMap"> 
+		SELECT * FROM abizcar_person WHERE CAR_CD = #{car_cd} AND SEQ_NB > #{seq_nb} 
+		ORDER BY SEQ_NB </select> -->
+	<update id="updateMileageForeach" parameterType="java.util.List">
+		<foreach collection="list" item="record" separator=";">
+			UPDATE
+			abizcar_person
+			SET
+			abizcar_person.BEFORE_KM = #{record.before_km},
+			abizcar_person.AFTER_KM = #{record.after_km}
+			WHERE
+			abizcar_person.SEQ_NB = #{record.seq_nb} AND abizcar_person.CAR_CD =
+			#{record.car_cd}
+
+		</foreach>
+	</update>
+
+	<!-- 안분에 사용할 기초거리 가져오기 -->
+	<select id="getstartaccfordivision" resultType="Integer">
+		SELECT COALESCE(STARTACC_KM ,0) FROM aper_startacc_info WHERE CAR_CD =
+		#{car_cd}
+	</select>
+
+	<!-- 안분된 운행기록 저장 -->
+	<update id="savedivisiondistance" parameterType="java.util.List">
+		<foreach collection="list" item="record" separator=";">
+			UPDATE
+			abizcar_person
+			SET
+			abizcar_person.MILEAGE_KM= #{record.mileage_km}
+			WHERE abizcar_person.SEQ_NB = #{record.seq_nb} AND
+			abizcar_person.CAR_CD = #{record.car_cd}
+
+		</foreach>
+
+	</update>
 
 </mapper>
