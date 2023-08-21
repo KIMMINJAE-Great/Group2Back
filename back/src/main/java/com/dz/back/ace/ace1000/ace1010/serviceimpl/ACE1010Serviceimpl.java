@@ -8,10 +8,12 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dz.back.ace.ace1000.ace1010.dao.ACE1010DAO;
 import com.dz.back.ace.ace1000.ace1010.dto.AbizCarPersonDTO;
-import com.dz.back.ace.ace1000.ace1010.dto.AperStartaccInfoDTO;
+import com.dz.back.ace.ace1000.ace1010.dto.AutoCalcMileageDTO;
+import com.dz.back.ace.ace1000.ace1010.dto.DeleteRequestAbizCarPersonDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.SendYnDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.StartEndFgDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.UseFgDTO;
@@ -20,170 +22,288 @@ import com.dz.back.ace.ace1000.ace1010.service.ACE1010Service;
 @Service
 public class ACE1010Serviceimpl implements ACE1010Service {
 
-	
 	@Autowired
 	ACE1010DAO dao;
+
 	@Override
 	public List<AbizCarPersonDTO> getallcars() {
-		
+
 		return dao.getallcars();
 	}
+
 	@Override
 	public List<UseFgDTO> usefg() {
-		
+
 		return dao.usefg();
 	}
+
 	@Override
 	public List<SendYnDTO> sendyn() {
 		return dao.sendyn();
 	}
+
 	@Override
 	public List<StartEndFgDTO> startendfg() {
 		return dao.startendfg();
 	}
+
 	@Override
 	public int insertAbizCarPerson(AbizCarPersonDTO dto) {
-		
-		 return dao.insertAbizCarPerson(dto);
+
+		return dao.insertAbizCarPerson(dto);
 	}
-	
-//	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ seq_nbï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Â´ï¿½.
+
+//	Â÷·®ÀÇ ÃÖ´ë seq_nb¸¦ °¡Á®¿Â´Ù.
 	@Override
 	public Integer findMaxSeqNb(String car_cd) {
-		
+
 		return dao.findMaxSeqNb(car_cd);
 	}
+
 	@Override
-	public List<AbizCarPersonDTO> findallbycar(String car_cd,String startDate, String endDate) {
-		System.out.println("ï¿½â°£ï¿½ï¿½î°£ ï¿½ï¿½ï¿½ï¿½ï¿½Ïºï¿½ ï¿½ï¿½È¸");
-		System.out.println("car_cd : "+ car_cd);
+	public List<AbizCarPersonDTO> findallbycar(String car_cd, String startDate, String endDate) {
+		System.out.println("±â°£µé¾î°£ ¿îÇà±â·ÏºÎ Á¶È¸");
+		System.out.println("car_cd : " + car_cd);
 		// TODO Auto-generated method stub
 		return dao.findallbycar(car_cd, startDate, endDate);
 	}
+
 	@Override
 	public List<AbizCarPersonDTO> findallbycar(String car_cd) {
-		System.out.println("ï¿½â°£ï¿½ï¿½ ï¿½Èµï¿½î°£ ï¿½ï¿½ï¿½ï¿½ï¿½Ïºï¿½ ï¿½ï¿½È¸");
+		System.out.println("±â°£ÀÌ ¾Èµé¾î°£ ¿îÇà±â·ÏºÎ Á¶È¸");
 		// TODO Auto-generated method stub
 		return dao.findallbycarByCarCd(car_cd);
 	}
-	
+
 	@Override
 	public int updateAbizCarPerson(AbizCarPersonDTO dto) {
-		
+
 		return dao.updateAbizCarPerson(dto);
 	}
+
 	@Override
 	public String checkUseDtAndStartTime(AbizCarPersonDTO dto) {
-		
-//		ï¿½Ã°ï¿½ 10ï¿½Ú¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ß±ï¿½
-		String insertUseDt = dto.getUse_dt();
-		
-		if (insertUseDt != null && insertUseDt.length() >= 10) {
-			 insertUseDt = insertUseDt.substring(0, 10);
-			 dto.setUse_dt(insertUseDt);
-		}
-		System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ use_dt ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½");
-		System.out.println(insertUseDt);
-		
-//		ï¿½Ô·Â½ï¿½ ï¿½Ã°ï¿½ È®ï¿½ï¿½ 
-		List<AbizCarPersonDTO> dtoForMaxUsedto  = findallbycar(dto.getCar_cd());
-		
-		AbizCarPersonDTO checkFinalInsertUseDtAndStartTime = new AbizCarPersonDTO();
-		
-		String checkInsertUseDt ="";
-		
-//		ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-		if(!dtoForMaxUsedto.isEmpty()) {
-			checkFinalInsertUseDtAndStartTime = dtoForMaxUsedto.get(dtoForMaxUsedto.size() -1);
-			checkInsertUseDt=checkFinalInsertUseDtAndStartTime.getUse_dt();
-		} 
-		
-		
-		if(dto.getSeq_nb() > 0) { //ï¿½ï¿½ï¿½ï¿½
-			
-			// seq_nbï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½Ï´ï¿½ ï¿½ï¿½Ã¼ Ã£ï¿½ï¿½
-	        Optional<AbizCarPersonDTO> matchedDtoOpt = dtoForMaxUsedto.stream()
-	            .filter(d -> Objects.equals(d.getSeq_nb(), dto.getSeq_nb()))
-	            .findFirst();
-	        
-	        if (matchedDtoOpt.isPresent()) {
-	            AbizCarPersonDTO matchedDto = matchedDtoOpt.get();
-	            
-	            // insertUseDtï¿½ï¿½ matchedDtoï¿½ï¿½ use_dtï¿½ï¿½ ï¿½ï¿½
-	            if (Objects.equals(insertUseDt, matchedDto.getUse_dt())) {
-	                // ï¿½ï¿½ï¿½â¼­ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
-	                System.out.println("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
-	                int updateTimeCheckResult = updateTimeCheck(dto);
-	                System.out.println(updateTimeCheckResult);
-	                if(updateTimeCheckResult > 0) {
-	                    return "same time exist at working row";
-	                } else {
-	                    return "ok";
-	                }
-	            } else if(LocalDate.parse(insertUseDt).isBefore(LocalDate.parse(checkInsertUseDt))){
-	                return "before data exist";
-	            }
-	        } 
-		} else { //ï¿½Å±ï¿½ ï¿½Ô·ï¿½
-			
 
-			if(dtoForMaxUsedto == null ||dtoForMaxUsedto.isEmpty()) {
+//		½Ã°£ 10ÀÚ¸®·Î ¸ÂÃß±â
+		String insertUseDt = dto.getUse_dt();
+
+		if (insertUseDt != null && insertUseDt.length() >= 10) {
+			insertUseDt = insertUseDt.substring(0, 10);
+			dto.setUse_dt(insertUseDt);
+		}
+		System.out.println("¼öÁ¤½Ã use_dt ÇüÅÂ È®ÀÎ");
+		System.out.println(insertUseDt);
+
+//		ÀÔ·Â½Ã ½Ã°£ È®ÀÎ 
+		List<AbizCarPersonDTO> dtoForMaxUsedto = findallbycar(dto.getCar_cd());
+
+		AbizCarPersonDTO checkFinalInsertUseDtAndStartTime = new AbizCarPersonDTO();
+
+		String checkInsertUseDt = "";
+
+//		Á¦ÀÏ ¸¶Áö¸· ¿îÇàÀÏÀÚ °¡Á®¿À±â
+		if (!dtoForMaxUsedto.isEmpty()) {
+			checkFinalInsertUseDtAndStartTime = dtoForMaxUsedto.get(dtoForMaxUsedto.size() - 1);
+			checkInsertUseDt = checkFinalInsertUseDtAndStartTime.getUse_dt();
+		}
+
+		if (dto.getSeq_nb() > 0) { // ¼öÁ¤
+
+			// seq_nb°¡ ÀÏÄ¡ÇÏ´Â °´Ã¼ Ã£±â
+			Optional<AbizCarPersonDTO> matchedDtoOpt = dtoForMaxUsedto.stream()
+					.filter(d -> Objects.equals(d.getSeq_nb(), dto.getSeq_nb())).findFirst();
+
+			if (matchedDtoOpt.isPresent()) {
+				AbizCarPersonDTO matchedDto = matchedDtoOpt.get();
+
+				// insertUseDt¿Í matchedDtoÀÇ use_dt¸¦ ºñ±³
+				if (Objects.equals(insertUseDt, matchedDto.getUse_dt())) {
+					// ¿©±â¼­ ¼öÁ¤À» ÁøÇàÇÕ´Ï´Ù.
+					System.out.println("¼öÁ¤ ½ÃÀÛ");
+					int updateTimeCheckResult = updateTimeCheck(dto);
+					System.out.println(updateTimeCheckResult);
+					if (updateTimeCheckResult > 0) {
+						return "same time exist at working row";
+					} else {
+						return "ok";
+					}
+				} else if (LocalDate.parse(insertUseDt).isBefore(LocalDate.parse(checkInsertUseDt))) {
+					return "before data exist";
+				}
+			}
+		} else { // ½Å±Ô ÀÔ·Â
+
+			if (dtoForMaxUsedto == null || dtoForMaxUsedto.isEmpty()) {
 				return "ok";
 			} else {
-				System.out.println("ï¿½Ã°ï¿½È®ï¿½Î¿ï¿½ DTO");
+				System.out.println("½Ã°£È®ÀÎ¿ë DTO");
 				System.out.println(checkFinalInsertUseDtAndStartTime.toString());
-				
-				
-				
-				
+
 				int insertStartTime;
 				int checkInsertStartTime;
-				
+
 				if (LocalDate.parse(insertUseDt).isBefore(LocalDate.parse(checkInsertUseDt))) {
 					return "before data exist";
 				}
-				
-				if(dto.getStart_time() != null &&checkFinalInsertUseDtAndStartTime.getStart_time() !=null) {
-					checkInsertStartTime = Integer.parseInt( checkFinalInsertUseDtAndStartTime.getStart_time());
-					insertStartTime =  Integer.parseInt(dto.getStart_time());
-					if(insertUseDt.equals(checkInsertUseDt)) {
-						if(insertStartTime <= checkInsertStartTime) {
+
+				if (dto.getStart_time() != null && checkFinalInsertUseDtAndStartTime.getStart_time() != null) {
+					checkInsertStartTime = Integer.parseInt(checkFinalInsertUseDtAndStartTime.getStart_time());
+					insertStartTime = Integer.parseInt(dto.getStart_time());
+					if (insertUseDt.equals(checkInsertUseDt)) {
+						if (insertStartTime <= checkInsertStartTime) {
 							return "same time data exist";
 						}
 					}
 				}
 			}
-			
-			
-			
 
 		}
-			
+
 		return "ok";
 	}
+
 	@Override
 	public int updateTimeCheck(AbizCarPersonDTO dto) {
-		
+
 		return dao.updateTimeCheck(dto);
 	}
+
 	@Override
-	public int insertStartaccKm(AperStartaccInfoDTO aperStartaccInfoDTO) {
-		return dao.insertStartaccKm(aperStartaccInfoDTO);
+	@Transactional
+	public int deleteAbizcarPerson(List<DeleteRequestAbizCarPersonDTO> dto) {
+//		¿îÇà±â·Ïµé »èÁ¦
+			System.out.println("»èÁ¦µÉ DTO ¸®½ºÆ® Ãâ·Â");
+			System.out.println(dto.toString());
+		
+			dao.deleteAbizcarPerson(dto);
+				
+				
+//		»èÁ¦µÈ ¿îÇà±â·ÏÁß ¹Ì¸¶°¨ÀÌ°í  ÃÖ¼Ò seq_nb ±âÁØÀ¸·Î ¿À¸§Â÷¼ø ÇØ¼­ ¹è¿­·Î °¡Á®¿À±â
+			List<AbizCarPersonDTO> listDTO = dao.findAllSeqNbNotSendY(dto.get(0).getCar_cd());
+			System.out.println("»èÁ¦µÈ ¿îÇà±â·ÏÁß ¹Ì¸¶°¨ÀÌ°í  ÃÖ¼Ò seq_nb ±âÁØÀ¸·Î ¿À¸§Â÷¼ø ÇØ¼­ ¹è¿­·Î °¡Á®¿À");
+			System.out.println(listDTO.toString());
+
+			int startacc = getstartaccfordivision(dto.get(0).getCar_cd());
+			
+			if(listDTO.size() == 0) {
+				return 1;
+			}
+			
+			for (int i = 0; i < listDTO.size(); i++) { 
+				if(i==0 &&listDTO.get(i).getSeq_nb() !=1 ) {
+					 AbizCarPersonDTO currentDTO = listDTO.get(i);
+					    
+					 currentDTO.setBefore_km(startacc); 
+					 currentDTO.setAfter_km(currentDTO.getBefore_km() + currentDTO.getMileage_km()); 
+				} else {
+					AbizCarPersonDTO currentDTO = listDTO.get(i);
+				    AbizCarPersonDTO previousDTO = listDTO.get(i - 1);
+				    
+				    currentDTO.setBefore_km(previousDTO.getAfter_km()); 
+				    currentDTO.setAfter_km(currentDTO.getBefore_km() + currentDTO.getMileage_km()); 
+				}
+			    
+			}
+			System.out.println("»èÁ¦ÈÄ °è»êÀÌ ³¡³­ ¿îÇà±â·ÏºÎ");
+			System.out.println(listDTO.toString());
+			
+//			¸¶Áö¸· »èÁ¦µÇÁö ¾ÊÀº ¿îÇà±â·ÏºÎÀÇ ÁÖÇà°Å¸® °è»ê
+			int result = dao.updateMileageForeach(listDTO);
+	
+		return result;
+
 	}
+
+	
 	
 	@Override
-	public int checkAperStart(AperStartaccInfoDTO aperStartaccInfoDTO) {
-		return dao.checkAperStart(aperStartaccInfoDTO);
+	public int updateAutoCalcMileage(AutoCalcMileageDTO dto) {
+		System.out.println("updateAutoCalcMileage service½ÃÀÛ");
+		
+//		¸ÕÀú ÇØ´ç ¿îÇà±â·ÏÀÇ ÁÖÇà°Å¸® ÀúÀå
+		updateOnlyOneMileage(dto);
+//		ÇØ´ç ¿îÇà±â·Ï ÁÖÇà°Å¸® º¯°æÈÄ ¹Ì¸¶°¨ÀÎ ¿îÇà±â·ÏºÎ¸¦ seq_nbÀÇ ¿À¸§Â÷¼øÀ¸·Î ´Ù °¡Á®¿È
+		List<AbizCarPersonDTO> listDTO = dao.findAllSeqNbNotSendY(dto.getCar_cd());
+		
+		
+// ´Ù¸¥ ¿îÇà±â·ÏÀÇ ÁÖÇàÀü, ÁÖÇà ÈÄ ¼öÁ¤
+		if(listDTO.size() == 0) {
+			return 1;
+		}
+		
+		for (int i = 1; i < listDTO.size(); i++) { 
+		    AbizCarPersonDTO currentDTO = listDTO.get(i);
+		    AbizCarPersonDTO previousDTO = listDTO.get(i - 1);
+		    
+		    currentDTO.setBefore_km(previousDTO.getAfter_km()); 
+		    currentDTO.setAfter_km(currentDTO.getBefore_km() + currentDTO.getMileage_km()); 
+		}
+		
+		int result = dao.updateMileageForeach(listDTO);
+		
+		
+		return result;
+		
+	
 	}
+
 	
 	@Override
-	public int updateStartaccKm(AperStartaccInfoDTO aperStartaccInfoDTO) {
-		return dao.updateStartaccKm(aperStartaccInfoDTO);
+	public void updateOnlyOneMileage(AutoCalcMileageDTO dto) {
+		System.out.println("ÇÏ³ª¸¸ update service½ÃÀÛ");
+		dao.updateOnlyOneMileage(dto);
+		
 	}
-	
+
+//	¾ÈºÐ¿¡ »ç¿ëµÉ ±âÃÊ°Å¸® °¡Á®¿À±â
 	@Override
-	public String selectStartaccKm(String car_cd) {
-		return dao.selectStartaccKm(car_cd);
+	public int getstartaccfordivision(String car_cd) {
+		int result = dao.getstartaccfordivision(car_cd);
+		return result;
 	}
+
+	@Override
+	public int savedivisiondistance(List<AutoCalcMileageDTO> dto) {
+//		1. ¾ÈºÐ¿¡¼­ ¹Ù²ï °ÍµéÀ» ´Ù ¼öÁ¤
+//		2. ¹Ì¸¶°¨µÈ Á¤º¸¸¦ ´Ù½Ã ¼öÁ¤ À§ÀÇ ÀÚµ¿°è»ê ºÎºÐÀ» »ç¿ëÇÏ¸é µÊ
+		dao.savedivisiondistance(dto);
+		
+		List<AbizCarPersonDTO> listDTO = dao.findAllSeqNbNotSendY(dto.get(0).getCar_cd());
+		System.out.println("»èÁ¦µÈ ¿îÇà±â·ÏÁß ¹Ì¸¶°¨ÀÌ°í  ÃÖ¼Ò seq_nb ±âÁØÀ¸·Î ¿À¸§Â÷¼ø ÇØ¼­ ¹è¿­·Î °¡Á®¿À");
+		System.out.println(listDTO.toString());
+
+		int startacc = getstartaccfordivision(dto.get(0).getCar_cd());
+		
+		if(listDTO.size() == 0) {
+			return 1;
+		}
+		
+		for (int i = 0; i < listDTO.size(); i++) { 
+			if(i==0 &&listDTO.get(i).getSeq_nb() !=1 ) {
+				 AbizCarPersonDTO currentDTO = listDTO.get(i);
+				    
+				 currentDTO.setBefore_km(startacc); 
+				 currentDTO.setAfter_km(currentDTO.getBefore_km() + currentDTO.getMileage_km()); 
+			} else if(i==0 &&listDTO.get(i).getSeq_nb() == 1){
+				
+				AbizCarPersonDTO currentDTO = listDTO.get(i);
+			  
+			    //
+			    currentDTO.setAfter_km(currentDTO.getBefore_km() + currentDTO.getMileage_km()); 
+			    
+			} else {
+				AbizCarPersonDTO currentDTO = listDTO.get(i);
+			    AbizCarPersonDTO previousDTO = listDTO.get(i - 1);
+			    
+			    currentDTO.setBefore_km(previousDTO.getAfter_km()); 
+			    currentDTO.setAfter_km(currentDTO.getBefore_km() + currentDTO.getMileage_km()); 
+			}
+		    
+		}
+				int result = dao.updateMileageForeach(listDTO);
+				
+		return result;
+	}
+
 
 }
