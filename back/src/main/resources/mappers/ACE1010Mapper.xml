@@ -176,6 +176,12 @@
 		FROM
 		sctrl_s as sendyn
 	</select>
+	
+	<select id="selectStartaccKm" resultType="String">
+		SELECT startacc_km 
+		FROM aper_startacc_info 
+		WHERE car_cd = #{car_cd};
+	</select>
 
 	<!-- 운행기록부 한 행 저장 -->
 	<insert id="insertAbizCarPerson"
@@ -242,6 +248,32 @@
 
 	</insert>
 
+	<!-- 운행기록부 기초거리 저장 -->
+	<insert id="insertStartaccKm"
+		parameterType="com.dz.back.ace.ace1000.ace1010.dto.AperStartaccInfoDTO">
+		INSERT INTO
+		aper_startacc_info
+		(
+		CO_CD,
+		CAR_CD,
+
+		STARTACC_KM,
+		INSERT_ID,
+		INSERT_IP,
+		INSERT_DT
+
+		) VALUES (
+		#{co_cd},
+		#{car_cd},
+
+		#{startacc_km},
+		#{insert_id},
+		#{insert_ip},
+		NOW()
+		)
+
+	</insert>
+
 	<!-- 운행기록부 한 행 저장 -->
 	<update id="updateAbizCarPerson"
 		parameterType="com.dz.back.ace.ace1000.ace1010.dto.AbizCarPersonDTO">
@@ -284,6 +316,21 @@
 
 	</update>
 
+	<!-- 운행기록부 기초거리 테이블 수정 aper_startacc_info -->
+	<update id="updateStartaccKm"
+		parameterType="com.dz.back.ace.ace1000.ace1010.dto.AperStartaccInfoDTO">
+		UPDATE aper_startacc_info
+		SET
+		CO_CD = #{co_cd},
+		CAR_CD = #{car_cd},
+		STARTACC_KM = #{startacc_km},
+		MODIFY_ID = #{modify_id},
+		MODIFY_DT = NOW()
+		WHERE
+		CO_CD = #{co_cd} AND CAR_CD = #{car_cd}
+	</update>
+
+
 	<!-- 차량의 최대 seq_nm 찾기 -->
 	<select id="findMaxSeqNb" parameterType="String"
 		resultType="Integer">
@@ -308,6 +355,16 @@
 		)
 		AND SEQ_NB != #{seq_nb};
 	</select>
+
+	<select id="checkAperStart" resultType="Integer"><!-- abizcarpersonMap -->
+		SELECT COUNT(*) FROM aper_startacc_info WHERE CO_CD = #{co_cd} AND CAR_CD = #{car_cd}
+
+	</select>
+
+	<!-- start_time이 전 행의 end_time과 겨치기 허용 <select id="updateTimeCheck" resultType="Integer" 
+		>abizcarpersonMap SELECT COUNT(*) FROM abizcar_person WHERE USE_DT = #{use_dt} 
+		AND ( (#{start_time} >= START_TIME AND #{start_time} < END_TIME) OR (#{end_time} 
+		> START_TIME AND #{end_time} <= END_TIME) ) AND SEQ_NB != #{seq_nb}; </select> -->
 
 	<!-- start_time이 전 행의 end_time과 겨치기 허용 <select id="updateTimeCheck" resultType="Integer" 
 		>abizcarpersonMap SELECT COUNT(*) FROM abizcar_person WHERE USE_DT = #{use_dt} 
