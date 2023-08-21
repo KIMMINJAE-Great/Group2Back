@@ -2,9 +2,12 @@ package com.dz.back.ace.ace1000.ace1010.controller;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -25,6 +28,7 @@ import com.dz.back.acd.acd1000.acd1010.serviceImpl.ACD1010ServiceImpl;
 import com.dz.back.ace.ace1000.ace1010.dto.AbizCarPersonDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.AutoCalcMileageDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.DeleteRequestAbizCarPersonDTO;
+import com.dz.back.ace.ace1000.ace1010.dto.AperStartaccInfoDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.SendYnDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.StartEndFgDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.UseFgDTO;
@@ -41,7 +45,9 @@ public class ACE1010Controller {
 	@Autowired
 	ACD1010ServiceImpl regcarService;
 
-//	Test µ¥ÀÌÅÍ °¡Á®¿À±â
+	private String car_cd;
+
+//	Test ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	@GetMapping("/getallcars")
 	public ResponseEntity<List<AbizCarPersonDTO>> getallcars() {
 		List<AbizCarPersonDTO> dto = service.getallcars();
@@ -50,7 +56,7 @@ public class ACE1010Controller {
 
 	}
 
-//	¿îÇà ±¸ºĞ
+//	ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@GetMapping("/usefg")
 	public ResponseEntity<List<UseFgDTO>> usefg() {
 		List<UseFgDTO> dto = service.usefg();
@@ -58,7 +64,7 @@ public class ACE1010Controller {
 		return ResponseEntity.ok().body(dto);
 	}
 
-//	¸¶°¨ À¯¹«
+//	ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@GetMapping("/sendyn")
 	public ResponseEntity<List<SendYnDTO>> sendyn() {
 		List<SendYnDTO> dto = service.sendyn();
@@ -66,7 +72,7 @@ public class ACE1010Controller {
 		return ResponseEntity.ok().body(dto);
 	}
 
-//	Ãâ¹ß,µµÂø ±¸ºĞ
+//	ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@GetMapping("/startendfg")
 	public ResponseEntity<List<StartEndFgDTO>> startendfg() {
 		List<StartEndFgDTO> dto = service.startendfg();
@@ -74,29 +80,29 @@ public class ACE1010Controller {
 		return ResponseEntity.ok().body(dto);
 	}
 
-//	 ¿îÇà±â·ÏºÎ ÀÔ·Â
+//	 ï¿½ï¿½ï¿½ï¿½ï¿½Ïºï¿½ ï¿½Ô·ï¿½
 	@PostMapping("/insert")
 	public ResponseEntity<String> insert(@RequestBody AbizCarPersonDTO dto) {
-		System.out.println("Å×šÀ ½ÇÇà........... : " + dto.toString());
+		System.out.println("ï¿½×šï¿½ ï¿½ï¿½ï¿½ï¿½........... : " + dto.toString());
 
-//		ÀÔ·Â µ¥ÀÌÅÍ ½Ã°£ Áßº¹ ¹× ÀÌÀü³¯Â¥ ÀÔ·Â ¹æÁö
+//		ï¿½Ô·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ ï¿½ßºï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¥ ï¿½Ô·ï¿½ ï¿½ï¿½ï¿½ï¿½
 		String checkTimeResult = service.checkUseDtAndStartTime(dto);
-		if(checkTimeResult.equals("before data exist")) {
+		if (checkTimeResult.equals("before data exist")) {
 			return ResponseEntity.ok().body("before data exist");
-		} else if(checkTimeResult.equals("same time data exist")) {
+		} else if (checkTimeResult.equals("same time data exist")) {
 			return ResponseEntity.ok().body("same time data exist");
 		}
 
-//		insertÇÏ±âÀ§ÇØ °¡°øÇÒ AbbizcarpersonDTO »ı¼º
+//		insertï¿½Ï±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ AbbizcarpersonDTO ï¿½ï¿½ï¿½ï¿½
 		AbizCarPersonDTO acpdto = dto;
 		System.out.println(dto.getCar_cd());
 
-//	Â÷·®ÀÇ seq_nbÀÇ ÃÖ´ë°ªÀ» °¡Á®¿Í +1 ÇØÁÖ±â
+//	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ seq_nbï¿½ï¿½ ï¿½Ö´ë°ªï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ +1 ï¿½ï¿½ï¿½Ö±ï¿½
 		int seqnb = service.findMaxSeqNb(dto.getCar_cd());
 		seqnb++;
 		acpdto.setSeq_nb(seqnb);
 
-// use_dt ³¯Â¥ ÇüÅÂ º¯°æ	    
+// use_dt ï¿½ï¿½Â¥ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½	    
 		String datetimeString = dto.getUse_dt();
 		if (datetimeString != null && datetimeString.length() >= 10) {
 			String dateString = datetimeString.substring(0, 10);
@@ -104,10 +110,10 @@ public class ACE1010Controller {
 		} else {
 			acpdto.setUse_dt(null);
 		}
-		if(acpdto.getEnd_fg().isEmpty() || acpdto.getStart_fg().isEmpty() ) {
+		if (acpdto.getEnd_fg().isEmpty() || acpdto.getStart_fg().isEmpty()) {
 			return ResponseEntity.ok().body("Required value not entered");
 		}
-		System.out.println("¸¶Áö¸· ¼­ºñ½º ³Ñ±â±âÀü¿¡ È®ÀÎ : " + acpdto.toString());
+		System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ : " + acpdto.toString());
 		int result = service.insertAbizCarPerson(acpdto);
 		if (result == 1) {
 			return ResponseEntity.ok().body("insert success");
@@ -117,22 +123,62 @@ public class ACE1010Controller {
 		}
 	}
 
-//	¿îÇà±â·ÏºÎ ¼öÁ¤
+	@PostMapping("/selectedCopy")
+	public ResponseEntity<String> selectedCopy(@RequestBody List<AbizCarPersonDTO> requestData) {
+		System.out.println("Received requestData: " + requestData);
+
+		for (AbizCarPersonDTO dto : requestData) {
+	        int seqnb = service.findMaxSeqNb(dto.getCar_cd());
+	        seqnb++;
+	        dto.setSeq_nb(seqnb);
+
+	        System.out.println("seqnb : " + seqnb);
+
+	        int result = service.insertAbizCarPerson(dto);
+	        System.out.println("result : " + result);
+	    }
+
+	    return ResponseEntity.ok().body("insert success");
+        
+
+//		if (dataList.size() == 3) {
+//			String startDatetimeString = (String) dataList.get(1);
+//			System.out.println("startDatetimeString : " + startDatetimeString);
+//
+//			String endDatetimeString = (String) dataList.get(2);
+//			System.out.println("endDatetimeString : " + endDatetimeString);
+//
+//			if (startDatetimeString != null && startDatetimeString.length() >= 10) {
+//				String startDatetimeString1 = startDatetimeString.substring(0, 10);
+//				dto.setUse_dt(startDatetimeString1);
+//				System.out.println("startDatetimeString1 : " + startDatetimeString1);
+//
+//			} else {
+//				System.out.println("null ì´ ë‚˜ì˜¬ìˆ˜ê°€ ì—†ìŒ@@@@@@@@@");
+//			}
+//
+//		}
+//		int result = service.insertAbizCarPerson(dto);
+//		System.out.println("result :" + result);
+
+	}
+
+//	ï¿½ï¿½ï¿½ï¿½ï¿½Ïºï¿½ ï¿½ï¿½ï¿½ï¿½
 	@PutMapping("/update")
 	public ResponseEntity<String> update(@RequestBody AbizCarPersonDTO dto) {
-		System.out.println("¾÷µ¥ÀÌÆ® ½ÃÀÛ");
+		System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½");
 		System.out.println(dto.toString());
-//		ÀÔ·Â µ¥ÀÌÅÍ ½Ã°£ Áßº¹ ¹× ÀÌÀü³¯Â¥ ÀÔ·Â ¹æÁö
+//		ï¿½Ô·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ ï¿½ßºï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¥ ï¿½Ô·ï¿½ ï¿½ï¿½ï¿½ï¿½
 		String checkTimeResult = service.checkUseDtAndStartTime(dto);
-		if(checkTimeResult.equals("before data exist")) {
+		if (checkTimeResult.equals("before data exist")) {
 			return ResponseEntity.ok().body("before data exist");
-		} else if(checkTimeResult.equals("same time data exist")) {
+		} else if (checkTimeResult.equals("same time data exist")) {
 			return ResponseEntity.ok().body("same time data exist");
-		} else if(checkTimeResult.equals("same time exist at working row")) {
-			System.out.println("Áßº¹µÇ´Â°Ô ÀÖ¾î¾ß ³ª¿À´Â°Å");
+		} else if (checkTimeResult.equals("same time exist at working row")) {
+			System.out.println("ï¿½ßºï¿½ï¿½Ç´Â°ï¿½ ï¿½Ö¾ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Â°ï¿½");
 			return ResponseEntity.ok().body("same time exist at working row");
 		}
-		
+
 		AbizCarPersonDTO finalDto = dto;
 		String datetimeString = dto.getUse_dt();
 		if (datetimeString != null && datetimeString.length() >= 10) {
@@ -143,7 +189,7 @@ public class ACE1010Controller {
 		}
 
 		int result = service.updateAbizCarPerson(finalDto);
-		System.out.println("¿¨ ¸îÀÎ°Å¾ß " + result);
+		System.out.println("ï¿½ï¿½ ï¿½ï¿½ï¿½Î°Å¾ï¿½ " + result);
 		System.out.println(finalDto.toString());
 		if (result == 1) {
 			return ResponseEntity.ok().body("update success");
@@ -152,31 +198,32 @@ public class ACE1010Controller {
 		}
 	}
 
-//	¿îÇà±â·ÏºÎ Á¶È¸
+//	ï¿½ï¿½ï¿½ï¿½ï¿½Ïºï¿½ ï¿½ï¿½È¸
 	@GetMapping("/searchcarforabizperson")
-	public ResponseEntity<?> findallbycar(@RequestParam String car_cd,@RequestParam String startDate, @RequestParam String endDate) {
-		System.out.println("findallbycarÈ£Ãâ........");
+	public ResponseEntity<?> findallbycar(@RequestParam String car_cd, @RequestParam String startDate,
+			@RequestParam String endDate) {
+		System.out.println("findallbycarÈ£ï¿½ï¿½........");
 
 		System.out.println(car_cd);
 
 		CarDTO cdto = regcarService.findCar(car_cd);
 		System.out.println(cdto);
-	
+
 		if (cdto == null) {
 			return ResponseEntity.ok().body("not found");
-		} else if (cdto.getUse_yn().equals("N") ) {
+		} else if (cdto.getUse_yn().equals("N")) {
 			return ResponseEntity.ok().body("not using");
 		} else {
-			
+
 			List<AbizCarPersonDTO> dto = service.findallbycar(car_cd, startDate, endDate);
 			//int startacc = service.getstartaccfordivision(dto.get(0).getCar_cd());
 			if (dto == null || dto.isEmpty()) {
-				dto = new ArrayList<>(); // ¸®½ºÆ® ÃÊ±âÈ­
+				dto = new ArrayList<>(); // ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ê±ï¿½È­
 				AbizCarPersonDTO newDto = new AbizCarPersonDTO();
 				newDto.setEmp_cd(cdto.getEmp_cd());
 				newDto.setCo_cd(cdto.getCo_cd());
 				newDto.setCar_cd(cdto.getCar_cd());
-				dto.add(newDto); // »õ·Î¿î DTO °´Ã¼¸¦ ¸®½ºÆ®¿¡ Ãß°¡
+				dto.add(newDto); // ï¿½ï¿½ï¿½Î¿ï¿½ DTO ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ß°ï¿½
 			} else {
 				for (AbizCarPersonDTO item : dto) {
 					item.setEmp_cd(cdto.getEmp_cd());
@@ -185,7 +232,7 @@ public class ACE1010Controller {
 				}
 			}
 			
-			System.out.println("Ã³À½ ºÒ·¯¿Ã¶§");
+			System.out.println("Ã³ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½Ã¶ï¿½");
 			System.out.println(dto.toString());
 			return ResponseEntity.ok().body(dto);
 		}
@@ -215,7 +262,7 @@ public class ACE1010Controller {
 	
 
 
-//	¾ÈºĞ¿¡ »ç¿ëÇÒ ±âÃÊ°Å¸® °¡Á®¿À±â
+//	ï¿½ÈºĞ¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ê°Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	@GetMapping("/getstartaccfordivision")
 	public ResponseEntity<Integer> getstartaccfordivision(@RequestParam String car_cd){
 		
@@ -225,12 +272,58 @@ public class ACE1010Controller {
 	}
 	
 	
-//	¿îÇà±â·Ï ¾ÈºĞ °è»ê 
+//	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Èºï¿½ ï¿½ï¿½ï¿½ 
 	@PostMapping("/savedivisiondistance")
 	public ResponseEntity<?> savedivisiondistance(@RequestBody List<AutoCalcMileageDTO> dto){
-		System.out.println("¾ÈºĞ ÄÁÆ®·Ñ·¯");
+		System.out.println("ï¿½Èºï¿½ ï¿½ï¿½Æ®ï¿½Ñ·ï¿½");
 		System.out.println(dto.toString());
 			int result = service.savedivisiondistance(dto);
 		return ResponseEntity.ok().body(result);
 	}
+	/* ìš´í–‰ê¸°ë¡ë¶€ - ê¸°ì´ˆê±°ë¦¬ ì…ë ¥ - Tabel aper_startacc_info */
+	@PostMapping("/insertStartaccKm")
+	public int insertStartaccKm(@RequestBody AperStartaccInfoDTO aperStartaccInfoDTO) {
+
+		String co_cd = aperStartaccInfoDTO.getCo_cd();
+		String car_cd = aperStartaccInfoDTO.getCar_cd();
+		String startacc_km = aperStartaccInfoDTO.getStartacc_km();
+
+		System.out.println("co_cd :" + co_cd);
+		System.out.println("car_cd :" + car_cd);
+		System.out.println("startacc_km :" + startacc_km);
+
+		int result = service.checkAperStart(aperStartaccInfoDTO);
+		System.out.println("result : " + result);
+
+		if (result == 0) {
+			String insert_id = aperStartaccInfoDTO.getInsert_id();
+			System.out.println("insert_id :" + insert_id);
+			int test = service.insertStartaccKm(aperStartaccInfoDTO);
+		} else if (result == 1) {
+			String modify_id = aperStartaccInfoDTO.getModify_id();
+			System.out.println("modify_id :" + modify_id);
+			service.updateStartaccKm(aperStartaccInfoDTO);
+			return result;
+		}
+		return result;
+	}
+
+	/* ìš´í–‰ê¸°ë¡ë¶€ - ê¸°ì´ˆê±°ë¦¬ ì…ë ¥ - Tabel aper_startacc_info */
+	@PostMapping("/selectStartaccKm")
+	public ResponseEntity<Map<String, Object>> selectStartaccKm(@RequestBody Map<String, String> requestData) {
+	    String car_cd = requestData.get("car_cd");
+	    System.out.println("car_cd : " + car_cd);
+
+	    // car_cdë¥¼ ì‚¬ìš©í•˜ì—¬ startacc_kmì„ ë°ì´í„°ë² ì´ìŠ¤ì—ì„œ ì¡°íšŒí•˜ëŠ” ì‘ì—… ìˆ˜í–‰
+	    String startaccKm = service.selectStartaccKm(car_cd); // ì˜ˆì‹œë¡œ ë©”ì†Œë“œ ì´ë¦„ì€ selectStartaccKmByCarCdë¼ ê°€ì •
+	    
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("startacc_km", startaccKm);
+
+	    return ResponseEntity.ok().body(response);
+	}
+
+	
+	
+	
 }

@@ -76,28 +76,30 @@ public class ACD1010Controller {
 	}
 
 	@PostMapping("/getCarsInfo")
-	public ResponseEntity<String> getCarsInfo() {
-		List<CarDTO> carCardList = regcarService.getCardCarList();
+	public ResponseEntity<String> getCarsInfo(@RequestBody Map<String, String> requestData) {
+	    String carCd = requestData.get("car_cd");
+	    System.out.println("carCd 첫 번째 : " + carCd);
 
-		// 씠 쟾 뿉 뒗 carCardList瑜 CarDTO濡 罹먯뒪 똿 븯 젮怨 뻽 쑝 굹, 씠 젣 뒗 由ъ뒪 듃 쓽 슂 냼瑜 媛 졇 빞 빀 땲
-		// 떎.
-		if (!carCardList.isEmpty()) {
-			CarDTO carDTO = carCardList.get(0);
+	    try {
+	        CarDTO carDTO = regcarService.findCar(carCd); // regcarService에서 데이터 조회
+	        System.out.println("carCd 두 번째 : " + carCd);
 
-			String abizcarNBNM = carDTO.getCar_nb() + '.' + carDTO.getCar_nm();
+	        if (carDTO != null) {
+	            String abizcarNBNM = carDTO.getCar_nb() + '.' + carDTO.getCar_nm();
+	            System.out.println("abizcarNBNM : " + abizcarNBNM);
+	            System.out.println("carDTO.getCar_nb() : " + carDTO.getCar_nb());
+	            System.out.println("carDTO.getCar_nm() : " + carDTO.getCar_nm());
+	            System.out.println("carDTO : " + carDTO);
 
-			CarDTO responseDTO = new CarDTO();
-			responseDTO.setAbizcarNBNM(abizcarNBNM);
-			System.out.println("getCarsInfo  떎 뻾 !!!!!!!!");
-			System.out.println("responseDTO :" + responseDTO);
-			System.out.println("abizcarNBNM :" + abizcarNBNM);
-
-			return ResponseEntity.ok().body(abizcarNBNM);
-		} else {
-			// 留뚯빟 carCardList媛 鍮꾩뼱 엳 떎硫 泥섎━ 븷 궡 슜 쓣 뿬湲곗뿉 異붽 븯 꽭 슂.
-			return ResponseEntity.notFound().build();
-		}
+	            return ResponseEntity.ok().body(abizcarNBNM);
+	        } else {
+	            return ResponseEntity.notFound().build();
+	        }
+	    } catch (Exception e) {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+	    }
 	}
+
 
 	// 카占쏙옙 占쌩곤옙
 	@PostMapping("/addcar")
