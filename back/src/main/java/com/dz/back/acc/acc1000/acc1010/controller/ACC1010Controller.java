@@ -126,13 +126,13 @@ public class ACC1010Controller {
 	    ACC1010EmpDTO finEmpDTO = empDTO;
 	    
 	    //입사일 포맷 변화
-//	    String datetimeString = empDTO.getEmp_hrd();
-//	    if (datetimeString != null && datetimeString.length() >= 10) {
-//	        String dateString = datetimeString.substring(0, 10);
-//	        finEmpDTO.setEmp_hrd(dateString);
-//	    } else {
-//	    	 finEmpDTO.setEmp_hrd(null);
-//	    }
+	    String datetimeString = empDTO.getEmp_hrd();
+	    if (datetimeString != null && datetimeString.length() >= 10) {
+	        String dateString = datetimeString.substring(0, 10);
+	        finEmpDTO.setEmp_hrd(dateString);
+	    } else {
+	    	 finEmpDTO.setEmp_hrd(null);
+	    }
 	    
 	    //비밀번호 암호화
 	    String encodePw = bcryptPasswordEncoder.encode(empDTO.getPassword());
@@ -188,14 +188,14 @@ public class ACC1010Controller {
 		System.out.println(empDTO.toString());
 		
 		
-//		ACC1010EmpDTO finEmpDTO = empDTO;
-//	    String datetimeString = empDTO.getEmp_hrd();
-//	    if (datetimeString != null && datetimeString.length() >= 10) {
-//	        String dateString = datetimeString.substring(0, 10);
-//	        finEmpDTO.setEmp_hrd(dateString);
-//	    } else {
-//	    	 finEmpDTO.setEmp_hrd(null);
-//	    }
+		ACC1010EmpDTO finEmpDTO = empDTO;
+	    String datetimeString = empDTO.getEmp_hrd();
+	    if (datetimeString != null && datetimeString.length() >= 10) {
+	        String dateString = datetimeString.substring(0, 10);
+	        finEmpDTO.setEmp_hrd(dateString);
+	    } else {
+	    	 finEmpDTO.setEmp_hrd(null);
+	    }
 		
 		
 		if(empService.updateEmp(empDTO) == 1) {

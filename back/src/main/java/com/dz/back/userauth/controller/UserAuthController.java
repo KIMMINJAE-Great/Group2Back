@@ -52,6 +52,8 @@ public class UserAuthController {
 				return new ResponseEntity<>("password not found", HttpStatus.NOT_FOUND);
 			} else {
 				UserDetails eDTO = customUserDetailsService.loadUserByUsername(empDTO.getEmp_id());
+				System.out.println("마지막 회원정보 넘기기 직전");
+				System.out.println(eDTO.toString());
 				return new ResponseEntity<>(eDTO, HttpStatus.OK);
 			}
 		}
