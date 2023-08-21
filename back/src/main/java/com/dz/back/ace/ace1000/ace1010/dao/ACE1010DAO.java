@@ -12,6 +12,7 @@ import com.dz.back.acc.acc1000.acc1010.mapper.ACC1010Mapper;
 import com.dz.back.ace.ace1000.ace1010.dto.AbizCarPersonDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.AutoCalcMileageDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.DeleteRequestAbizCarPersonDTO;
+import com.dz.back.ace.ace1000.ace1010.dto.AperStartaccInfoDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.SendYnDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.StartEndFgDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.UseFgDTO;
@@ -45,7 +46,7 @@ public class ACE1010DAO {
 		return sqlSession.getMapper(ACE1010Mapper.class).startendfg();
 	};
 
-// Test ¿îÇà±â·ÏºÎ ÀúÀå 
+// Test ï¿½ï¿½ï¿½ï¿½ï¿½Ïºï¿½ ï¿½ï¿½ï¿½ï¿½ 
 	public int insertAbizCarPerson(AbizCarPersonDTO dto) {
 		
 		 return sqlSession.getMapper(ACE1010Mapper.class).insertAbizCarPerson(dto);
@@ -94,17 +95,17 @@ public class ACE1010DAO {
 	};
 
 //	
-//	´Ü¼ø ÁÖÇà°Å¸® ÀúÀå
+//	ï¿½Ü¼ï¿½ ï¿½ï¿½ï¿½ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public void updateOnlyOneMileage(AutoCalcMileageDTO dto) {
-		System.out.println("´ÜÀÏ ÀúÀå DAO ½ÃÀÛ updateOnlyOneMileage");
+		System.out.println("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ DAO ï¿½ï¿½ï¿½ï¿½ updateOnlyOneMileage");
 		System.out.println(dto.toString());
 		sqlSession.getMapper(ACE1010Mapper.class).updateOnlyOneMileage(dto);
 	};
-	// ÁÖÇà°Å¸®°¡ ÀÚµ¿ °è»êµÇ´Â dao
+	// ï¿½ï¿½ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ ï¿½Úµï¿½ ï¿½ï¿½ï¿½Ç´ï¿½ dao
 //	public int updateAutoCalcMileage(List<AbizCarPersonDTO> dto) {
 //		return sqlSession.getMapper(ACE1010Mapper.class).updateAutoCalcMileage(dto);
 //	};
-	// ÀÔ·ÂµÈ Çàº¸´Ù seq_nb°¡ ³ôÀº µ¥ÀÌÅÍ °¡Á®¿À´Â dao
+	// ï¿½Ô·Âµï¿½ ï¿½àº¸ï¿½ï¿½ seq_nbï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ dao
 //	public List<AbizCarPersonDTO> selectByCarCdAndSeqNbGreaterThan(AutoCalcMileageDTO dto){
 //		return sqlSession.getMapper(ACE1010Mapper.class).selectByCarCdAndSeqNbGreaterThan(dto);
 //	}
@@ -119,4 +120,22 @@ public class ACE1010DAO {
 		
 	};
 	
+
+	public int insertStartaccKm(AperStartaccInfoDTO aperStartaccInfoDTO) {
+		return sqlSession.getMapper(ACE1010Mapper.class).insertStartaccKm(aperStartaccInfoDTO);
+	}
+
+
+	public int checkAperStart(AperStartaccInfoDTO aperStartaccInfoDTO) {
+		return sqlSession.getMapper(ACE1010Mapper.class).checkAperStart(aperStartaccInfoDTO);
+	}
+
+
+	public int updateStartaccKm(AperStartaccInfoDTO aperStartaccInfoDTO) {
+		return sqlSession.getMapper(ACE1010Mapper.class).updateStartaccKm(aperStartaccInfoDTO);
+	}
+	
+	public String selectStartaccKm(String car_cd) {
+		return sqlSession.getMapper(ACE1010Mapper.class).selectStartaccKm(car_cd);
+	}
 }

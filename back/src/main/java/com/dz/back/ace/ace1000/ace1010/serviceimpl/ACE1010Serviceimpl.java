@@ -14,6 +14,7 @@ import com.dz.back.ace.ace1000.ace1010.dao.ACE1010DAO;
 import com.dz.back.ace.ace1000.ace1010.dto.AbizCarPersonDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.AutoCalcMileageDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.DeleteRequestAbizCarPersonDTO;
+import com.dz.back.ace.ace1000.ace1010.dto.AperStartaccInfoDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.SendYnDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.StartEndFgDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.UseFgDTO;
@@ -53,7 +54,7 @@ public class ACE1010Serviceimpl implements ACE1010Service {
 		return dao.insertAbizCarPerson(dto);
 	}
 
-//	Â÷·®ÀÇ ÃÖ´ë seq_nb¸¦ °¡Á®¿Â´Ù.
+//	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ seq_nbï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Â´ï¿½.
 	@Override
 	public Integer findMaxSeqNb(String car_cd) {
 
@@ -62,7 +63,7 @@ public class ACE1010Serviceimpl implements ACE1010Service {
 
 	@Override
 	public List<AbizCarPersonDTO> findallbycar(String car_cd, String startDate, String endDate) {
-		System.out.println("±â°£µé¾î°£ ¿îÇà±â·ÏºÎ Á¶È¸");
+		System.out.println("ï¿½â°£ï¿½ï¿½î°£ ï¿½ï¿½ï¿½ï¿½ï¿½Ïºï¿½ ï¿½ï¿½È¸");
 		System.out.println("car_cd : " + car_cd);
 		// TODO Auto-generated method stub
 		return dao.findallbycar(car_cd, startDate, endDate);
@@ -70,7 +71,7 @@ public class ACE1010Serviceimpl implements ACE1010Service {
 
 	@Override
 	public List<AbizCarPersonDTO> findallbycar(String car_cd) {
-		System.out.println("±â°£ÀÌ ¾Èµé¾î°£ ¿îÇà±â·ÏºÎ Á¶È¸");
+		System.out.println("ï¿½â°£ï¿½ï¿½ ï¿½Èµï¿½î°£ ï¿½ï¿½ï¿½ï¿½ï¿½Ïºï¿½ ï¿½ï¿½È¸");
 		// TODO Auto-generated method stub
 		return dao.findallbycarByCarCd(car_cd);
 	}
@@ -84,42 +85,42 @@ public class ACE1010Serviceimpl implements ACE1010Service {
 	@Override
 	public String checkUseDtAndStartTime(AbizCarPersonDTO dto) {
 
-//		½Ã°£ 10ÀÚ¸®·Î ¸ÂÃß±â
+//		ï¿½Ã°ï¿½ 10ï¿½Ú¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ß±ï¿½
 		String insertUseDt = dto.getUse_dt();
 
 		if (insertUseDt != null && insertUseDt.length() >= 10) {
 			insertUseDt = insertUseDt.substring(0, 10);
 			dto.setUse_dt(insertUseDt);
 		}
-		System.out.println("¼öÁ¤½Ã use_dt ÇüÅÂ È®ÀÎ");
+		System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ use_dt ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½");
 		System.out.println(insertUseDt);
 
-//		ÀÔ·Â½Ã ½Ã°£ È®ÀÎ 
+//		ï¿½Ô·Â½ï¿½ ï¿½Ã°ï¿½ È®ï¿½ï¿½ 
 		List<AbizCarPersonDTO> dtoForMaxUsedto = findallbycar(dto.getCar_cd());
 
 		AbizCarPersonDTO checkFinalInsertUseDtAndStartTime = new AbizCarPersonDTO();
 
 		String checkInsertUseDt = "";
 
-//		Á¦ÀÏ ¸¶Áö¸· ¿îÇàÀÏÀÚ °¡Á®¿À±â
+//		ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		if (!dtoForMaxUsedto.isEmpty()) {
 			checkFinalInsertUseDtAndStartTime = dtoForMaxUsedto.get(dtoForMaxUsedto.size() - 1);
 			checkInsertUseDt = checkFinalInsertUseDtAndStartTime.getUse_dt();
 		}
 
-		if (dto.getSeq_nb() > 0) { // ¼öÁ¤
+		if (dto.getSeq_nb() > 0) { // ï¿½ï¿½ï¿½ï¿½
 
-			// seq_nb°¡ ÀÏÄ¡ÇÏ´Â °´Ã¼ Ã£±â
+			// seq_nbï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½Ï´ï¿½ ï¿½ï¿½Ã¼ Ã£ï¿½ï¿½
 			Optional<AbizCarPersonDTO> matchedDtoOpt = dtoForMaxUsedto.stream()
 					.filter(d -> Objects.equals(d.getSeq_nb(), dto.getSeq_nb())).findFirst();
 
 			if (matchedDtoOpt.isPresent()) {
 				AbizCarPersonDTO matchedDto = matchedDtoOpt.get();
 
-				// insertUseDt¿Í matchedDtoÀÇ use_dt¸¦ ºñ±³
+				// insertUseDtï¿½ï¿½ matchedDtoï¿½ï¿½ use_dtï¿½ï¿½ ï¿½ï¿½
 				if (Objects.equals(insertUseDt, matchedDto.getUse_dt())) {
-					// ¿©±â¼­ ¼öÁ¤À» ÁøÇàÇÕ´Ï´Ù.
-					System.out.println("¼öÁ¤ ½ÃÀÛ");
+					// ï¿½ï¿½ï¿½â¼­ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
+					System.out.println("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 					int updateTimeCheckResult = updateTimeCheck(dto);
 					System.out.println(updateTimeCheckResult);
 					if (updateTimeCheckResult > 0) {
@@ -131,12 +132,12 @@ public class ACE1010Serviceimpl implements ACE1010Service {
 					return "before data exist";
 				}
 			}
-		} else { // ½Å±Ô ÀÔ·Â
+		} else { // ï¿½Å±ï¿½ ï¿½Ô·ï¿½
 
 			if (dtoForMaxUsedto == null || dtoForMaxUsedto.isEmpty()) {
 				return "ok";
 			} else {
-				System.out.println("½Ã°£È®ÀÎ¿ë DTO");
+				System.out.println("ï¿½Ã°ï¿½È®ï¿½Î¿ï¿½ DTO");
 				System.out.println(checkFinalInsertUseDtAndStartTime.toString());
 
 				int insertStartTime;
@@ -167,20 +168,39 @@ public class ACE1010Serviceimpl implements ACE1010Service {
 
 		return dao.updateTimeCheck(dto);
 	}
+	@Override
+	public int insertStartaccKm(AperStartaccInfoDTO aperStartaccInfoDTO) {
+		return dao.insertStartaccKm(aperStartaccInfoDTO);
+	}
+	
+	@Override
+	public int checkAperStart(AperStartaccInfoDTO aperStartaccInfoDTO) {
+		return dao.checkAperStart(aperStartaccInfoDTO);
+	}
+	
+	@Override
+	public int updateStartaccKm(AperStartaccInfoDTO aperStartaccInfoDTO) {
+		return dao.updateStartaccKm(aperStartaccInfoDTO);
+	}
+	
+	@Override
+	public String selectStartaccKm(String car_cd) {
+		return dao.selectStartaccKm(car_cd);
+	}
 
 	@Override
 	@Transactional
 	public int deleteAbizcarPerson(List<DeleteRequestAbizCarPersonDTO> dto) {
-//		¿îÇà±â·Ïµé »èÁ¦
-			System.out.println("»èÁ¦µÉ DTO ¸®½ºÆ® Ãâ·Â");
+//		ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ ï¿½ï¿½ï¿½ï¿½
+			System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ DTO ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½");
 			System.out.println(dto.toString());
 		
 			dao.deleteAbizcarPerson(dto);
 				
 				
-//		»èÁ¦µÈ ¿îÇà±â·ÏÁß ¹Ì¸¶°¨ÀÌ°í  ÃÖ¼Ò seq_nb ±âÁØÀ¸·Î ¿À¸§Â÷¼ø ÇØ¼­ ¹è¿­·Î °¡Á®¿À±â
+//		ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½Ì°ï¿½  ï¿½Ö¼ï¿½ seq_nb ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø¼ï¿½ ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			List<AbizCarPersonDTO> listDTO = dao.findAllSeqNbNotSendY(dto.get(0).getCar_cd());
-			System.out.println("»èÁ¦µÈ ¿îÇà±â·ÏÁß ¹Ì¸¶°¨ÀÌ°í  ÃÖ¼Ò seq_nb ±âÁØÀ¸·Î ¿À¸§Â÷¼ø ÇØ¼­ ¹è¿­·Î °¡Á®¿À");
+			System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½Ì°ï¿½  ï¿½Ö¼ï¿½ seq_nb ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø¼ï¿½ ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 			System.out.println(listDTO.toString());
 
 			int startacc = getstartaccfordivision(dto.get(0).getCar_cd());
@@ -204,10 +224,10 @@ public class ACE1010Serviceimpl implements ACE1010Service {
 				}
 			    
 			}
-			System.out.println("»èÁ¦ÈÄ °è»êÀÌ ³¡³­ ¿îÇà±â·ÏºÎ");
+			System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ïºï¿½");
 			System.out.println(listDTO.toString());
 			
-//			¸¶Áö¸· »èÁ¦µÇÁö ¾ÊÀº ¿îÇà±â·ÏºÎÀÇ ÁÖÇà°Å¸® °è»ê
+//			ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ïºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½
 			int result = dao.updateMileageForeach(listDTO);
 	
 		return result;
@@ -218,15 +238,15 @@ public class ACE1010Serviceimpl implements ACE1010Service {
 	
 	@Override
 	public int updateAutoCalcMileage(AutoCalcMileageDTO dto) {
-		System.out.println("updateAutoCalcMileage service½ÃÀÛ");
+		System.out.println("updateAutoCalcMileage serviceï¿½ï¿½ï¿½ï¿½");
 		
-//		¸ÕÀú ÇØ´ç ¿îÇà±â·ÏÀÇ ÁÖÇà°Å¸® ÀúÀå
+//		ï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½
 		updateOnlyOneMileage(dto);
-//		ÇØ´ç ¿îÇà±â·Ï ÁÖÇà°Å¸® º¯°æÈÄ ¹Ì¸¶°¨ÀÎ ¿îÇà±â·ÏºÎ¸¦ seq_nbÀÇ ¿À¸§Â÷¼øÀ¸·Î ´Ù °¡Á®¿È
+//		ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ÏºÎ¸ï¿½ seq_nbï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		List<AbizCarPersonDTO> listDTO = dao.findAllSeqNbNotSendY(dto.getCar_cd());
 		
 		
-// ´Ù¸¥ ¿îÇà±â·ÏÀÇ ÁÖÇàÀü, ÁÖÇà ÈÄ ¼öÁ¤
+// ï¿½Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		if(listDTO.size() == 0) {
 			return 1;
 		}
@@ -250,12 +270,12 @@ public class ACE1010Serviceimpl implements ACE1010Service {
 	
 	@Override
 	public void updateOnlyOneMileage(AutoCalcMileageDTO dto) {
-		System.out.println("ÇÏ³ª¸¸ update service½ÃÀÛ");
+		System.out.println("ï¿½Ï³ï¿½ï¿½ï¿½ update serviceï¿½ï¿½ï¿½ï¿½");
 		dao.updateOnlyOneMileage(dto);
 		
 	}
 
-//	¾ÈºÐ¿¡ »ç¿ëµÉ ±âÃÊ°Å¸® °¡Á®¿À±â
+//	ï¿½ÈºÐ¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ê°Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	@Override
 	public int getstartaccfordivision(String car_cd) {
 		int result = dao.getstartaccfordivision(car_cd);
@@ -264,12 +284,12 @@ public class ACE1010Serviceimpl implements ACE1010Service {
 
 	@Override
 	public int savedivisiondistance(List<AutoCalcMileageDTO> dto) {
-//		1. ¾ÈºÐ¿¡¼­ ¹Ù²ï °ÍµéÀ» ´Ù ¼öÁ¤
-//		2. ¹Ì¸¶°¨µÈ Á¤º¸¸¦ ´Ù½Ã ¼öÁ¤ À§ÀÇ ÀÚµ¿°è»ê ºÎºÐÀ» »ç¿ëÇÏ¸é µÊ
+//		1. ï¿½ÈºÐ¿ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½ ï¿½Íµï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+//		2. ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½
 		dao.savedivisiondistance(dto);
 		
 		List<AbizCarPersonDTO> listDTO = dao.findAllSeqNbNotSendY(dto.get(0).getCar_cd());
-		System.out.println("»èÁ¦µÈ ¿îÇà±â·ÏÁß ¹Ì¸¶°¨ÀÌ°í  ÃÖ¼Ò seq_nb ±âÁØÀ¸·Î ¿À¸§Â÷¼ø ÇØ¼­ ¹è¿­·Î °¡Á®¿À");
+		System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½Ì°ï¿½  ï¿½Ö¼ï¿½ seq_nb ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø¼ï¿½ ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 		System.out.println(listDTO.toString());
 
 		int startacc = getstartaccfordivision(dto.get(0).getCar_cd());
