@@ -565,6 +565,58 @@ WHERE
     AND bookmark.CO_CD = #{co_cd}
     AND bookmark.BOOKMARK_CD='2'
 	</select>
+	
+	
+	
+	
+	
+	<!-- 즐겨찾기 도착지 구분 -->
+	<select id="bookmarkendfg1" resultMap="abizcarbookmarkMap"
+		parameterType="String">
+		SELECT
+    bookmark.co_cd,
+    bookmark.emp_cd,
+    bookmark.bookmark_cd,
+    bookmark.bookmark_nm,
+    bookmark.use_fg,
+    bookmark.start_time,
+    bookmark.end_time,
+    bookmark.start_fg,
+    bookmark.start_addr,
+    bookmark.end_fg,
+    bookmark.end_addr,
+    bookmark.mileage_km
+FROM
+    abizcar_bookmark as bookmark
+WHERE
+    bookmark.EMP_CD = #{emp_cd}
+    AND bookmark.CO_CD = #{co_cd}
+    AND bookmark.BOOKMARK_CD='1'
+	</select>
+	
+	<!-- 즐겨찾기 도착지 구분 -->
+	<select id="bookmarkendfg2" resultMap="abizcarbookmarkMap"
+		parameterType="String">
+		SELECT
+    bookmark.co_cd,
+    bookmark.emp_cd,
+    bookmark.bookmark_cd,
+    bookmark.bookmark_nm,
+    bookmark.use_fg,
+    bookmark.start_time,
+    bookmark.end_time,
+    bookmark.start_fg,
+    bookmark.start_addr,
+    bookmark.end_fg,
+    bookmark.end_addr,
+    bookmark.mileage_km
+FROM
+    abizcar_bookmark as bookmark
+WHERE
+    bookmark.EMP_CD = #{emp_cd}
+    AND bookmark.CO_CD = #{co_cd}
+    AND bookmark.BOOKMARK_CD='2'
+	</select>
 
 
 	<!-- 즐겨찾기 입력 -->

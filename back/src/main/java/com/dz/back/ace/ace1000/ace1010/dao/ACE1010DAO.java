@@ -167,4 +167,14 @@ public List<AbizCarBookmarkDTO> findallbookmark(String emp_cd) {
 	    
 	    return null;
 	}
+	
+	public AbizCarBookmarkDTO bookmarkendfg(String emp_cd, String co_cd, String end_fg) {
+	    if ("회사".equals(end_fg)) {
+	        return sqlSession.getMapper(ACE1010Mapper.class).bookmarkstartfg1(emp_cd,co_cd,end_fg);
+	    } else if ("자택".equals(end_fg)) {
+	    	return sqlSession.getMapper(ACE1010Mapper.class).bookmarkstartfg2(emp_cd,co_cd,end_fg);
+	    }
+	    
+	    return null;
+	}
 }

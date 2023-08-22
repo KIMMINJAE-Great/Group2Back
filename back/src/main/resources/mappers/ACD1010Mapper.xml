@@ -98,7 +98,7 @@
 		#{insur_tr_cd},
 		#{ifr_dt},
 		#{ito_dt},
-		#{use_yn})
+		'Y')
 	</insert>
 
 	<update id="updateRegCar"
