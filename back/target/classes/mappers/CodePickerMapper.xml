@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dz.back.commons.codepicker.mapper.CodePickerMapper">
+
+	<!-- company -->
+	<select id="searchCompanyByKeyword" resultType="ComDTO">
+	    SELECT * FROM sco
+		WHERE
+			co_nm LIKE CONCAT('%', #{keyword}, '%')
+			OR
+			co_cd LIKE CONCAT('%', #{keyword}, '%')
+	</select>
+	
+	<!-- trade -->
+	<select id="searchTradeByKeyword" resultType="TradeManagementDTO">
+	    SELECT * FROM strade
+		WHERE
+			tr_nm LIKE CONCAT('%', #{keyword}, '%')
+			OR
+			tr_cd LIKE CONCAT('%', #{keyword}, '%')
+	</select>
+	
+	<!-- car -->
+	<select id="searchCarByKeyword" resultType="CarDTO">
+		SELECT * FROM abizcar
+		WHERE
+			car_nm LIKE CONCAT('%', #{keyword}, '%')
+			OR
+			car_cd LIKE CONCAT('%', #{keyword}, '%')
+	</select>
+	
+	<!--semp의 emp_cd, emp_nm ,sdept의 dept_nm 을 조회해야한다..  -->
+	<!-- <resultMap id="EmpCodePickerMap" type="CodePickerDTO">
+	    <result property="emp_cd" column="emp_cd"/>
+	    <result property="emp_nm" column="emp_nm"/>
+	    <result property="dept_nm" column="dept_nm"/>
+	</resultMap> -->
+	<!-- <select id="EmpfindByName" resultMap="EmpCodePickerMap">
+		SELECT 
+			e.emp_cd AS emp_cd, 
+			e.emp_nm AS emp_nm, 
+			d.dept_nm AS dept_nm
+		FROM semp e
+		LEFT JOIN sdept d 
+		ON e.co_cd=d.co_cd 
+		WHERE e.emp_nm LIKE CONCAT('%', #{name}, '%')
+		GROUP BY e.emp_nm
+	</select> -->
+	
+	<!-- <select id="DeptfindByName" resultType="DeptDTO">
+	    SELECT * FROM sdept
+	    WHERE dept_nm LIKE CONCAT('%', #{name}, '%')
+	</select> -->
+	<!-- <select id="DeptfindByCode" resultType="DeptDTO">
+	    SELECT * FROM sdept
+	    WHERE dept_cd = #{code}
+	</select> -->
+	
+	
+	<!-- <select id="EmpfindByName" resultType="ACC1010EmpDTO"> 
+	    SELECT * FROM semp s, 
+	    WHERE emp_nm LIKE CONCAT('%', #{name}, '%')
+	</select> -->
+	
+	
+
+	
+	
+	<!--mentor 님 예제코드  -->
+	<!-- select * from sco
+	where case when coalesce(#{where}, '') = '' then '1'
+			   when (co_cd LIKE CONCAT('%', #{where}, '%') OR coNm LIKE CONCAT('%', #{where}, '%')) then '1'
+			   else '0' end = '1'
+			   
+			   
+	select * from strade
+	where co_cd = #{coCd}
+	and 	case when coalesce(#{where}, '') = '' then '1'
+			   when (trCd LIKE CONCAT('%', #{where}, '%') OR coNm LIKE CONCAT('%', #{where}, '%')) then '1'
+			   else '0' end = '1' -->
+	
+</mapper>

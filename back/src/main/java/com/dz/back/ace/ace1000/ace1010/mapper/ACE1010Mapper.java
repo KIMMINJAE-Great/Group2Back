@@ -64,4 +64,9 @@ public interface ACE1010Mapper {
 
 	public int updatebookmark(AbizCarBookmarkDTO cdto);
 
+	public AbizCarBookmarkDTO bookmarkstartfg1(@Param("emp_cd") String emp_cd, @Param("co_cd") String co_cd, @Param("start_fg") String start_fg);
+	
+	public AbizCarBookmarkDTO bookmarkstartfg2(@Param("emp_cd") String emp_cd, @Param("co_cd") String co_cd, @Param("start_fg") String start_fg);
+	
+
 }

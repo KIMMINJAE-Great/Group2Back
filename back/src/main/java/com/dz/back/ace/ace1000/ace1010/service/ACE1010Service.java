@@ -69,4 +69,6 @@ public interface ACE1010Service {
 	// ���ã�� ����
 		public int updateBookmark(AbizCarBookmarkDTO cdto);
 
+		public AbizCarBookmarkDTO bookmarkstartfg(String emp_cd,String co_cd,String start_fg);
+
 }

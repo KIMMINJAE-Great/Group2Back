@@ -156,4 +156,15 @@ public List<AbizCarBookmarkDTO> findallbookmark(String emp_cd) {
 		// TODO Auto-generated method stub
 		return sqlSession.getMapper(ACE1010Mapper.class).updatebookmark(cdto);
 	}
+
+	public AbizCarBookmarkDTO bookmarkstartfg(String emp_cd, String co_cd, String start_fg) {
+	    if ("자택".equals(start_fg)) {
+	        return sqlSession.getMapper(ACE1010Mapper.class).bookmarkstartfg1(emp_cd,co_cd,start_fg);
+	    } else if ("회사".equals(start_fg)) {
+	    	
+	    	return sqlSession.getMapper(ACE1010Mapper.class).bookmarkstartfg2(emp_cd,co_cd,start_fg);
+	    }
+	    
+	    return null;
+	}
 }
