@@ -18,14 +18,18 @@ public class ACC1013ServiceImpl {
 	@Autowired
 	private ACC1013DAO acc1013dao;
 
-	//회사코드로 회사이름 가져오기
-	public List<ComDTO> getComRegInfoByCocd(String co_cd) {	
+	//회사코드로 회사이름 가져오기 //최종: 안쓰는코드
+	public ComDTO getComRegInfoByCocd(String co_cd) {	
 		return acc1013dao.getComRegInfoByCocd(co_cd);
 	}
 	
-	//저장코드!!!! (저장/업데이트) (회사코드가 비어있다는것은 아무것도 입력안했을 때..라고 가정)
+	//저장코드!!!!
 	public boolean saveComRegInfo(ComDTO comDTO) {
 		try {
+			ComDTO existingCom = acc1013dao.getComRegInfoByCocd(comDTO.getCo_cd());
+			if(existingCom != null) {
+	            return false; // 이미 존재하므로 저장하지 않고 false 반환
+	        }
 			acc1013dao.saveComRegInfo(comDTO);
 			return true;
 			//데이터무결성 위반시
@@ -58,4 +62,8 @@ public class ACC1013ServiceImpl {
 		return acc1013dao.getStByCode(co_cd);
 	}
 
+	//검색코드
+	public List<ComDTO> getSearchData(ComDTO dto) {
+		return acc1013dao.getSearchData(dto);
+	}
 }

@@ -18,8 +18,8 @@ public class ACC1013DAO {
 
 	@Autowired
 	SqlSession sqlSession;
-	//Test 코드 select 이다. co_cd로 co_nm 찾는 코드// 리스트로 받는군...
-	public List<ComDTO> getComRegInfoByCocd(String co_cd) {
+	// co_cd로 회사 정보 전체를 받는 코드 유효성을 위해 만듦
+	public ComDTO getComRegInfoByCocd(String co_cd) {
 		System.out.println(co_cd+"DAO..");
 		return sqlSession.getMapper(ACC1013Mapper.class).getComRegInfoByCocd(co_cd);
 	}
@@ -59,5 +59,9 @@ public class ACC1013DAO {
 	public ComDTO getStByCode(String co_cd) {
 		System.out.println(co_cd);
 		return sqlSession.getMapper(ACC1013Mapper.class).getStByCode(co_cd);
+	}
+	
+	public List<ComDTO> getSearchData(ComDTO dto) {
+		return (List<ComDTO>) sqlSession.getMapper(ACC1013Mapper.class).getSearchData(dto);
 	}
 }
