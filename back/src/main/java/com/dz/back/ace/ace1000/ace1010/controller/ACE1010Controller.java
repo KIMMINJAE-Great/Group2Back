@@ -340,7 +340,7 @@ public class ACE1010Controller {
 	
 	
 	
-//	 ���ã�� �Է�
+//	 즐겨찾기 입력
 	@PostMapping("/insertbookmark")
 	public ResponseEntity<String> insertbookmark(@RequestBody List<AbizCarBookmarkDTO> dto) {
 		System.out.println("�ך� ����........... : " + dto.toString());
@@ -360,7 +360,7 @@ public class ACE1010Controller {
 			return ResponseEntity.ok().body("insert failed");
 		}
 	}
-//���ã�� �� ����
+//즐겨찾기 수정
 	 @PutMapping("/updatebookmark")
 	 public ResponseEntity<String> updatebookmark(@RequestBody AbizCarBookmarkDTO dto) {
 		 System.out.println("������ ��ü ���Դ�?");
@@ -378,7 +378,7 @@ public class ACE1010Controller {
 		 
 	 }
 	
-	//���ã�� ��ȸ
+	//즐겨찾기 조회
 	@GetMapping("/abizbookmark")
 	public ResponseEntity<?> findallbookmark(@RequestParam String emp_cd,@RequestParam String co_cd){
 		
@@ -398,6 +398,15 @@ public class ACE1010Controller {
 		}
 
 		System.out.println(dto);
+		
+		return ResponseEntity.ok().body(dto);
+	}
+	
+	//즐겨찾기 출발지에서 회사,자택 조회
+	@GetMapping("/bookmarkstartfg")
+	public ResponseEntity<AbizCarBookmarkDTO> bookmarkstartfg(@RequestParam String emp_cd,@RequestParam String co_cd,@RequestParam String start_fg){
+		
+		AbizCarBookmarkDTO dto = service.bookmarkstartfg(emp_cd,co_cd,start_fg);
 		
 		return ResponseEntity.ok().body(dto);
 	}

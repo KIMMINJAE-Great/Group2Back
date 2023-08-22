@@ -343,5 +343,12 @@ public class ACE1010Serviceimpl implements ACE1010Service {
 		return dao.updatebookmark(cdto);
 	}
 
+	@Override
+	public AbizCarBookmarkDTO bookmarkstartfg(String emp_cd,String co_cd,String start_fg) {
+		
+		
+		return dao.bookmarkstartfg(emp_cd,co_cd,start_fg);
+	}
+
 
 }

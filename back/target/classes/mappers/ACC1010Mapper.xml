@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dz.back.acc.acc1000.acc1010.mapper.ACC1010Mapper">
+	<resultMap type="com.dz.back.acc.acc1000.acc1010.dto.ACC1010EmpDTO" id="empMap">
+		<id property="co_cd" column="CO_CD" />
+		<id property="emp_cd" column="EMP_CD" />
+		<result property="emp_nm" column="EMP_NM" />
+		<result property="password" column="PASSWORD" />
+		<result property="dept_cd" column="DEPT_CD" />
+		<result property="emp_id" column="EMP_ID" />
+		<result property="gender" column="GENDER" />
+		<result property="app_password" column="APP_PASSWORD" />
+		<result property="emp_lang" column="EMP_LANG" />
+		<result property="emp_email1" column="EMP_EMAIL1" />
+		<result property="emp_email2" column="EMP_EMAIL2" />
+		<result property="emp_semail1" column="EMP_SEMAIL1" />
+		<result property="emp_semail2" column="EMP_SEMAIL2" />
+		<result property="emp_mobile" column="EMP_MOBILE" />
+		<result property="emp_post" column="EMP_POST" />
+		<result property="emp_hphone" column="EMP_HPHONE" />
+		<result property="emp_add" column="EMP_ADD" />
+		<result property="emp_hrd" column="EMP_HRD" />
+		<result property="emp_resi" column="EMP_RESI" />
+		
+	</resultMap>
+
+	<select id="readCardList" resultMap="empMap">
+		SELECT
+		emp.emp_id,
+		emp.gender,
+		emp.emp_nm,
+		CAST(emp.emp_hrd AS
+		VARCHAR(255)) as emp_hrd,
+		emp.password,
+		emp.dept_cd,
+		emp.co_cd,
+		emp.emp_lang,
+		emp.app_password,
+		emp.emp_email1,
+		emp.emp_email2,
+		emp.emp_semail1,
+		emp.emp_semail2,
+		emp.emp_post,
+		emp.emp_mobile,
+		emp.emp_hphone,
+		emp.emp_add,
+		emp.emp_resi,
+		emp.emp_cd
+		FROM semp AS emp;
+
+	</select>
+
+	<select id="getEmpCard" resultMap="empMap">
+			SELECT
+	emp.emp_id,
+	emp.gender,
+	emp.emp_nm,
+	CAST(emp.emp_hrd AS VARCHAR(255)) as emp_hrd,
+	emp.password,
+	emp.dept_cd,
+	emp.co_cd,
+	emp.emp_lang,
+	emp.app_password,
+	emp.emp_email1,
+	emp.emp_email2,
+	emp.emp_semail1,
+	emp.emp_semail2,
+	emp.emp_post,
+	emp.emp_mobile,
+	emp.emp_hphone,
+	emp.emp_add,
+	emp.emp_resi,
+	emp.emp_cd
+FROM semp AS emp
+WHERE emp.emp_cd = #{emp_cd}
+	</select>
+
+	<!-- 회사코드를 기준으로 마지막 최대 사원번호를 가져오기 -->
+	<select id="searchEmpCd" resultType="String">
+		SELECT COALESCE(MAX(emp.emp_cd),0) FROM
+		semp AS emp WHERE emp.co_cd = #{cocd}
+	</select>
+
+	<!-- 사번 중복확인 -->
+	<select id="validEmpCd" resultType="com.dz.back.acc.acc1000.acc1010.dto.ACC1010EmpDTO">
+		SELECT * FROM semp
+		AS emp
+		WHERE emp.emp_cd = #{emp_cd}
+	</select>
+
+	<!-- 사원등록 -->
+	<insert id="register" parameterType="com.dz.back.acc.acc1000.acc1010.dto.ACC1010EmpDTO">
+		INSERT INTO semp (
+		CO_CD,
+		EMP_CD,
+		EMP_NM,
+		DEPT_CD,
+		EMP_ID,
+		PASSWORD,
+		APP_PASSWORD,
+		GENDER,
+		EMP_LANG,
+		EMP_EMAIL1,
+		EMP_EMAIL2,
+		EMP_SEMAIL1,
+		EMP_SEMAIL2,
+		EMP_MOBILE,
+		EMP_HPHONE,
+		EMP_POST,
+		EMP_ADD,
+		EMP_HRD
+		)
+		VALUES
+		(#{co_cd},
+		#{emp_cd},
+		#{emp_nm},
+		#{dept_cd},
+		#{emp_id},
+		#{password},
+		#{app_password},
+		#{gender},
+		#{emp_lang},
+		#{emp_email1},
+		#{emp_email2},
+		#{emp_semail1},
+		#{emp_semail2},
+		#{emp_mobile},
+		#{emp_hphone},
+		#{emp_post},
+		#{emp_add},
+		#{emp_hrd})
+	</insert>
+
+<!-- 조회로 사원찾기 -->
+<select id="empSearch" parameterType="com.dz.back.acc.acc1000.acc1010.dto.ACC1010EmpDTO" resultMap="empMap">
+    SELECT * 
+    FROM semp
+    WHERE 1 = 1
+    <if test="co_cd != null">
+        AND co_cd = #{co_cd}
+    </if>
+    <if test="emp_id != null or emp_nm != null">
+        AND (emp_id LIKE CONCAT('%', #{emp_id}, '%') OR emp_nm LIKE CONCAT('%', #{emp_nm}, '%'))
+    </if>
+    <choose>
+        <when test="emp_resi != null and emp_resi == 'IS NULL'">
+            AND emp_resi IS NULL
+        </when>
+        <when test="emp_resi != null and emp_resi == 'IS NOT NULL'">
+            AND emp_resi IS NOT NULL
+        </when>
+    </choose>
+</select>
+
+	<insert id="rolesSetUser" parameterType="String">
+		INSERT INTO empauth
+		(EMP_ID,AUTH) VALUES (#{emp_id},'ROLE_USER')
+	</insert>
+
+
+	<update id="updateEmp" parameterType="com.dz.back.acc.acc1000.acc1010.dto.ACC1010EmpDTO">
+
+		UPDATE semp SET
+		CO_CD = #{co_cd},
+		EMP_CD = #{emp_cd},
+		EMP_NM = #{emp_nm},
+		EMP_ID = #{emp_id},
+		DEPT_CD = #{dept_cd},
+		APP_PASSWORD = #{app_password},
+		EMP_LANG= #{emp_lang},
+		EMP_EMAIL1= #{emp_email1},
+		EMP_EMAIL2 = #{emp_email2},
+		EMP_SEMAIL1 = #{emp_semail1},
+		EMP_SEMAIL2 = #{emp_semail2},
+		EMP_MOBILE = #{emp_mobile},
+		EMP_HPHONE = #{emp_hphone},
+		EMP_ADD = #{emp_add},
+		EMP_HRD = #{emp_hrd},
+		EMP_RESI = #{emp_resi},
+		EMP_POST = #{emp_post}
+		WHERE
+		EMP_ID = #{emp_id}
+	</update>
+
+
+<!-- 사원 삭제 -->
+<delete id="deleteEmp" parameterType="String">
+	DELETE FROM semp WHERE emp_cd = #{emp_cd}
+</delete>
+
+<delete id="deleteAuth" parameterType="String">
+DELETE FROM empauth WHERE emp_id = #{emp_id}
+</delete>
+
+
+<resultMap type="com.dz.back.acc.acc1000.acc1010.dto.ACC1010MauthDTO" id="empMauthMap">
+		<id property="cocd" column="CO_CD" />
+		<id property="empcd" column="EMP_CD" />
+		<result property="mgroupnm" column="MGROUP_NM" />
+		<result property="menucd" column="MENU_CD" />
+		<result property="mgroupcd" column="MGROUP_CD" />
+		<result property="menunm" column="MENU_NM" />
+		<result property="url" column="URL" />
+		<result property="insertid" column="INSERT_ID" />
+		<result property="insertip" column="INSERT_IP" />
+		<result property="insertdt" column="INSERT_DT" />
+	</resultMap>
+
+
+<select id="getMauth" parameterType="String" resultMap="empMauthMap">
+	SELECT * FROM mauth WHERE emp_cd = #{emp_cd}
+</select>
+
+
+
+<resultMap type="com.dz.back.acc.acc1000.acc1010.dto.MenuDTO" id="menuMap">
+		<id property="co_cd" column="CO_CD" />
+		<id property="menu_cd" column="MENU_CD" />
+		<result property="mgroup_nm" column="MGROUP_NM" />
+		<result property="mgroup_cd" column="MGROUP_CD" />
+		<result property="menu_nm" column="MENU_NM" />
+		<result property="url" column="URL" />
+		
+	</resultMap>
+
+<select id="searchMenu" parameterType="String" resultMap="menuMap">
+	SELECT * from menu WHERE menu_cd = #{menucd}
+</select>
+<insert id="insertMauth" parameterType="com.dz.back.acc.acc1000.acc1010.dto.ACC1010MauthDTO">
+	INSERT INTO mauth (
+		CO_CD,
+		EMP_CD,
+		MENU_CD,
+		MGROUP_CD,
+		MGROUP_NM,
+		MENU_NM,
+		URL,
+		INSERT_ID,
+		INSERT_IP,
+		INSERT_DT
+		
+		)
+		VALUES
+		(#{cocd},
+		#{empcd},
+		#{menucd},
+		#{mgroupcd},
+		#{mgroupnm},
+		#{menunm},
+		#{url},
+		#{insertid},
+		#{insertip},
+		#{insertdt}
+		)
+</insert>
+<delete id="deleteMauth" parameterType="com.dz.back.acc.acc1000.acc1010.dto.ACC1010MauthDTO">
+	DELETE FROM mauth  
+	WHERE 1=1
+	<if test="empcd != null">
+		AND EMP_CD = #{empcd}
+	</if>
+	<if test="menucd != null">
+		AND MENU_CD = #{menucd}
+	</if>
+</delete>
+
+<select id="checkEmpId" parameterType="String" resultType="int">
+	SELECT  count(*) FROM semp as emp WHERE EMP_ID = #{emp_id}
+</select>
+</mapper>
+
+
+
