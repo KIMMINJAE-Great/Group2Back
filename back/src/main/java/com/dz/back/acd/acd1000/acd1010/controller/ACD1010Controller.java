@@ -106,8 +106,13 @@ public class ACD1010Controller {
 	public ResponseEntity<CarDTO> addRegCar(@RequestBody CarDTO dto) {
 		System.out.println("차량 등록 시작");
 		System.out.println(dto.toString());
-		// 원본형식에서 처음부터 10자리까지만 잘라서
+		
 		String GetDt = dto.getGet_dt().substring(0, 10);
+		
+		if(dto.getLease_yn().equals("1")) {
+			dto.setGet_dt(GetDt);
+		} else {
+		// 원본형식에서 처음부터 10자리까지만 잘라서
 		String DisposalDt = "";
 		String LfrDt = "";
 		String LtoDt = "";
@@ -128,7 +133,7 @@ public class ACD1010Controller {
 		dto.setGet_dt(GetDt);
 		dto.setIfr_dt(IfrDt);
 		dto.setIto_dt(ItoDt);
-
+		}
 		int result = regcarService.addRegCar(dto);
 		System.out.println(result);
 		if (result == 1) {
