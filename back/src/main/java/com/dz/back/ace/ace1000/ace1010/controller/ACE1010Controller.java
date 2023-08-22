@@ -410,6 +410,15 @@ public class ACE1010Controller {
 		
 		return ResponseEntity.ok().body(dto);
 	}
+	
+	//즐겨찾기 도착지에서 회사,자택 조회
+		@GetMapping("/bookmarkendfg")
+		public ResponseEntity<AbizCarBookmarkDTO> bookmarkendfg(@RequestParam String emp_cd,@RequestParam String co_cd,@RequestParam String end_fg){
+			
+			AbizCarBookmarkDTO dto = service.bookmarkendfg(emp_cd,co_cd,end_fg);
+			
+			return ResponseEntity.ok().body(dto);
+		}
 
 	
 	
