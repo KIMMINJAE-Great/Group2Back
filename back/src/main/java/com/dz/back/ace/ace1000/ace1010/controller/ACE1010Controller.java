@@ -25,6 +25,7 @@ import com.dz.back.acc.acc1000.acc1010.dto.ACC1010EmpDTO;
 import com.dz.back.acc.acc1000.acc1010.dto.ACC1010MauthDTO;
 import com.dz.back.acd.acd1000.acd1010.dto.CarDTO;
 import com.dz.back.acd.acd1000.acd1010.serviceImpl.ACD1010ServiceImpl;
+import com.dz.back.ace.ace1000.ace1010.dao.ACE1010DAO;
 import com.dz.back.ace.ace1000.ace1010.dto.AbizCarPersonDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.AutoCalcMileageDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.DeleteRequestAbizCarPersonDTO;
@@ -44,6 +45,9 @@ public class ACE1010Controller {
 
 	@Autowired
 	ACD1010ServiceImpl regcarService;
+	
+	@Autowired
+	ACE1010DAO dao;
 
 	private String car_cd;
 
@@ -125,42 +129,30 @@ public class ACE1010Controller {
 
 	@PostMapping("/selectedCopy")
 	public ResponseEntity<String> selectedCopy(@RequestBody List<AbizCarPersonDTO> requestData) {
-		System.out.println("Received requestData: " + requestData);
+	    System.out.println("Received requestData: " + requestData);
 
-		for (AbizCarPersonDTO dto : requestData) {
+	    for (AbizCarPersonDTO dto : requestData) {
 	        int seqnb = service.findMaxSeqNb(dto.getCar_cd());
 	        seqnb++;
 	        dto.setSeq_nb(seqnb);
 
 	        System.out.println("seqnb : " + seqnb);
+	        
+	        String datetimeString = dto.getUse_dt();
+	        if (datetimeString != null && datetimeString.length() >= 10) {
+	        	String dateString = datetimeString.substring(0, 10);
+	            dto.setUse_dt(dateString);
+	            System.out.println("dateString : " + dateString);
+	        } else {
+	            System.out.println("null 이 나올수가 없음@@@@@@@@@");
+	        }
 
 	        int result = service.insertAbizCarPerson(dto);
 	        System.out.println("result : " + result);
 	    }
+	    
 
 	    return ResponseEntity.ok().body("insert success");
-        
-
-//		if (dataList.size() == 3) {
-//			String startDatetimeString = (String) dataList.get(1);
-//			System.out.println("startDatetimeString : " + startDatetimeString);
-//
-//			String endDatetimeString = (String) dataList.get(2);
-//			System.out.println("endDatetimeString : " + endDatetimeString);
-//
-//			if (startDatetimeString != null && startDatetimeString.length() >= 10) {
-//				String startDatetimeString1 = startDatetimeString.substring(0, 10);
-//				dto.setUse_dt(startDatetimeString1);
-//				System.out.println("startDatetimeString1 : " + startDatetimeString1);
-//
-//			} else {
-//				System.out.println("null 이 나올수가 없음@@@@@@@@@");
-//			}
-//
-//		}
-//		int result = service.insertAbizCarPerson(dto);
-//		System.out.println("result :" + result);
-
 	}
 
 //	�����Ϻ� ����
