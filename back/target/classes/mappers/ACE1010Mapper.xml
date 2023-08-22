@@ -34,6 +34,34 @@
 		<result property="modify_dt" column="MODIFY_DT" />
 		<result property="data_fg" column="DATA_FG" />
 	</resultMap>
+	<resultMap id="abizcarbookmarkMap"
+		type="com.dz.back.ace.ace1000.ace1010.dto.AbizCarBookmarkDTO">
+
+		<id column="CO_CD" property="co_cd" />
+
+		<id column="EMP_CD" property="emp_cd" />
+
+		<id column="BOOKMARK_CD" property="bookmark_cd" />
+
+		<result column="BOOKMARK_NM" property="bookmark_nm" />
+
+		<result column="USE_FG" property="use_fg" />
+
+		<result column="START_TIME" property="start_time" />
+
+		<result column="END_TIME" property="end_time" />
+
+		<result column="START_FG" property="start_fg" />
+
+		<result column="START_ADDR" property="start_addr" />
+
+		<result column="END_FG" property="end_fg" />
+
+		<result column="END_ADDR" property="end_addr" />
+
+		<result column="MILEAGE_KM" property="mileage_km" />
+
+	</resultMap>
 
 	<select id="getallcars" resultMap="abizcarpersonMap">
 		select
@@ -177,6 +205,13 @@
 		sctrl_s as sendyn
 	</select>
 
+	<select id="selectStartaccKm" resultType="String">
+		SELECT startacc_km
+		FROM
+		aper_startacc_info
+		WHERE car_cd = #{car_cd};
+	</select>
+
 	<!-- 운행기록부 한 행 저장 -->
 	<insert id="insertAbizCarPerson"
 		parameterType="com.dz.back.ace.ace1000.ace1010.dto.AbizCarPersonDTO">
@@ -242,6 +277,32 @@
 
 	</insert>
 
+	<!-- 운행기록부 기초거리 저장 -->
+	<insert id="insertStartaccKm"
+		parameterType="com.dz.back.ace.ace1000.ace1010.dto.AperStartaccInfoDTO">
+		INSERT INTO
+		aper_startacc_info
+		(
+		CO_CD,
+		CAR_CD,
+
+		STARTACC_KM,
+		INSERT_ID,
+		INSERT_IP,
+		INSERT_DT
+
+		) VALUES (
+		#{co_cd},
+		#{car_cd},
+
+		#{startacc_km},
+		#{insert_id},
+		#{insert_ip},
+		NOW()
+		)
+
+	</insert>
+
 	<!-- 운행기록부 한 행 저장 -->
 	<update id="updateAbizCarPerson"
 		parameterType="com.dz.back.ace.ace1000.ace1010.dto.AbizCarPersonDTO">
@@ -284,6 +345,22 @@
 
 	</update>
 
+	<!-- 운행기록부 기초거리 테이블 수정 aper_startacc_info -->
+	<update id="updateStartaccKm"
+		parameterType="com.dz.back.ace.ace1000.ace1010.dto.AperStartaccInfoDTO">
+		UPDATE aper_startacc_info
+		SET
+		CO_CD = #{co_cd},
+		CAR_CD =
+		#{car_cd},
+		STARTACC_KM = #{startacc_km},
+		MODIFY_ID = #{modify_id},
+		MODIFY_DT = NOW()
+		WHERE
+		CO_CD = #{co_cd} AND CAR_CD = #{car_cd}
+	</update>
+
+
 	<!-- 차량의 최대 seq_nm 찾기 -->
 	<select id="findMaxSeqNb" parameterType="String"
 		resultType="Integer">
@@ -308,6 +385,17 @@
 		)
 		AND SEQ_NB != #{seq_nb};
 	</select>
+
+	<select id="checkAperStart" resultType="Integer"><!-- abizcarpersonMap -->
+		SELECT COUNT(*) FROM aper_startacc_info WHERE CO_CD = #{co_cd} AND
+		CAR_CD = #{car_cd}
+
+	</select>
+
+	<!-- start_time이 전 행의 end_time과 겨치기 허용 <select id="updateTimeCheck" resultType="Integer" 
+		>abizcarpersonMap SELECT COUNT(*) FROM abizcar_person WHERE USE_DT = #{use_dt} 
+		AND ( (#{start_time} >= START_TIME AND #{start_time} < END_TIME) OR (#{end_time} 
+		> START_TIME AND #{end_time} <= END_TIME) ) AND SEQ_NB != #{seq_nb}; </select> -->
 
 	<!-- start_time이 전 행의 end_time과 겨치기 허용 <select id="updateTimeCheck" resultType="Integer" 
 		>abizcarpersonMap SELECT COUNT(*) FROM abizcar_person WHERE USE_DT = #{use_dt} 
@@ -337,7 +425,8 @@
 		FROM
 		abizcar_person
 		WHERE
-		abizcar_person.car_cd = #{car_cd}
+		abizcar_person.car_cd =
+		#{car_cd}
 
 		AND abizcar_person.SEND_YN = '2'
 
@@ -387,7 +476,8 @@
 
 	<!-- 안분에 사용할 기초거리 가져오기 -->
 	<select id="getstartaccfordivision" resultType="Integer">
-		SELECT COALESCE(STARTACC_KM ,0) FROM aper_startacc_info WHERE CAR_CD =
+		SELECT
+		COALESCE(STARTACC_KM ,0) FROM aper_startacc_info WHERE CAR_CD =
 		#{car_cd}
 	</select>
 
@@ -403,6 +493,58 @@
 
 		</foreach>
 
+	</update>
+
+
+	<!-- 즐겨찾기 조회 -->
+	<select id="findallbookmark" resultMap="abizcarbookmarkMap"
+		parameterType="String">
+		SELECT
+    bookmark.co_cd,
+    bookmark.emp_cd,
+    bookmark.bookmark_cd,
+    bookmark.bookmark_nm,
+    bookmark.use_fg,
+    bookmark.start_time,
+    bookmark.end_time,
+    bookmark.start_fg,
+    bookmark.start_addr,
+    bookmark.end_fg,
+    bookmark.end_addr,
+    bookmark.mileage_km
+FROM
+    abizcar_bookmark as bookmark
+WHERE
+    bookmark.emp_cd = #{emp_cd}
+	</select>
+
+
+	<!-- 즐겨찾기 입력 -->
+	<insert id="insertbookmark" parameterType="java.util.List">
+		INSERT INTO abizcar_bookmark 
+		(co_cd, emp_cd, bookmark_cd, bookmark_nm, use_fg,start_time, end_time, start_fg, start_addr,end_fg, end_addr, mileage_km) VALUES
+		<foreach separator="," item="bookmark" collection="list">
+		(#{bookmark.co_cd},#{bookmark.emp_cd},#{bookmark.bookmark_cd},#{bookmark.bookmark_nm},#{bookmark.use_fg},#{bookmark.start_time},#{bookmark.end_time},#{bookmark.start_fg},#{bookmark.start_addr},#{bookmark.end_fg},#{bookmark.end_addr},#{bookmark.mileage_km})
+		</foreach>
+	</insert>
+
+	<!-- 즐겨찾기 수정 -->
+	<update id="updatebookmark"
+		parameterType="com.dz.back.ace.ace1000.ace1010.dto.AbizCarBookmarkDTO">
+		UPDATE abizcar_bookmark SET
+		CO_CD = #{co_cd},
+		EMP_CD = #{emp_cd},
+		BOOKMARK_CD = #{bookmark_cd},
+		BOOKMARK_NM = #{bookmark_nm},
+		USE_FG = #{use_fg},
+		START_TIME = #{start_time},
+		END_TIME = #{end_time},
+		START_FG = #{start_fg},
+		START_ADDR = #{start_addr},
+		END_FG = #{end_fg},
+		END_ADDR = #{end_addr},
+		MILEAGE_KM = #{mileage_km}
+		WHERE BOOKMARK_CD = #{bookmark_cd}
 	</update>
 
 </mapper>

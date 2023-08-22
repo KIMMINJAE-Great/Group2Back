@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.dz.back.ace.ace1000.ace1010.dto.AbizCarBookmarkDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.AbizCarPersonDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.AutoCalcMileageDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.DeleteRequestAbizCarPersonDTO;
@@ -56,5 +57,11 @@ public interface ACE1010Mapper {
 	public int updateStartaccKm(AperStartaccInfoDTO aperStartaccInfoDTO);
 	
 	public String selectStartaccKm(String car_cd);
+	
+	public List<AbizCarBookmarkDTO> findallbookmark(String emp_cd);
+
+	public int insertbookmark(List<AbizCarBookmarkDTO> bookmarks);
+
+	public int updatebookmark(AbizCarBookmarkDTO cdto);
 
 }
