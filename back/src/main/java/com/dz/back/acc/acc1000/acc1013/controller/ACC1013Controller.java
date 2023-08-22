@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dz.back.acc.acc1000.acc1012.dto.TradeManagementDTO;
 import com.dz.back.acc.acc1000.acc1013.dto.ComDTO;
 import com.dz.back.acc.acc1000.acc1013.serviceimpl.ACC1013ServiceImpl;
 
@@ -49,7 +51,7 @@ public class ACC1013Controller {
 	    }
     }
 	
-	//companyreg/save 저장코드 (존재시 업데이트, 없을시 저장)
+	//companyreg/save 저장코드 
 	@PostMapping("/save")
 	public ResponseEntity<Object> ComRegSave(@RequestBody ComDTO comDTO) {
 		System.out.println("/companyreg/save 실행");
@@ -108,15 +110,36 @@ public class ACC1013Controller {
 	}
 	
 	//체크박스가 선택되었을때 한꺼번에 삭제하기(객체가 여러개 담겨있을땐 이게 실행됨)
-		 @DeleteMapping("/delete")
-		    public void deleteCheckedCoCd(@RequestBody List<ComDTO> comList) {
-		        for (ComDTO com : comList) {
-		        	System.out.println(com.getCo_cd());
-		        	acc1013ServiceImpl.deleteComRegInfoByCocd(com.getCo_cd());
-		        }
-		    }
+	 @DeleteMapping("/delete")
+	    public void deleteCheckedCoCd(@RequestBody List<ComDTO> comList) {
+	        for (ComDTO com : comList) {
+	        	System.out.println(com.getCo_cd());
+	        	acc1013ServiceImpl.deleteComRegInfoByCocd(com.getCo_cd());
+	        }
+	    }
 	
-	
+	//검색
+	 @GetMapping("/getSearchData")
+		public ResponseEntity<List<ComDTO>> getSearchData(
+				@RequestParam(required = false) String co_cd, @RequestParam(required = false) String use_yn) {
+
+			if (co_cd == null & co_cd.isEmpty()) {
+				co_cd = null;
+			}
+			if (use_yn == null & use_yn.isEmpty()) {
+				use_yn = null;
+			}
+			ComDTO dto = new ComDTO();
+			dto.setCo_cd(co_cd);
+			dto.setUse_yn(use_yn);
+
+			List<ComDTO> searchDataList = acc1013ServiceImpl.getSearchData(dto);
+			
+			System.out.println("회사검색"+searchDataList);
+
+			return ResponseEntity.ok().body(searchDataList);
+		}
+		 
 	//companyreg/search 카드리스트에 회사코드로 조회(회사등록 textfield에 넣기)
 //	@PostMapping("/selectCard")
 //	public ResponseEntity<Object> SelectCard(@RequestBody ComDTO comDTO) {

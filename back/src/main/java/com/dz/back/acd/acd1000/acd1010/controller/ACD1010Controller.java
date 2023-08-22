@@ -38,14 +38,20 @@ public class ACD1010Controller {
 	}
 
 	@GetMapping("/carsearch")
-	public ResponseEntity<List<CarDTO>> carSearch(@RequestParam(required = false) String lease_yn) {
+	public ResponseEntity<List<CarDTO>> carSearch(@RequestParam(required = false) String lease_yn, 
+												@RequestParam(required = false) String car_cd ) {
 
 		List<CarDTO> carSearchList;
-		if (lease_yn == "" || lease_yn.equals("all")) {
+		
+		
+		if (lease_yn.equals("all")) {
 			carSearchList = regcarService.getCardCarList();
 		} else {
 			if (lease_yn != null && lease_yn.isEmpty()) {
 				lease_yn = null;
+			}
+			if (car_cd == null & car_cd.isEmpty()) {
+				car_cd = null;
 			}
 
 			if (lease_yn != null) {
@@ -62,6 +68,7 @@ public class ACD1010Controller {
 
 			CarDTO carSearch = new CarDTO();
 			carSearch.setLease_yn(lease_yn);
+			carSearch.setCar_cd(car_cd);
 			carSearchList = regcarService.carSearch(carSearch);
 		}
 		return ResponseEntity.ok().body(carSearchList);

@@ -136,9 +136,13 @@
 		<!-- <if test="co_cd != null">
 			AND co_cd = #{co_cd}
 		</if> -->
-		<if test="lease_yn != null">
+		<if test="car_cd != null and car_cd != ''">
+			AND car_cd LIKE CONCAT('%', #{car_cd}, '%')
+		</if>
+		<if test="lease_yn != null ">
 			AND lease_yn = #{lease_yn}
 		</if>
+		
 	</select>
 <!-- 민재추가 -->
 	<select id="findCar" resultMap="regcarMap"> 

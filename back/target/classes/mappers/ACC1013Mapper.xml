@@ -103,7 +103,23 @@
 			sco
 			WHERE
 			co_cd=#{co_cd};
-		</select>
+	</select>
    
+   <!-- SELECT , 조회한 값만 카드데이터 불러오기 (거래처구분, 거래처코드, 거래처명) -->
+	<select id="getSearchData"
+		parameterType="com.dz.back.acc.acc1000.acc1013.dto.ComDTO" resultMap="comMap">
+		SELECT *
+		FROM sco
+		WHERE 1=1
+		<if test="use_yn != null and use_yn != ''">
+			AND use_yn = #{use_yn}
+		</if>
+		<if test="co_cd != null and co_cd != ''">
+			AND co_cd LIKE CONCAT('%', #{co_cd}, '%')
+		</if>
+		<if test="co_nm != null and co_nm != ''">
+			AND co_nm LIKE CONCAT('%', #{co_nm}, '%')
+		</if>
+	</select>
 
 </mapper>
