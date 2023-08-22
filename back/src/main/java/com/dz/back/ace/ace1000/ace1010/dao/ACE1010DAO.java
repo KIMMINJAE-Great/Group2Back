@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.dz.back.acc.acc1000.acc1010.dto.ACC1010EmpDTO;
 import com.dz.back.acc.acc1000.acc1010.mapper.ACC1010Mapper;
+import com.dz.back.ace.ace1000.ace1010.dto.AbizCarBookmarkDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.AbizCarPersonDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.AutoCalcMileageDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.DeleteRequestAbizCarPersonDTO;
@@ -46,7 +47,7 @@ public class ACE1010DAO {
 		return sqlSession.getMapper(ACE1010Mapper.class).startendfg();
 	};
 
-// Test �����Ϻ� ���� 
+// Test 占쏙옙占쏙옙占싹븝옙 占쏙옙占쏙옙 
 	public int insertAbizCarPerson(AbizCarPersonDTO dto) {
 		
 		 return sqlSession.getMapper(ACE1010Mapper.class).insertAbizCarPerson(dto);
@@ -95,17 +96,17 @@ public class ACE1010DAO {
 	};
 
 //	
-//	�ܼ� ����Ÿ� ����
+//	占쌤쇽옙 占쏙옙占쏙옙타占� 占쏙옙占쏙옙
 	public void updateOnlyOneMileage(AutoCalcMileageDTO dto) {
-		System.out.println("���� ���� DAO ���� updateOnlyOneMileage");
+		System.out.println("占쏙옙占쏙옙 占쏙옙占쏙옙 DAO 占쏙옙占쏙옙 updateOnlyOneMileage");
 		System.out.println(dto.toString());
 		sqlSession.getMapper(ACE1010Mapper.class).updateOnlyOneMileage(dto);
 	};
-	// ����Ÿ��� �ڵ� ���Ǵ� dao
+	// 占쏙옙占쏙옙타占쏙옙占� 占쌘듸옙 占쏙옙占실댐옙 dao
 //	public int updateAutoCalcMileage(List<AbizCarPersonDTO> dto) {
 //		return sqlSession.getMapper(ACE1010Mapper.class).updateAutoCalcMileage(dto);
 //	};
-	// �Էµ� �ຸ�� seq_nb�� ���� ������ �������� dao
+	// 占쌉력듸옙 占썅보占쏙옙 seq_nb占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙 dao
 //	public List<AbizCarPersonDTO> selectByCarCdAndSeqNbGreaterThan(AutoCalcMileageDTO dto){
 //		return sqlSession.getMapper(ACE1010Mapper.class).selectByCarCdAndSeqNbGreaterThan(dto);
 //	}
@@ -137,5 +138,33 @@ public class ACE1010DAO {
 	
 	public String selectStartaccKm(String car_cd) {
 		return sqlSession.getMapper(ACE1010Mapper.class).selectStartaccKm(car_cd);
+	}
+	
+public List<AbizCarBookmarkDTO> findallbookmark(String emp_cd) {
+		
+		return sqlSession.getMapper(ACE1010Mapper.class).findallbookmark(emp_cd);
+	}
+
+
+	public int insertbookmark(List<AbizCarBookmarkDTO> bookmarks) {
+		// TODO Auto-generated method stub
+		return sqlSession.getMapper(ACE1010Mapper.class).insertbookmark(bookmarks);
+	}
+
+
+	public int updatebookmark(AbizCarBookmarkDTO cdto) {
+		// TODO Auto-generated method stub
+		return sqlSession.getMapper(ACE1010Mapper.class).updatebookmark(cdto);
+	}
+
+	public AbizCarBookmarkDTO bookmarkstartfg(String emp_cd, String co_cd, String start_fg) {
+	    if ("자택".equals(start_fg)) {
+	        return sqlSession.getMapper(ACE1010Mapper.class).bookmarkstartfg1(emp_cd,co_cd,start_fg);
+	    } else if ("회사".equals(start_fg)) {
+	    	
+	    	return sqlSession.getMapper(ACE1010Mapper.class).bookmarkstartfg2(emp_cd,co_cd,start_fg);
+	    }
+	    
+	    return null;
 	}
 }

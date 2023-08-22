@@ -34,6 +34,34 @@
 		<result property="modify_dt" column="MODIFY_DT" />
 		<result property="data_fg" column="DATA_FG" />
 	</resultMap>
+	<resultMap id="abizcarbookmarkMap"
+		type="com.dz.back.ace.ace1000.ace1010.dto.AbizCarBookmarkDTO">
+
+		<id column="CO_CD" property="co_cd" />
+
+		<id column="EMP_CD" property="emp_cd" />
+
+		<id column="BOOKMARK_CD" property="bookmark_cd" />
+
+		<result column="BOOKMARK_NM" property="bookmark_nm" />
+
+		<result column="USE_FG" property="use_fg" />
+
+		<result column="START_TIME" property="start_time" />
+
+		<result column="END_TIME" property="end_time" />
+
+		<result column="START_FG" property="start_fg" />
+
+		<result column="START_ADDR" property="start_addr" />
+
+		<result column="END_FG" property="end_fg" />
+
+		<result column="END_ADDR" property="end_addr" />
+
+		<result column="MILEAGE_KM" property="mileage_km" />
+
+	</resultMap>
 
 	<select id="getallcars" resultMap="abizcarpersonMap">
 		select
@@ -176,10 +204,11 @@
 		FROM
 		sctrl_s as sendyn
 	</select>
-	
+
 	<select id="selectStartaccKm" resultType="String">
-		SELECT startacc_km 
-		FROM aper_startacc_info 
+		SELECT startacc_km
+		FROM
+		aper_startacc_info
 		WHERE car_cd = #{car_cd};
 	</select>
 
@@ -322,7 +351,8 @@
 		UPDATE aper_startacc_info
 		SET
 		CO_CD = #{co_cd},
-		CAR_CD = #{car_cd},
+		CAR_CD =
+		#{car_cd},
 		STARTACC_KM = #{startacc_km},
 		MODIFY_ID = #{modify_id},
 		MODIFY_DT = NOW()
@@ -357,7 +387,8 @@
 	</select>
 
 	<select id="checkAperStart" resultType="Integer"><!-- abizcarpersonMap -->
-		SELECT COUNT(*) FROM aper_startacc_info WHERE CO_CD = #{co_cd} AND CAR_CD = #{car_cd}
+		SELECT COUNT(*) FROM aper_startacc_info WHERE CO_CD = #{co_cd} AND
+		CAR_CD = #{car_cd}
 
 	</select>
 
@@ -394,7 +425,8 @@
 		FROM
 		abizcar_person
 		WHERE
-		abizcar_person.car_cd = #{car_cd}
+		abizcar_person.car_cd =
+		#{car_cd}
 
 		AND abizcar_person.SEND_YN = '2'
 
@@ -444,7 +476,8 @@
 
 	<!-- 안분에 사용할 기초거리 가져오기 -->
 	<select id="getstartaccfordivision" resultType="Integer">
-		SELECT COALESCE(STARTACC_KM ,0) FROM aper_startacc_info WHERE CAR_CD =
+		SELECT
+		COALESCE(STARTACC_KM ,0) FROM aper_startacc_info WHERE CAR_CD =
 		#{car_cd}
 	</select>
 
@@ -460,6 +493,106 @@
 
 		</foreach>
 
+	</update>
+
+
+	<!-- 즐겨찾기 조회 -->
+	<select id="findallbookmark" resultMap="abizcarbookmarkMap"
+		parameterType="String">
+		SELECT
+    bookmark.co_cd,
+    bookmark.emp_cd,
+    bookmark.bookmark_cd,
+    bookmark.bookmark_nm,
+    bookmark.use_fg,
+    bookmark.start_time,
+    bookmark.end_time,
+    bookmark.start_fg,
+    bookmark.start_addr,
+    bookmark.end_fg,
+    bookmark.end_addr,
+    bookmark.mileage_km
+FROM
+    abizcar_bookmark as bookmark
+WHERE
+    bookmark.emp_cd = #{emp_cd}
+	</select>
+	
+	<!-- 즐겨찾기 출발지 구분 -->
+	<select id="bookmarkstartfg1" resultMap="abizcarbookmarkMap"
+		parameterType="String">
+		SELECT
+    bookmark.co_cd,
+    bookmark.emp_cd,
+    bookmark.bookmark_cd,
+    bookmark.bookmark_nm,
+    bookmark.use_fg,
+    bookmark.start_time,
+    bookmark.end_time,
+    bookmark.start_fg,
+    bookmark.start_addr,
+    bookmark.end_fg,
+    bookmark.end_addr,
+    bookmark.mileage_km
+FROM
+    abizcar_bookmark as bookmark
+WHERE
+    bookmark.EMP_CD = #{emp_cd}
+    AND bookmark.CO_CD = #{co_cd}
+    AND bookmark.BOOKMARK_CD='1'
+	</select>
+	
+	<!-- 즐겨찾기 출발지 구분 -->
+	<select id="bookmarkstartfg2" resultMap="abizcarbookmarkMap"
+		parameterType="String">
+		SELECT
+    bookmark.co_cd,
+    bookmark.emp_cd,
+    bookmark.bookmark_cd,
+    bookmark.bookmark_nm,
+    bookmark.use_fg,
+    bookmark.start_time,
+    bookmark.end_time,
+    bookmark.start_fg,
+    bookmark.start_addr,
+    bookmark.end_fg,
+    bookmark.end_addr,
+    bookmark.mileage_km
+FROM
+    abizcar_bookmark as bookmark
+WHERE
+    bookmark.EMP_CD = #{emp_cd}
+    AND bookmark.CO_CD = #{co_cd}
+    AND bookmark.BOOKMARK_CD='2'
+	</select>
+
+
+	<!-- 즐겨찾기 입력 -->
+	<insert id="insertbookmark" parameterType="java.util.List">
+		INSERT INTO abizcar_bookmark 
+		(co_cd, emp_cd, bookmark_cd, bookmark_nm, use_fg,start_time, end_time, start_fg, start_addr,end_fg, end_addr, mileage_km) VALUES
+		<foreach separator="," item="bookmark" collection="list">
+		(#{bookmark.co_cd},#{bookmark.emp_cd},#{bookmark.bookmark_cd},#{bookmark.bookmark_nm},#{bookmark.use_fg},#{bookmark.start_time},#{bookmark.end_time},#{bookmark.start_fg},#{bookmark.start_addr},#{bookmark.end_fg},#{bookmark.end_addr},#{bookmark.mileage_km})
+		</foreach>
+	</insert>
+
+	<!-- 즐겨찾기 수정 -->
+	<update id="updatebookmark"
+		parameterType="com.dz.back.ace.ace1000.ace1010.dto.AbizCarBookmarkDTO">
+		UPDATE abizcar_bookmark SET
+		CO_CD = #{co_cd},
+		EMP_CD = #{emp_cd},
+		BOOKMARK_CD = #{bookmark_cd},
+		BOOKMARK_NM = #{bookmark_nm},
+		USE_FG = #{use_fg},
+		START_TIME = #{start_time},
+		END_TIME = #{end_time},
+		START_FG = #{start_fg},
+		START_ADDR = #{start_addr},
+		END_FG = #{end_fg},
+		END_ADDR = #{end_addr},
+		MILEAGE_KM = #{mileage_km}
+		WHERE BOOKMARK_CD = #{bookmark_cd}
 	</update>
 
 </mapper>
