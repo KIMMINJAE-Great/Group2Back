@@ -204,12 +204,6 @@
 		FROM
 		sctrl_s as sendyn
 	</select>
-	
-	<select id="selectStartaccKm" resultType="String">
-		SELECT startacc_km 
-		FROM aper_startacc_info 
-		WHERE car_cd = #{car_cd};
-	</select>
 
 	<select id="selectStartaccKm" resultType="String">
 		SELECT startacc_km
@@ -357,12 +351,8 @@
 		UPDATE aper_startacc_info
 		SET
 		CO_CD = #{co_cd},
-<<<<<<< Updated upstream
 		CAR_CD =
 		#{car_cd},
-=======
-		CAR_CD = #{car_cd},
->>>>>>> Stashed changes
 		STARTACC_KM = #{startacc_km},
 		MODIFY_ID = #{modify_id},
 		MODIFY_DT = NOW()
@@ -397,12 +387,8 @@
 	</select>
 
 	<select id="checkAperStart" resultType="Integer"><!-- abizcarpersonMap -->
-<<<<<<< Updated upstream
 		SELECT COUNT(*) FROM aper_startacc_info WHERE CO_CD = #{co_cd} AND
 		CAR_CD = #{car_cd}
-=======
-		SELECT COUNT(*) FROM aper_startacc_info WHERE CO_CD = #{co_cd} AND CAR_CD = #{car_cd}
->>>>>>> Stashed changes
 
 	</select>
 
