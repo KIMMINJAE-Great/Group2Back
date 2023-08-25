@@ -156,25 +156,7 @@ public class ACE1010Controller {
 	    return ResponseEntity.ok().body("insert success");
         
 
-//		if (dataList.size() == 3) {
-//			String startDatetimeString = (String) dataList.get(1);
-//			System.out.println("startDatetimeString : " + startDatetimeString);
-//
-//			String endDatetimeString = (String) dataList.get(2);
-//			System.out.println("endDatetimeString : " + endDatetimeString);
-//
-//			if (startDatetimeString != null && startDatetimeString.length() >= 10) {
-//				String startDatetimeString1 = startDatetimeString.substring(0, 10);
-//				dto.setUse_dt(startDatetimeString1);
-//				System.out.println("startDatetimeString1 : " + startDatetimeString1);
-//
-//			} else {
-//				System.out.println("null �씠 �굹�삱�닔媛� �뾾�쓬@@@@@@@@@");
-//			}
-//
-//		}
-//		int result = service.insertAbizCarPerson(dto);
-//		System.out.println("result :" + result);
+
 
 	}
 
@@ -420,6 +402,46 @@ public class ACE1010Controller {
 			return ResponseEntity.ok().body(dto);
 		}
 
+		//마감
+		@PutMapping("/updatesendyn")
+		public ResponseEntity<String> updatesendyn(@RequestBody List<AbizCarPersonDTO> dto) {
+			System.out.println("마감 시작");
+			System.out.println(dto.toString());
+			
+			for(AbizCarPersonDTO dto2 : dto) {
+				dto2.setSend_yn("1");
+			}
+			
+			String result = service.findLastSeqNbWithSendYn(dto.get(0));
+			System.out.println("거시기");
+//			System.out.println(result);
+			
+			if(result == null || result.equals("1")) {
+				for(AbizCarPersonDTO dto2 : dto) {
+					
+					 String datetimeString = dto2.getUse_dt();
+					 
+				        if (datetimeString != null && datetimeString.length() >= 10) {
+				        	String dateString = datetimeString.substring(0, 10);
+				            dto2.setUse_dt(dateString);
+				            System.out.println("dateString : " + dateString);
+				        } else {
+				            System.out.println("null 이 나올수가 없음@@@@@@@@@");
+				        }	
+				        
+				service.updateAbizCarPerson(dto2);
+			}
+			
+				return ResponseEntity.ok().body("success");
+			
+			}
+			 else {
+				return ResponseEntity.badRequest().body("can not");
+			}
+			
+			
+			
+		}
 	
 	
 	
