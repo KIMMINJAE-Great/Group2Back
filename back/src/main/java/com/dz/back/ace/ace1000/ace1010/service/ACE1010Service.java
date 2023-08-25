@@ -60,8 +60,6 @@ public interface ACE1010Service {
 	
 	public String selectStartaccKm (String car_cd);
 	
-	public String findLastSeqNbWithSendYn(AbizCarPersonDTO dto);
-	
 	
 	
 	// �α����� emp_cd�� ���ã�� ��ȸ

@@ -353,13 +353,5 @@ public class ACE1010Serviceimpl implements ACE1010Service {
 		return dao.bookmarkendfg(emp_cd,co_cd,end_fg);
 	}
 
-	@Override
-	public String findLastSeqNbWithSendYn(AbizCarPersonDTO dto) {
-		
-		return dao.findLastSeqNbWithSendYn(dto);
-				
-	}
 
-
-	
 }

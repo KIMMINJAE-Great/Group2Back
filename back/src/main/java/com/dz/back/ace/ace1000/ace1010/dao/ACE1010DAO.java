@@ -177,9 +177,4 @@ public List<AbizCarBookmarkDTO> findallbookmark(String emp_cd) {
 	    
 	    return null;
 	}
-
-	public String findLastSeqNbWithSendYn(AbizCarPersonDTO dto) {
-		return 	sqlSession.getMapper(ACE1010Mapper.class).findLastSeqNbWithSendYn(dto);
-		
-	}
 }

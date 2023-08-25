@@ -392,6 +392,17 @@
 
 	</select>
 
+	<!-- start_time이 전 행의 end_time과 겨치기 허용 <select id="updateTimeCheck" resultType="Integer" 
+		>abizcarpersonMap SELECT COUNT(*) FROM abizcar_person WHERE USE_DT = #{use_dt} 
+		AND ( (#{start_time} >= START_TIME AND #{start_time} < END_TIME) OR (#{end_time} 
+		> START_TIME AND #{end_time} <= END_TIME) ) AND SEQ_NB != #{seq_nb}; </select> -->
+
+	<!-- start_time이 전 행의 end_time과 겨치기 허용 <select id="updateTimeCheck" resultType="Integer" 
+		>abizcarpersonMap SELECT COUNT(*) FROM abizcar_person WHERE USE_DT = #{use_dt} 
+		AND ( (#{start_time} >= START_TIME AND #{start_time} < END_TIME) OR (#{end_time} 
+		> START_TIME AND #{end_time} <= END_TIME) ) AND SEQ_NB != #{seq_nb}; </select> -->
+
+
 	<!-- 운행기록 삭제 -->
 	<delete id="deleteAbizcarPerson" parameterType="java.util.List">
 		<foreach collection="list" item="record" separator=";">
@@ -446,6 +457,9 @@
 		SEQ_NB = #{seq_nb}
 	</update>
 
+	<!-- <select id="selectByCarCdAndSeqNbGreaterThan" resultMap="abizcarpersonMap"> 
+		SELECT * FROM abizcar_person WHERE CAR_CD = #{car_cd} AND SEQ_NB > #{seq_nb} 
+		ORDER BY SEQ_NB </select> -->
 	<update id="updateMileageForeach" parameterType="java.util.List">
 		<foreach collection="list" item="record" separator=";">
 			UPDATE
@@ -633,8 +647,4 @@ WHERE
 		WHERE BOOKMARK_CD = #{bookmark_cd}
 	</update>
 
-
-<select id="findLastSeqNbWithSendYn"  resultType="String">
-	SELECT COALESCE(SEND_YN,0) FROM abizcar_person WHERE car_cd = #{car_cd} AND seq_nb &lt; #{seq_nb} ORDER BY seq_nb DESC LIMIT 1
-</select>
 </mapper>
