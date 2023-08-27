@@ -13,6 +13,7 @@ import com.dz.back.ace.ace1000.ace1010.dto.AbizCarBookmarkDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.AbizCarPersonDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.AutoCalcMileageDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.DeleteRequestAbizCarPersonDTO;
+import com.dz.back.ace.ace1000.ace1010.dto.KmFgDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.AperStartaccInfoDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.SendYnDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.StartEndFgDTO;
@@ -47,7 +48,10 @@ public class ACE1010DAO {
 		return sqlSession.getMapper(ACE1010Mapper.class).startendfg();
 	};
 
-// Test 占쏙옙占쏙옙占싹븝옙 占쏙옙占쏙옙 
+	public String findLastSeqNbWithSendYn(AbizCarPersonDTO dto) {
+		return 	sqlSession.getMapper(ACE1010Mapper.class).findLastSeqNbWithSendYn(dto);
+
+	}
 	public int insertAbizCarPerson(AbizCarPersonDTO dto) {
 		
 		 return sqlSession.getMapper(ACE1010Mapper.class).insertAbizCarPerson(dto);
@@ -91,10 +95,14 @@ public class ACE1010DAO {
 	};
 	
 	
-	public List<AbizCarPersonDTO> findAllSeqNbNotSendY (String car_cd){
-		return sqlSession.getMapper(ACE1010Mapper.class).findAllSeqNbNotSendY(car_cd);
+	public List<AbizCarPersonDTO> findAllSeqNbNotSendY (@Param("seq_nb") int seq_nb, @Param("car_cd") String car_cd){
+		return sqlSession.getMapper(ACE1010Mapper.class).findAllSeqNbNotSendY(seq_nb,car_cd);
 	};
 
+	public int selectAfterKmThanBeforeSeqNb(@Param("seq_nb") int seq_nb, @Param("car_cd") String car_cd) {
+		return sqlSession.getMapper(ACE1010Mapper.class).selectAfterKmThanBeforeSeqNb(seq_nb,car_cd);
+	}
+	
 //	
 //	占쌤쇽옙 占쏙옙占쏙옙타占� 占쏙옙占쏙옙
 	public void updateOnlyOneMileage(AutoCalcMileageDTO dto) {
@@ -176,5 +184,9 @@ public List<AbizCarBookmarkDTO> findallbookmark(String emp_cd) {
 	    }
 	    
 	    return null;
+	}
+	
+	public KmFgDTO selectLastAfterKm(AbizCarPersonDTO dto) {
+		return sqlSession.getMapper(ACE1010Mapper.class).selectLastAfterKm(dto);
 	}
 }

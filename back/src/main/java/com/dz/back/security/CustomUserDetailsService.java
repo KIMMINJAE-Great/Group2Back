@@ -28,11 +28,14 @@ public class CustomUserDetailsService implements UserDetailsService{
 // semp에서 가져온 정보중 emp_cd를 사용하여 메뉴 권한을 리스트로 가져오기
 		List<MauthDTO> mauthList = userAuthMapper.readMauthList(empDTO.getEmp_cd());
 
+// CustomUser로 보낼 dto에 메뉴권한, 메뉴그룹, URL 담기
 		empDTO.setMauthList(mauthList);
 		
-// CustomUser로 보낼 dto에 메뉴권한, 메뉴그룹, URL 담기
 	
-		
+		String co_cd = (userAuthMapper.getEmpByUsername(username)).getCo_cd();
+		empDTO.setCo_cd(co_cd);
+		System.out.println("login...........cocd get");
+		System.out.println(empDTO.toString());
 		return empDTO == null ? null : new CustomUser(empDTO);
 	}
 	

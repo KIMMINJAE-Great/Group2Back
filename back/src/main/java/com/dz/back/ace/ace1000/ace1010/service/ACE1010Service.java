@@ -6,6 +6,7 @@ import com.dz.back.ace.ace1000.ace1010.dto.AbizCarBookmarkDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.AbizCarPersonDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.AutoCalcMileageDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.DeleteRequestAbizCarPersonDTO;
+import com.dz.back.ace.ace1000.ace1010.dto.KmFgDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.AperStartaccInfoDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.SendYnDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.StartEndFgDTO;
@@ -60,7 +61,7 @@ public interface ACE1010Service {
 	
 	public String selectStartaccKm (String car_cd);
 	
-	
+	public KmFgDTO selectLastAfterKm(AbizCarPersonDTO dto);
 	
 	// �α����� emp_cd�� ���ã�� ��ȸ
 		public List<AbizCarBookmarkDTO> findallbookmark(String emp_cd);
@@ -72,6 +73,10 @@ public interface ACE1010Service {
 		public AbizCarBookmarkDTO bookmarkstartfg(String emp_cd,String co_cd,String start_fg);
 		
 		public AbizCarBookmarkDTO bookmarkendfg(String emp_cd,String co_cd,String end_fg);
+
+		public String findLastSeqNbWithSendYn(AbizCarPersonDTO abizCarPersonDTO);
+
+		public void selectedCopy(List<AbizCarPersonDTO> requestData);
 		
 
 }

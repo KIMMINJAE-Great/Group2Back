@@ -8,6 +8,7 @@ import com.dz.back.ace.ace1000.ace1010.dto.AbizCarBookmarkDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.AbizCarPersonDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.AutoCalcMileageDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.DeleteRequestAbizCarPersonDTO;
+import com.dz.back.ace.ace1000.ace1010.dto.KmFgDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.AperStartaccInfoDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.SendYnDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.StartEndFgDTO;
@@ -39,7 +40,9 @@ public interface ACE1010Mapper {
 	
 	public int updateMileageForeach(List<AbizCarPersonDTO> dto);
 	
-	public List<AbizCarPersonDTO> findAllSeqNbNotSendY (String car_cd);
+	public List<AbizCarPersonDTO> findAllSeqNbNotSendY (@Param("seq_nb") int seq_nb, @Param("car_cd") String car_cd);
+	
+	public int selectAfterKmThanBeforeSeqNb(@Param("seq_nb") int seq_nb, @Param("car_cd") String car_cd);
 	
 	public void updateOnlyOneMileage(AutoCalcMileageDTO dto);
 	
@@ -73,4 +76,7 @@ public interface ACE1010Mapper {
 	public AbizCarBookmarkDTO bookmarkendfg2(@Param("emp_cd") String emp_cd, @Param("co_cd") String co_cd, @Param("end_fg") String end_fg);
 	
 
+	public KmFgDTO  selectLastAfterKm(AbizCarPersonDTO dto);
+
+	public String findLastSeqNbWithSendYn(AbizCarPersonDTO dto);
 }

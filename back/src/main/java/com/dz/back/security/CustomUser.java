@@ -15,6 +15,8 @@ public class CustomUser extends User {
 	private EmpDTO empDTO;
 
 	private String co_cd;
+
+
 	private String emp_cd;
 	private String emp_nm;
 	private String emp_id;
@@ -67,5 +69,12 @@ public class CustomUser extends User {
 
 	public List<AuthDTO> getAuthList() {
 		return authList;
+	}
+	public String getCo_cd() {
+		return co_cd;
+	}
+
+	public void setCo_cd(String co_cd) {
+		this.co_cd = co_cd;
 	}
 }

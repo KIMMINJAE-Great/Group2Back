@@ -30,6 +30,7 @@ import com.dz.back.ace.ace1000.ace1010.dto.AbizCarBookmarkDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.AbizCarPersonDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.AutoCalcMileageDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.DeleteRequestAbizCarPersonDTO;
+import com.dz.back.ace.ace1000.ace1010.dto.KmFgDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.AperStartaccInfoDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.SendYnDTO;
 import com.dz.back.ace.ace1000.ace1010.dto.StartEndFgDTO;
@@ -52,7 +53,7 @@ public class ACE1010Controller {
 
 	private String car_cd;
 
-//	Test 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙
+
 	@GetMapping("/getallcars")
 	public ResponseEntity<List<AbizCarPersonDTO>> getallcars() {
 		List<AbizCarPersonDTO> dto = service.getallcars();
@@ -61,7 +62,7 @@ public class ACE1010Controller {
 
 	}
 
-//	占쏙옙占쏙옙 占쏙옙占쏙옙
+
 	@GetMapping("/usefg")
 	public ResponseEntity<List<UseFgDTO>> usefg() {
 		List<UseFgDTO> dto = service.usefg();
@@ -69,7 +70,7 @@ public class ACE1010Controller {
 		return ResponseEntity.ok().body(dto);
 	}
 
-//	占쏙옙占쏙옙 占쏙옙占쏙옙
+
 	@GetMapping("/sendyn")
 	public ResponseEntity<List<SendYnDTO>> sendyn() {
 		List<SendYnDTO> dto = service.sendyn();
@@ -77,7 +78,6 @@ public class ACE1010Controller {
 		return ResponseEntity.ok().body(dto);
 	}
 
-//	占쏙옙占�,占쏙옙占쏙옙 占쏙옙占쏙옙
 	@GetMapping("/startendfg")
 	public ResponseEntity<List<StartEndFgDTO>> startendfg() {
 		List<StartEndFgDTO> dto = service.startendfg();
@@ -88,9 +88,8 @@ public class ACE1010Controller {
 //	 占쏙옙占쏙옙占싹븝옙 占쌉뤄옙
 	@PostMapping("/insert")
 	public ResponseEntity<String> insert(@RequestBody AbizCarPersonDTO dto) {
-		System.out.println("占쌓싷옙 占쏙옙占쏙옙........... : " + dto.toString());
 
-//		占쌉뤄옙 占쏙옙占쏙옙占쏙옙 占시곤옙 占쌩븝옙 占쏙옙 占쏙옙占쏙옙占쏙옙짜 占쌉뤄옙 占쏙옙占쏙옙
+
 		String checkTimeResult = service.checkUseDtAndStartTime(dto);
 		if (checkTimeResult.equals("before data exist")) {
 			return ResponseEntity.ok().body("before data exist");
@@ -98,16 +97,15 @@ public class ACE1010Controller {
 			return ResponseEntity.ok().body("same time data exist");
 		}
 
-//		insert占싹깍옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 AbbizcarpersonDTO 占쏙옙占쏙옙
 		AbizCarPersonDTO acpdto = dto;
 		System.out.println(dto.getCar_cd());
 
-//	占쏙옙占쏙옙占쏙옙 seq_nb占쏙옙 占쌍대값占쏙옙 占쏙옙占쏙옙占쏙옙 +1 占쏙옙占쌍깍옙
+
 		int seqnb = service.findMaxSeqNb(dto.getCar_cd());
 		seqnb++;
 		acpdto.setSeq_nb(seqnb);
 
-// use_dt 占쏙옙짜 占쏙옙占쏙옙 占쏙옙占쏙옙	    
+    
 		String datetimeString = dto.getUse_dt();
 		if (datetimeString != null && datetimeString.length() >= 10) {
 			String dateString = datetimeString.substring(0, 10);
@@ -118,7 +116,8 @@ public class ACE1010Controller {
 		if (acpdto.getEnd_fg().isEmpty() || acpdto.getStart_fg().isEmpty()) {
 			return ResponseEntity.ok().body("Required value not entered");
 		}
-		System.out.println("占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙 占싼깍옙占쏙옙占쏙옙占� 확占쏙옙 : " + acpdto.toString());
+		System.out.println(" : " + acpdto.toString());
+			
 		int result = service.insertAbizCarPerson(acpdto);
 		if (result == 1) {
 			return ResponseEntity.ok().body("insert success");
@@ -132,65 +131,83 @@ public class ACE1010Controller {
 	public ResponseEntity<String> selectedCopy(@RequestBody List<AbizCarPersonDTO> requestData) {
 	    System.out.println("Received requestData: " + requestData);
 
-	    for (AbizCarPersonDTO dto : requestData) {
-	        int seqnb = service.findMaxSeqNb(dto.getCar_cd());
-	        seqnb++;
-	        dto.setSeq_nb(seqnb);
-
-	        System.out.println("seqnb : " + seqnb);
-	        
-	        String datetimeString = dto.getUse_dt();
-	        if (datetimeString != null && datetimeString.length() >= 10) {
-	        	String dateString = datetimeString.substring(0, 10);
-	            dto.setUse_dt(dateString);
-	            System.out.println("dateString : " + dateString);
-	        } else {
-	            System.out.println("null 이 나올수가 없음@@@@@@@@@");
-	        }
-
-	        int result = service.insertAbizCarPerson(dto);
-	        System.out.println("result : " + result);
-	    }
 	    
+	   service.selectedCopy(requestData);
+	    System.out.println(requestData.toString());
+//	    for (AbizCarPersonDTO dto : requestData) {
+//	        int seqnb = service.findMaxSeqNb(dto.getCar_cd());
+//	        seqnb++;
+//	        dto.setSeq_nb(seqnb);
+//
+//	        System.out.println("seqnb : " + seqnb);
+//	        
+//	        String datetimeString = dto.getUse_dt();
+//	        if (datetimeString != null && datetimeString.length() >= 10) {
+//	        	String dateString = datetimeString.substring(0, 10);
+//	            dto.setUse_dt(dateString);
+//	            System.out.println("dateString : " + dateString);
+//	        } else {
+//	            System.out.println("null 이 나올수가 없음@@@@@@@@@");
+//	        }
+//
+//	        int result = service.insertAbizCarPerson(dto);
+//	        System.out.println("result : " + result);
+//	    }
+//	    
 
 	    return ResponseEntity.ok().body("insert success");
         
+	}
+//	마감 
+	@PutMapping("/updatesendyn")
+	public ResponseEntity<String> updatesendyn(@RequestBody List<AbizCarPersonDTO> dto) {
+		System.out.println("마감 시작");
+		System.out.println(dto.toString());
 
-//		if (dataList.size() == 3) {
-//			String startDatetimeString = (String) dataList.get(1);
-//			System.out.println("startDatetimeString : " + startDatetimeString);
-//
-//			String endDatetimeString = (String) dataList.get(2);
-//			System.out.println("endDatetimeString : " + endDatetimeString);
-//
-//			if (startDatetimeString != null && startDatetimeString.length() >= 10) {
-//				String startDatetimeString1 = startDatetimeString.substring(0, 10);
-//				dto.setUse_dt(startDatetimeString1);
-//				System.out.println("startDatetimeString1 : " + startDatetimeString1);
-//
-//			} else {
-//				System.out.println("null �씠 �굹�삱�닔媛� �뾾�쓬@@@@@@@@@");
-//			}
-//
-//		}
-//		int result = service.insertAbizCarPerson(dto);
-//		System.out.println("result :" + result);
+		for(AbizCarPersonDTO dto2 : dto) {
+			dto2.setSend_yn("1");
+		}
+
+		String result = service.findLastSeqNbWithSendYn(dto.get(0));
+
+
+		if(result == null || result.equals("1")) {
+			for(AbizCarPersonDTO dto2 : dto) {
+
+				 String datetimeString = dto2.getUse_dt();
+
+			        if (datetimeString != null && datetimeString.length() >= 10) {
+			        	String dateString = datetimeString.substring(0, 10);
+			            dto2.setUse_dt(dateString);
+			            System.out.println("dateString : " + dateString);
+			        } else {
+			            System.out.println("null 이 나올수가 없음@@@@@@@@@");
+			        }	
+
+			service.updateAbizCarPerson(dto2);
+		}
+
+			return ResponseEntity.ok().body("success");
+
+		}
+		 else {
+			return ResponseEntity.badRequest().body("can not");
+		}
+
+
 
 	}
-
-//	占쏙옙占쏙옙占싹븝옙 占쏙옙占쏙옙
+	
+	
 	@PutMapping("/update")
 	public ResponseEntity<String> update(@RequestBody AbizCarPersonDTO dto) {
-		System.out.println("占쏙옙占쏙옙占쏙옙트 占쏙옙占쏙옙");
-		System.out.println(dto.toString());
-//		占쌉뤄옙 占쏙옙占쏙옙占쏙옙 占시곤옙 占쌩븝옙 占쏙옙 占쏙옙占쏙옙占쏙옙짜 占쌉뤄옙 占쏙옙占쏙옙
+
 		String checkTimeResult = service.checkUseDtAndStartTime(dto);
 		if (checkTimeResult.equals("before data exist")) {
 			return ResponseEntity.ok().body("before data exist");
 		} else if (checkTimeResult.equals("same time data exist")) {
 			return ResponseEntity.ok().body("same time data exist");
 		} else if (checkTimeResult.equals("same time exist at working row")) {
-			System.out.println("占쌩븝옙占실는곤옙 占쌍억옙占� 占쏙옙占쏙옙占승곤옙");
 			return ResponseEntity.ok().body("same time exist at working row");
 		}
 
@@ -204,8 +221,7 @@ public class ACE1010Controller {
 		}
 
 		int result = service.updateAbizCarPerson(finalDto);
-		System.out.println("占쏙옙 占쏙옙占싸거억옙 " + result);
-		System.out.println(finalDto.toString());
+
 		if (result == 1) {
 			return ResponseEntity.ok().body("update success");
 		} else {
@@ -213,32 +229,57 @@ public class ACE1010Controller {
 		}
 	}
 
-//	占쏙옙占쏙옙占싹븝옙 占쏙옙회
+// 운행기록의 마지막 주행 후 검색, 기록이 존재하지 않다면 기초거리 리턴
+	@GetMapping("/selectLastAfterKm")
+	public ResponseEntity<Integer> selectLastAfterKm(@RequestParam String car_cd, @RequestParam String co_cd,
+			@RequestParam String use_dt){
+		System.out.println("last After_km get");
+		AbizCarPersonDTO dto = new AbizCarPersonDTO();
+		dto.setCar_cd(car_cd);
+		dto.setCo_cd(co_cd);
+		dto.setUse_dt(use_dt);
+		
+		System.out.println(dto.toString());
+		KmFgDTO kfDTO = service.selectLastAfterKm(dto);
+		
+		if(kfDTO!=null) {
+			return ResponseEntity.ok().body(kfDTO.getKm());
+			
+		} else {
+			return ResponseEntity.ok().body(0);
+		}
+	}
+	
+	
+	
 	@GetMapping("/searchcarforabizperson")
-	public ResponseEntity<?> findallbycar(@RequestParam String car_cd, @RequestParam String startDate,
+	public ResponseEntity<?> searchcarforabizperson(@RequestParam String car_cd, @RequestParam String startDate,
 			@RequestParam String endDate) {
-		System.out.println("findallbycar호占쏙옙........");
+		System.out.println("findallbycar.");
 
 		System.out.println(car_cd);
 
 		CarDTO cdto = regcarService.findCar(car_cd);
-		System.out.println(cdto);
+		System.out.println("is exist? car : "+cdto);
 
 		if (cdto == null) {
 			return ResponseEntity.ok().body("not found");
 		} else if (cdto.getUse_yn().equals("N")) {
 			return ResponseEntity.ok().body("not using");
 		} else {
-
+// 빈행을 검색시 그 안에는 아무것도 안담겨 있다 그러니깐 selectLastKm를 쓰면 기초거리만 나온다.
+			//그런데 기록이 있다면 배열의 맨마지막의 usedt를 넣으면 되지 않을까?
+			
+			
 			List<AbizCarPersonDTO> dto = service.findallbycar(car_cd, startDate, endDate);
 			//int startacc = service.getstartaccfordivision(dto.get(0).getCar_cd());
 			if (dto == null || dto.isEmpty()) {
-				dto = new ArrayList<>(); // 占쏙옙占쏙옙트 占십깍옙화
+				dto = new ArrayList<>(); 
 				AbizCarPersonDTO newDto = new AbizCarPersonDTO();
 				newDto.setEmp_cd(cdto.getEmp_cd());
 				newDto.setCo_cd(cdto.getCo_cd());
 				newDto.setCar_cd(cdto.getCar_cd());
-				dto.add(newDto); // 占쏙옙占싸울옙 DTO 占쏙옙체占쏙옙 占쏙옙占쏙옙트占쏙옙 占쌩곤옙
+				dto.add(newDto);
 			} else {
 				for (AbizCarPersonDTO item : dto) {
 					item.setEmp_cd(cdto.getEmp_cd());
@@ -246,9 +287,9 @@ public class ACE1010Controller {
 					item.setCar_cd(cdto.getCar_cd());
 				}
 			}
-			
-			System.out.println("처占쏙옙 占쌀뤄옙占시띰옙");
-			System.out.println(dto.toString());
+
+//			}
+//			
 			return ResponseEntity.ok().body(dto);
 		}
 
@@ -277,7 +318,6 @@ public class ACE1010Controller {
 	
 
 
-//	占싫분울옙 占쏙옙占쏙옙占� 占쏙옙占십거몌옙 占쏙옙占쏙옙占쏙옙占쏙옙
 	@GetMapping("/getstartaccfordivision")
 	public ResponseEntity<Integer> getstartaccfordivision(@RequestParam String car_cd){
 		
@@ -287,7 +327,7 @@ public class ACE1010Controller {
 	}
 	
 	
-//	占쏙옙占쏙옙占쏙옙 占싫븝옙 占쏙옙占� 
+
 	@PostMapping("/savedivisiondistance")
 	public ResponseEntity<?> savedivisiondistance(@RequestBody List<AutoCalcMileageDTO> dto){
 		System.out.println("占싫븝옙 占쏙옙트占싼뤄옙");
@@ -295,7 +335,7 @@ public class ACE1010Controller {
 			int result = service.savedivisiondistance(dto);
 		return ResponseEntity.ok().body(result);
 	}
-	/* �슫�뻾湲곕줉遺� - 湲곗큹嫄곕━ �엯�젰 - Tabel aper_startacc_info */
+	
 	@PostMapping("/insertStartaccKm")
 	public int insertStartaccKm(@RequestBody AperStartaccInfoDTO aperStartaccInfoDTO) {
 
@@ -327,7 +367,6 @@ public class ACE1010Controller {
 	@PostMapping("/selectStartaccKm")
 	public ResponseEntity<Map<String, Object>> selectStartaccKm(@RequestBody Map<String, String> requestData) {
 	    String car_cd = requestData.get("car_cd");
-	    System.out.println("car_cd : " + car_cd);
 
 	    // car_cd瑜� �궗�슜�븯�뿬 startacc_km�쓣 �뜲�씠�꽣踰좎씠�뒪�뿉�꽌 議고쉶�븯�뒗 �옉�뾽 �닔�뻾
 	    String startaccKm = service.selectStartaccKm(car_cd); // �삁�떆濡� 硫붿냼�뱶 �씠由꾩� selectStartaccKmByCarCd�씪 媛��젙

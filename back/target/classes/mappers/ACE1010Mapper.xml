@@ -428,16 +428,31 @@
 		abizcar_person.car_cd =
 		#{car_cd}
 
-		AND abizcar_person.SEND_YN = '2'
+		AND abizcar_person.seq_nb &gt; #{seq_nb}
 
 		ORDER BY
 
 		abizcar_person.SEQ_NB ASC
 
+
 	</select>
 
-	<select id="rownumAbizcarPersonNotSendY">
+	<select id="selectAfterKmThanBeforeSeqNb" resultType="Integer">
+		SELECT km
+		FROM (
+		SELECT AFTER_KM AS km, 1 AS fg
+		FROM abizcar_person
+		WHERE CAR_CD = #{car_cd} AND SEQ_NB &lt; #{seq_nb}
 
+		UNION ALL
+
+		SELECT COALESCE(MAX(STARTACC_KM), 0)AS km, 2 AS fg
+		FROM aper_startacc_info
+		WHERE CAR_CD = #{car_cd}
+
+		) a
+		ORDER BY fg ASC, km DESC
+		LIMIT 1;
 
 
 	</select>
@@ -500,131 +515,138 @@
 	<select id="findallbookmark" resultMap="abizcarbookmarkMap"
 		parameterType="String">
 		SELECT
-    bookmark.co_cd,
-    bookmark.emp_cd,
-    bookmark.bookmark_cd,
-    bookmark.bookmark_nm,
-    bookmark.use_fg,
-    bookmark.start_time,
-    bookmark.end_time,
-    bookmark.start_fg,
-    bookmark.start_addr,
-    bookmark.end_fg,
-    bookmark.end_addr,
-    bookmark.mileage_km
-FROM
-    abizcar_bookmark as bookmark
-WHERE
-    bookmark.emp_cd = #{emp_cd}
+		bookmark.co_cd,
+		bookmark.emp_cd,
+		bookmark.bookmark_cd,
+		bookmark.bookmark_nm,
+		bookmark.use_fg,
+		bookmark.start_time,
+		bookmark.end_time,
+		bookmark.start_fg,
+		bookmark.start_addr,
+		bookmark.end_fg,
+		bookmark.end_addr,
+		bookmark.mileage_km
+		FROM
+		abizcar_bookmark as bookmark
+		WHERE
+		bookmark.emp_cd = #{emp_cd}
 	</select>
-	
+
 	<!-- 즐겨찾기 출발지 구분 -->
 	<select id="bookmarkstartfg1" resultMap="abizcarbookmarkMap"
 		parameterType="String">
 		SELECT
-    bookmark.co_cd,
-    bookmark.emp_cd,
-    bookmark.bookmark_cd,
-    bookmark.bookmark_nm,
-    bookmark.use_fg,
-    bookmark.start_time,
-    bookmark.end_time,
-    bookmark.start_fg,
-    bookmark.start_addr,
-    bookmark.end_fg,
-    bookmark.end_addr,
-    bookmark.mileage_km
-FROM
-    abizcar_bookmark as bookmark
-WHERE
-    bookmark.EMP_CD = #{emp_cd}
-    AND bookmark.CO_CD = #{co_cd}
-    AND bookmark.BOOKMARK_CD='1'
+		bookmark.co_cd,
+		bookmark.emp_cd,
+		bookmark.bookmark_cd,
+		bookmark.bookmark_nm,
+		bookmark.use_fg,
+		bookmark.start_time,
+		bookmark.end_time,
+		bookmark.start_fg,
+		bookmark.start_addr,
+		bookmark.end_fg,
+		bookmark.end_addr,
+		bookmark.mileage_km
+		FROM
+		abizcar_bookmark as bookmark
+		WHERE
+		bookmark.EMP_CD = #{emp_cd}
+		AND bookmark.CO_CD = #{co_cd}
+		AND
+		bookmark.BOOKMARK_CD='1'
 	</select>
-	
+
 	<!-- 즐겨찾기 출발지 구분 -->
 	<select id="bookmarkstartfg2" resultMap="abizcarbookmarkMap"
 		parameterType="String">
 		SELECT
-    bookmark.co_cd,
-    bookmark.emp_cd,
-    bookmark.bookmark_cd,
-    bookmark.bookmark_nm,
-    bookmark.use_fg,
-    bookmark.start_time,
-    bookmark.end_time,
-    bookmark.start_fg,
-    bookmark.start_addr,
-    bookmark.end_fg,
-    bookmark.end_addr,
-    bookmark.mileage_km
-FROM
-    abizcar_bookmark as bookmark
-WHERE
-    bookmark.EMP_CD = #{emp_cd}
-    AND bookmark.CO_CD = #{co_cd}
-    AND bookmark.BOOKMARK_CD='2'
+		bookmark.co_cd,
+		bookmark.emp_cd,
+		bookmark.bookmark_cd,
+		bookmark.bookmark_nm,
+		bookmark.use_fg,
+		bookmark.start_time,
+		bookmark.end_time,
+		bookmark.start_fg,
+		bookmark.start_addr,
+		bookmark.end_fg,
+		bookmark.end_addr,
+		bookmark.mileage_km
+		FROM
+		abizcar_bookmark as bookmark
+		WHERE
+		bookmark.EMP_CD = #{emp_cd}
+		AND bookmark.CO_CD = #{co_cd}
+		AND
+		bookmark.BOOKMARK_CD='2'
 	</select>
-	
-	
-	
-	
-	
+
+
+
+
+
 	<!-- 즐겨찾기 도착지 구분 -->
 	<select id="bookmarkendfg1" resultMap="abizcarbookmarkMap"
 		parameterType="String">
 		SELECT
-    bookmark.co_cd,
-    bookmark.emp_cd,
-    bookmark.bookmark_cd,
-    bookmark.bookmark_nm,
-    bookmark.use_fg,
-    bookmark.start_time,
-    bookmark.end_time,
-    bookmark.start_fg,
-    bookmark.start_addr,
-    bookmark.end_fg,
-    bookmark.end_addr,
-    bookmark.mileage_km
-FROM
-    abizcar_bookmark as bookmark
-WHERE
-    bookmark.EMP_CD = #{emp_cd}
-    AND bookmark.CO_CD = #{co_cd}
-    AND bookmark.BOOKMARK_CD='1'
+		bookmark.co_cd,
+		bookmark.emp_cd,
+		bookmark.bookmark_cd,
+		bookmark.bookmark_nm,
+		bookmark.use_fg,
+		bookmark.start_time,
+		bookmark.end_time,
+		bookmark.start_fg,
+		bookmark.start_addr,
+		bookmark.end_fg,
+		bookmark.end_addr,
+		bookmark.mileage_km
+		FROM
+		abizcar_bookmark as bookmark
+		WHERE
+		bookmark.EMP_CD = #{emp_cd}
+		AND bookmark.CO_CD = #{co_cd}
+		AND
+		bookmark.BOOKMARK_CD='1'
 	</select>
-	
+
 	<!-- 즐겨찾기 도착지 구분 -->
 	<select id="bookmarkendfg2" resultMap="abizcarbookmarkMap"
 		parameterType="String">
 		SELECT
-    bookmark.co_cd,
-    bookmark.emp_cd,
-    bookmark.bookmark_cd,
-    bookmark.bookmark_nm,
-    bookmark.use_fg,
-    bookmark.start_time,
-    bookmark.end_time,
-    bookmark.start_fg,
-    bookmark.start_addr,
-    bookmark.end_fg,
-    bookmark.end_addr,
-    bookmark.mileage_km
-FROM
-    abizcar_bookmark as bookmark
-WHERE
-    bookmark.EMP_CD = #{emp_cd}
-    AND bookmark.CO_CD = #{co_cd}
-    AND bookmark.BOOKMARK_CD='2'
+		bookmark.co_cd,
+		bookmark.emp_cd,
+		bookmark.bookmark_cd,
+		bookmark.bookmark_nm,
+		bookmark.use_fg,
+		bookmark.start_time,
+		bookmark.end_time,
+		bookmark.start_fg,
+		bookmark.start_addr,
+		bookmark.end_fg,
+		bookmark.end_addr,
+		bookmark.mileage_km
+		FROM
+		abizcar_bookmark as bookmark
+		WHERE
+		bookmark.EMP_CD = #{emp_cd}
+		AND bookmark.CO_CD = #{co_cd}
+		AND
+		bookmark.BOOKMARK_CD='2'
 	</select>
 
 
 	<!-- 즐겨찾기 입력 -->
 	<insert id="insertbookmark" parameterType="java.util.List">
-		INSERT INTO abizcar_bookmark 
-		(co_cd, emp_cd, bookmark_cd, bookmark_nm, use_fg,start_time, end_time, start_fg, start_addr,end_fg, end_addr, mileage_km) VALUES
+		INSERT INTO abizcar_bookmark
+		(co_cd, emp_cd, bookmark_cd, bookmark_nm,
+		use_fg,start_time, end_time,
+		start_fg, start_addr,end_fg, end_addr,
+		mileage_km) VALUES
 		<foreach separator="," item="bookmark" collection="list">
-		(#{bookmark.co_cd},#{bookmark.emp_cd},#{bookmark.bookmark_cd},#{bookmark.bookmark_nm},#{bookmark.use_fg},#{bookmark.start_time},#{bookmark.end_time},#{bookmark.start_fg},#{bookmark.start_addr},#{bookmark.end_fg},#{bookmark.end_addr},#{bookmark.mileage_km})
+			(#{bookmark.co_cd},#{bookmark.emp_cd},#{bookmark.bookmark_cd},#{bookmark.bookmark_nm},#{bookmark.use_fg},#{bookmark.start_time},#{bookmark.end_time},#{bookmark.start_fg},#{bookmark.start_addr},#{bookmark.end_fg},#{bookmark.end_addr},#{bookmark.mileage_km})
 		</foreach>
 	</insert>
 
@@ -633,7 +655,8 @@ WHERE
 		parameterType="com.dz.back.ace.ace1000.ace1010.dto.AbizCarBookmarkDTO">
 		UPDATE abizcar_bookmark SET
 		CO_CD = #{co_cd},
-		EMP_CD = #{emp_cd},
+		EMP_CD =
+		#{emp_cd},
 		BOOKMARK_CD = #{bookmark_cd},
 		BOOKMARK_NM = #{bookmark_nm},
 		USE_FG = #{use_fg},
@@ -644,7 +667,64 @@ WHERE
 		END_FG = #{end_fg},
 		END_ADDR = #{end_addr},
 		MILEAGE_KM = #{mileage_km}
-		WHERE BOOKMARK_CD = #{bookmark_cd}
+		WHERE BOOKMARK_CD =
+		#{bookmark_cd}
 	</update>
+
+
+	<select id="selectLastAfterKm"
+		resultType="com.dz.back.ace.ace1000.ace1010.dto.KmFgDTO">
+		SELECT km, fg
+		FROM (
+		SELECT B.AFTER_KM AS KM,
+		'2' AS FG
+		FROM (
+		SELECT A.CO_CD,
+		A.CAR_CD,
+		A.USE_DT,
+		MAX(B.SEQ_NB) AS SEQ_NB
+		FROM (
+		SELECT
+		CO_CD,
+		CAR_CD,
+		MAX(USE_DT) AS USE_DT
+		FROM abizcar_person
+		WHERE CO_CD =
+		#{co_cd}
+		AND CAR_CD = #{car_cd}
+		AND USE_DT &lt; #{use_dt}
+		GROUP BY CO_CD,
+		CAR_CD
+		) A
+		INNER JOIN abizcar_person B
+		ON A.CO_CD = B.CO_CD
+		AND A.CAR_CD =
+		B.CAR_CD
+		AND A.USE_DT = B.USE_DT
+		GROUP BY A.CO_CD, A.CAR_CD, A.USE_DT
+		) A
+		INNER JOIN abizcar_person B
+		ON A.CO_CD = B.CO_CD
+		AND A.CAR_CD = B.CAR_CD
+		AND A.USE_DT = B.USE_DT
+		AND A.SEQ_NB = B.SEQ_NB
+
+		UNION all
+
+		SELECT
+		COALESCE(STARTACC_KM ,0) AS km,
+		'1' AS fg
+		FROM aper_startacc_info
+		WHERE
+		CAR_CD = #{car_cd}
+		) a
+		ORDER BY fg DESC
+		LIMIT 1
+	</select>
+	<select id="findLastSeqNbWithSendYn" resultType="String">
+		SELECT
+		COALESCE(SEND_YN,0) FROM abizcar_person WHERE car_cd = #{car_cd} AND
+		seq_nb &lt; #{seq_nb} ORDER BY seq_nb DESC LIMIT 1
+	</select>
 
 </mapper>
