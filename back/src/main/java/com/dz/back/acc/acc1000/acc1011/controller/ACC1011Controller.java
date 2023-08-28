@@ -88,7 +88,7 @@ public class ACC1011Controller {
 //카드 추가
 	@PostMapping("/adddept")
 	public ResponseEntity<DeptDTO> addCardDept(@RequestBody DeptDTO dto) {
-
+			dto.setDept_fg("Y");
 		int result = deptService.addDept(dto);
 		System.out.println(result);
 		if (result == 1) {
