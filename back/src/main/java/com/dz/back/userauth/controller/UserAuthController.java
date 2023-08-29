@@ -26,28 +26,35 @@ public class UserAuthController {
 
 	@Autowired
 	private UserAuthService userAuthService;
-	
+
 	@Autowired
 	private CustomUserDetailsService customUserDetailsService;
-	
+
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
-	
+
 	@PostMapping("/login")
 	public ResponseEntity<Object> login(@RequestBody EmpDTO empDTO) {
 		System.out.println("EmpController 실행.........." + empDTO.toString());
-		//BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		// BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
 		EmpDTO edto = userAuthService.getEmp(empDTO.getEmp_id());
-		
+//		System.out.println(edto.getEmp_resi());
 		if (edto == null) {
 			System.out.println("edto가 널 일때");
 			return new ResponseEntity<>("id not found", HttpStatus.NOT_FOUND);
-		} else  {
+		}
+
+		else if (edto.getEmp_resi() != null) {
+			System.out.println("퇴사");
+			return new ResponseEntity<>("cant use this id", HttpStatus.FORBIDDEN);
+		}
+
+		else {
 			System.out.println("edto가 널이 아닐때");
-			String rawPassword = empDTO.getPassword(); 
-			String encodedPassword = edto.getPassword(); 
-			Boolean isMatch = bcryptPasswordEncoder.matches(rawPassword, encodedPassword); 
+			String rawPassword = empDTO.getPassword();
+			String encodedPassword = edto.getPassword();
+			Boolean isMatch = bcryptPasswordEncoder.matches(rawPassword, encodedPassword);
 			if (isMatch == false) {
 				return new ResponseEntity<>("password not found", HttpStatus.NOT_FOUND);
 			} else {
@@ -57,9 +64,8 @@ public class UserAuthController {
 				return new ResponseEntity<>(eDTO, HttpStatus.OK);
 			}
 		}
-		
+
 	}
-	
 
 	@PostMapping("/logout")
 	public ResponseEntity<?> logout(HttpServletRequest request) {

@@ -127,6 +127,10 @@
 		AND abizcarperson.use_dt BETWEEN
 		#{startDate} AND #{endDate}
 		ORDER BY abizcarperson.use_dt ASC,
+		CASE
+		WHEN abizcarperson.send_yn = 1 THEN 1
+		WHEN abizcarperson.send_yn = 2 THEN 2
+		END ASC,
 		abizcarperson.start_time ASC
 	</select>
 
@@ -442,11 +446,13 @@
 		FROM (
 		SELECT AFTER_KM AS km, 1 AS fg
 		FROM abizcar_person
-		WHERE CAR_CD = #{car_cd} AND SEQ_NB &lt; #{seq_nb}
+		WHERE CAR_CD =
+		#{car_cd} AND SEQ_NB &lt; #{seq_nb}
 
 		UNION ALL
 
-		SELECT COALESCE(MAX(STARTACC_KM), 0)AS km, 2 AS fg
+		SELECT
+		COALESCE(MAX(STARTACC_KM), 0)AS km, 2 AS fg
 		FROM aper_startacc_info
 		WHERE CAR_CD = #{car_cd}
 

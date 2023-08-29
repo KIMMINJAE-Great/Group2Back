@@ -114,7 +114,13 @@ public class ACD1010Controller {
       
       
       String GetDt = dto.getGet_dt().substring(0, 10);
-      
+      String IfrDt = dto.getIfr_dt().substring(0, 10);
+      String ItoDt = dto.getIto_dt().substring(0, 10);
+
+      // 날짜를 자른 값으로 DTO 수정
+      dto.setGet_dt(GetDt);
+      dto.setIfr_dt(IfrDt);
+      dto.setIto_dt(ItoDt);
       if(dto.getLease_yn().equals("1")) {
          dto.setGet_dt(GetDt);
       } else {
@@ -132,13 +138,7 @@ public class ACD1010Controller {
          dto.setLto_dt(LtoDt);
       }
 
-      String IfrDt = dto.getIfr_dt().substring(0, 10);
-      String ItoDt = dto.getIto_dt().substring(0, 10);
-
-      // 날짜를 자른 값으로 DTO 수정
-      dto.setGet_dt(GetDt);
-      dto.setIfr_dt(IfrDt);
-      dto.setIto_dt(ItoDt);
+  
       }
       int result = regcarService.addRegCar(dto);
       System.out.println(result);
